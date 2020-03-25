@@ -1,0 +1,96 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.RightArrow {
+
+}
+
+.RightArrow:before {
+  content: "\f054";
+  font-family: "Font Awesome 5 Free", serif;
+  font-weight: 900;
+  position: absolute;
+  left: -17px;
+  top: 40px;
+  color: #999;
+  z-index: auto;
+}
+
+.ActionBox {
+  position: relative;
+  border-width: 1px;
+  border-color: #DCDCDC;
+  border-style: solid;
+}
+
+.ActionBox-content {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.ActionBox-content i {
+  margin-bottom: 15px;
+}
+
+.ups-number{
+  display: block;
+  left: 0px;
+  position: absolute;
+  top: -17px;
+  width: 100%;
+  text-align: center;
+}
+
+.ups-number span{
+  background: #262626;
+  border-radius: 17px;
+  box-shadow: 0 2px 3px rgba(0,0,0,.2);
+  color: white;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 34px;
+  width: 34px;
+}
+
+.muted {
+  color: #999;
+  margin: 0;
+}
+
+

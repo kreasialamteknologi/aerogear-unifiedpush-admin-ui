@@ -1,7 +1,0 @@
-language: java
-
-jdk:
-  - oraclejdk12
-notifications:
-  irc: "irc.freenode.org#aerogear"
-  
