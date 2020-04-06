@@ -6,8 +6,9 @@ import { PageHeader } from '@patternfly/react-core';
 
 import '../App.css';
 
-function Header() {
-  const header = (
+// tslint:disable-next-line:variable-name
+export const Header = () => {
+  return (
     <PageHeader
       logo={
         <a className="navbar-brand" href="https://aerogear.org">
@@ -18,9 +19,4 @@ function Header() {
       isNavOpen={true}
     />
   );
-
-  return header;
-}
-
-// tslint:disable-next-line:no-default-export
-export default Header;
+};

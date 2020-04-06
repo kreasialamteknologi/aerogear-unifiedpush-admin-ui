@@ -16,7 +16,7 @@ import { ActionBox } from './ActionBox';
 export class WizardStep1 extends Component<{}> {
   render = (): React.ReactElement => {
     return (
-      <PageSection variant={'light'}>
+      <>
         <PageSection variant={'light'}>
           <div style={{ textAlign: 'center' }}>
             <Title headingLevel="h1" size="3xl">
@@ -71,7 +71,7 @@ export class WizardStep1 extends Component<{}> {
             </GridItem>
           </Grid>
         </PageSection>
-      </PageSection>
+      </>
     );
   };
 }

@@ -1,3 +1,7 @@
+#root {
+  height: 100%;
+}
+
 .App {
   text-align: center;
 }
@@ -93,4 +97,46 @@
   margin: 0;
 }
 
+h1 {
+  font-size: 24px;
+}
 
+.h1, .h2, h1, h2 {
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+/* applications list */
+.title {
+  font-size: 22px;
+  color: rgb(85,85,85);
+}
+
+.subtitle {
+  font-size: 12px;
+  color: rgb(85,85,85);
+}
+
+.app-icon{
+  background-color: #2497DA;
+  color: rgba(255,255,255,.9);
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 50px;
+  text-align: center;
+  width: 50px;
+  text-transform: capitalize;
+}
+
+.apps-dashboard {
+  color: #999;
+}
+
+.app-dashboard, .ups-count {
+  font-size: 30px;
+  color: inherit;
+}
+
+.app-dashboard, .ups-count-label {
+  font-size: 15px;
+}
