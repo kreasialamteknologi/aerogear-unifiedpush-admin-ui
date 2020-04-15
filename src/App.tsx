@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
 import '@fortawesome/fontawesome-free/css/all.css';
-import './App.css';
+import './styles/App.css';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { Page, PageSection } from '@patternfly/react-core';
 import { Welcome } from './landing/Welcome';

@@ -1,0 +1,13 @@
+%app-dashboard {
+  color: #999;
+}
+
+.ups-count {
+  @extend %app-dashboard;
+  font-size: 30px;
+}
+
+.ups-count-label {
+  @extend %app-dashboard;
+  font-size: 15px;
+}

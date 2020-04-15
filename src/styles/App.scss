@@ -1,3 +1,7 @@
+@import 'app-dashboard.css';
+
+
+
 #root {
   height: 100%;
 }
@@ -128,15 +132,4 @@ h1 {
   text-transform: capitalize;
 }
 
-.apps-dashboard {
-  color: #999;
-}
 
-.app-dashboard, .ups-count {
-  font-size: 30px;
-  color: inherit;
-}
-
-.app-dashboard, .ups-count-label {
-  font-size: 15px;
-}

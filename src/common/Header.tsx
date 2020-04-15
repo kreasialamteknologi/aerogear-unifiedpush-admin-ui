@@ -4,7 +4,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 import { PageHeader } from '@patternfly/react-core';
 
-import '../App.css';
+import '../styles/App.scss';
 
 // tslint:disable-next-line:variable-name
 export const Header = () => {
