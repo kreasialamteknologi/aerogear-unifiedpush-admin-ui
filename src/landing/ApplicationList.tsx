@@ -21,15 +21,31 @@ import {
   DataListItem,
 } from '@patternfly/react-core';
 import { Label } from '../common/Label';
+import { CreateApplicationWizard } from '../application/wizard/CreateApplicationWizard';
 
 interface Props {
   apps: PushApplication[];
 }
 
-export class ApplicationList extends Component<Props> {
+interface State {
+  openCreateAppWizard: boolean;
+}
+
+export class ApplicationList extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      openCreateAppWizard: false,
+    };
+  }
+
   render() {
     return (
       <>
+        <CreateApplicationWizard
+          open={this.state.openCreateAppWizard}
+          close={() => this.setState({ openCreateAppWizard: false })}
+        />
         <Split>
           <SplitItem>
             <Title
@@ -46,6 +62,7 @@ export class ApplicationList extends Component<Props> {
               variant="link"
               icon={<PlusCircleIcon />}
               style={{ paddingTop: 50, paddingLeft: 25, paddingBottom: 20 }}
+              onClick={() => this.setState({ openCreateAppWizard: true })}
             >
               Create Application
             </Button>
