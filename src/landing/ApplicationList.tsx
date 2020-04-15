@@ -53,7 +53,7 @@ export class ApplicationList extends Component<Props> {
         </Split>
         <DataList aria-label="Expandable data list example">
           {this.props.apps.map(app => (
-            <DataListItem aria-labelledby={'item'}>
+            <DataListItem aria-labelledby={'item'} key={app.pushApplicationID}>
               <DataListItemRow>
                 <DataListItemCells
                   dataListCells={[

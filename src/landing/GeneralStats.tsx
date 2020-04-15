@@ -1,6 +1,6 @@
-import {PushApplication} from '@aerogear/unifiedpush-admin-client';
-import React, {Component} from 'react';
-import {Divider, Grid, GridItem, List, ListItem, ListVariant, Text, TextVariants, Title,} from '@patternfly/react-core';
+import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import React, { Component } from 'react';
+import { Divider, Grid, GridItem, Text, Title } from '@patternfly/react-core';
 
 interface Props {
   apps: PushApplication[];
@@ -18,16 +18,37 @@ export class GeneralStats extends Component<Props> {
           General Statistics
         </Title>
         <Divider />
-        <Grid style={{paddingLeft: 20, paddingTop: 20}}>
-        <GridItem sm={4}>
-          <div><Text className={'ups-count'}>{this.props.apps.length}</Text><Text className={'ups-count-label'}>Apps</Text></div>
-        </GridItem>
-        <GridItem sm={4}>
-        <div><Text className={'ups-count'}>0</Text><Text className={'ups-count-label'}>Messages</Text></div>
-        </GridItem>
-        <GridItem sm={4}>
-        <div><Text className={'ups-count'}>0</Text><Text className={'ups-count-label'}>Devices</Text></div>
-        </GridItem>
+        <Grid style={{ paddingLeft: 20, paddingTop: 20 }}>
+          <GridItem sm={4}>
+            <div>
+              <Text className={'ups-count'}>{this.props.apps.length}</Text>
+              <Text className={'ups-count-label'}>Apps</Text>
+            </div>
+          </GridItem>
+          <GridItem sm={4}>
+            <div>
+              <Text className={'ups-count'}>
+                {this.props.apps.reduce(
+                  (res: number, app: PushApplication) =>
+                    (app.activity ?? 0) + res,
+                  0
+                )}
+              </Text>
+              <Text className={'ups-count-label'}>Messages</Text>
+            </div>
+          </GridItem>
+          <GridItem sm={4}>
+            <div>
+              <Text className={'ups-count'}>
+                {this.props.apps.reduce(
+                  (res: number, app: PushApplication) =>
+                    (app.deviceCount ?? 0) + res,
+                  0
+                )}
+              </Text>
+              <Text className={'ups-count-label'}>Devices</Text>
+            </div>
+          </GridItem>
         </Grid>
       </div>
     );
