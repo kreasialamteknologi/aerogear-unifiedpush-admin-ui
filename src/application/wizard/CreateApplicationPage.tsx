@@ -13,18 +13,32 @@ import {
   TextInput,
   Title,
 } from '@patternfly/react-core';
+import { UpsClientFactory } from '../../utils/UpsClientFactory';
 
 interface State {
   appName: string;
 }
 
-export class CreateApplicationPage extends Component<{}, State> {
-  constructor(props: {}) {
+interface Props {
+  onFinished: () => void;
+}
+
+export class CreateApplicationPage extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       appName: '',
     };
   }
+
+  private readonly createApp = async (name: string) => {
+    try {
+      await UpsClientFactory.getUpsClient().applications.create(name);
+      this.props.onFinished();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   render(): React.ReactNode {
     return (
@@ -61,6 +75,7 @@ export class CreateApplicationPage extends Component<{}, State> {
                 isDisabled={
                   !this.state.appName || this.state.appName.trim().length === 0
                 }
+                onClick={() => this.createApp(this.state.appName)}
               >
                 Create App
               </Button>
