@@ -20,9 +20,12 @@ import {
   Button,
   DataListItem,
 } from '@patternfly/react-core';
+import { TrashIcon, EditIcon } from '@patternfly/react-icons';
 import { Label } from '../common/Label';
 import { CreateApplicationWizard } from '../application/wizard/CreateApplicationWizard';
 import { ApplicationListConsumer } from '../context/Context';
+import { DeleteApplicationPage } from '../application/crud/DeleteApplicationPage';
+import { UpdateApplicationPage } from '../application/crud/UpdateApplicationPage';
 
 interface Props {
   apps: PushApplication[];
@@ -30,6 +33,9 @@ interface Props {
 
 interface State {
   openCreateAppWizard: boolean;
+  deleteApplicationPage: boolean;
+  updateApplicationPage: boolean;
+  selectedApp?: PushApplication;
 }
 
 export class ApplicationList extends Component<Props, State> {
@@ -37,12 +43,18 @@ export class ApplicationList extends Component<Props, State> {
     super(props);
     this.state = {
       openCreateAppWizard: false,
+      deleteApplicationPage: false,
+      updateApplicationPage: false,
     };
   }
 
   render() {
     const dataListItem = (app: PushApplication): ReactNode => (
-      <DataListItem aria-labelledby={'item'} key={app.pushApplicationID}>
+      <DataListItem
+        aria-labelledby={'item'}
+        key={app.pushApplicationID}
+        className="appList"
+      >
         <DataListItemRow>
           <DataListItemCells
             dataListCells={[
@@ -79,6 +91,41 @@ export class ApplicationList extends Component<Props, State> {
                   </List>
                 </div>
               </DataListCell>,
+              <DataListCell key="buttons">
+                <List className="buttonGroup" variant={ListVariant.inline}>
+                  <ListItem>
+                    <Button
+                      className="editBtn"
+                      variant="secondary"
+                      // isHover={false}
+                      icon={<EditIcon />}
+                      onClick={() =>
+                        this.setState({
+                          deleteApplicationPage: true,
+                          selectedApp: app,
+                        })
+                      }
+                    >
+                      <EditIcon />
+                    </Button>
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      className="deleteBtn"
+                      variant="danger"
+                      icon={TrashIcon}
+                      onClick={() =>
+                        this.setState({
+                          deleteApplicationPage: true,
+                          selectedApp: app,
+                        })
+                      }
+                    >
+                      <TrashIcon />
+                    </Button>
+                  </ListItem>
+                </List>
+              </DataListCell>,
             ]}
           />
         </DataListItemRow>
@@ -86,11 +133,26 @@ export class ApplicationList extends Component<Props, State> {
     );
 
     return (
-<<<<<<< HEAD
       <ApplicationListConsumer>
         {({ applications, refresh }): ReactNode => {
           return (
             <>
+              <UpdateApplicationPage
+                open={this.state.updateApplicationPage}
+                app={this.state.selectedApp}
+                close={() => {
+                  this.setState({ updateApplicationPage: false });
+                  refresh();
+                }}
+              />
+              <DeleteApplicationPage
+                open={this.state.deleteApplicationPage}
+                app={this.state.selectedApp}
+                close={() => {
+                  this.setState({ deleteApplicationPage: false });
+                  refresh();
+                }}
+              />
               <CreateApplicationWizard
                 open={this.state.openCreateAppWizard}
                 close={() => {
@@ -135,79 +197,6 @@ export class ApplicationList extends Component<Props, State> {
           );
         }}
       </ApplicationListConsumer>
-=======
-      <>
-        <Split>
-          <SplitItem>
-            <Title
-              headingLevel="h1"
-              size="3xl"
-              style={{ paddingTop: 40, paddingLeft: 25, paddingBottom: 20 }}
-            >
-              Applications
-            </Title>
-          </SplitItem>
-          <SplitItem isFilled />
-          <SplitItem>
-            <Button
-              variant="link"
-              icon={<PlusCircleIcon />}
-              style={{ paddingTop: 50, paddingLeft: 25, paddingBottom: 20 }}
-            >
-              Create Application
-            </Button>
-          </SplitItem>
-        </Split>
-        <DataList aria-label="Expandable data list example">
-          {this.props.apps.map(app => (
-            <DataListItem aria-labelledby={'item'} key={app.pushApplicationID}>
-              <DataListItemRow>
-                <DataListItemCells
-                  dataListCells={[
-                    <DataListCell isIcon key="icon">
-                      <div className={'app-icon'}>A</div>
-                    </DataListCell>,
-                    <DataListCell key="primary content">
-                      <div className="title">{app.name}</div>
-                      <div className="subtitle">
-                        <List variant={ListVariant.inline}>
-                          <ListItem className="subtitle">
-                            <Label
-                              text={`created by admin ${app.developer}`}
-                              icon={<UserIcon />}
-                            />
-                          </ListItem>
-                          <ListItem className="subtitle">
-                            <Label
-                              text={`${
-                                app.variants ? app.variants.length : 0
-                              } variants`}
-                              icon={'fa fa-code-branch'}
-                            />
-                          </ListItem>
-                          <ListItem className="subtitle">
-                            <Label
-                              text={'0 messages sent'}
-                              icon={<MessagesIcon />}
-                            />
-                          </ListItem>
-                          <ListItem className="subtitle">
-                            <Label
-                              text={'0 devices registered'}
-                              icon={'fa fa-mobile'}
-                            />
-                          </ListItem>
-                        </List>
-                      </div>
-                    </DataListCell>,
-                  ]}
-                />
-              </DataListItemRow>
-            </DataListItem>
-          ))}
-        </DataList>
-      </>
->>>>>>> Added application list page
     );
   }
 }
