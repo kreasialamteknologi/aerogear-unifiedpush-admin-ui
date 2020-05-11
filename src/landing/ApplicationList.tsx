@@ -24,8 +24,8 @@ import { TrashIcon, EditIcon } from '@patternfly/react-icons';
 import { Label } from '../common/Label';
 import { CreateApplicationWizard } from '../application/wizard/CreateApplicationWizard';
 import { ApplicationListConsumer } from '../context/Context';
-import { DeleteApplicationPage } from '../application/crud/DeleteApplicationPage';
-import { UpdateApplicationPage } from '../application/crud/UpdateApplicationPage';
+import { DialogModal } from '../common/Modal';
+import { DeleteApplicationPage } from '../application/wizard/DeleteApplicationPage';
 
 interface Props {
   apps: PushApplication[];
@@ -33,8 +33,7 @@ interface Props {
 
 interface State {
   openCreateAppWizard: boolean;
-  deleteApplicationPage: boolean;
-  updateApplicationPage: boolean;
+  dialogModal: boolean;
   selectedApp?: PushApplication;
 }
 
@@ -43,18 +42,13 @@ export class ApplicationList extends Component<Props, State> {
     super(props);
     this.state = {
       openCreateAppWizard: false,
-      deleteApplicationPage: false,
-      updateApplicationPage: false,
+      dialogModal: false,
     };
   }
 
   render() {
     const dataListItem = (app: PushApplication): ReactNode => (
-      <DataListItem
-        aria-labelledby={'item'}
-        key={app.pushApplicationID}
-        className="appList"
-      >
+      <DataListItem aria-labelledby={'item'} key={app.pushApplicationID}>
         <DataListItemRow>
           <DataListItemCells
             dataListCells={[
@@ -75,7 +69,7 @@ export class ApplicationList extends Component<Props, State> {
                       <Label
                         text={`${
                           app.variants ? app.variants.length : 0
-                        } variants`}
+                          } variants`}
                         icon={'fa fa-code-branch'}
                       />
                     </ListItem>
@@ -88,43 +82,30 @@ export class ApplicationList extends Component<Props, State> {
                         icon={'fa fa-mobile'}
                       />
                     </ListItem>
+                    <ListItem>
+                      <Button
+                        variant="secondary"
+                        icon={<EditIcon />}
+                        onClick={() =>
+                          this.setState({ dialogModal: true, selectedApp: app })
+                        }
+                      >
+                        <EditIcon />
+                      </Button>
+                    </ListItem>
+                    <ListItem>
+                      <Button
+                        variant="danger"
+                        icon={TrashIcon}
+                        onClick={() =>
+                          this.setState({ dialogModal: true, selectedApp: app })
+                        }
+                      >
+                        <TrashIcon />
+                      </Button>
+                    </ListItem>
                   </List>
                 </div>
-              </DataListCell>,
-              <DataListCell key="buttons">
-                <List className="buttonGroup" variant={ListVariant.inline}>
-                  <ListItem>
-                    <Button
-                      className="editBtn"
-                      variant="secondary"
-                      // isHover={false}
-                      icon={<EditIcon />}
-                      onClick={() =>
-                        this.setState({
-                          updateApplicationPage: true,
-                          selectedApp: app,
-                        })
-                      }
-                    >
-                      <EditIcon />
-                    </Button>
-                  </ListItem>
-                  <ListItem>
-                    <Button
-                      className="deleteBtn"
-                      variant="danger"
-                      icon={TrashIcon}
-                      onClick={() =>
-                        this.setState({
-                          deleteApplicationPage: true,
-                          selectedApp: app,
-                        })
-                      }
-                    >
-                      <TrashIcon />
-                    </Button>
-                  </ListItem>
-                </List>
               </DataListCell>,
             ]}
           />
@@ -137,22 +118,20 @@ export class ApplicationList extends Component<Props, State> {
         {({ applications, refresh }): ReactNode => {
           return (
             <>
-              <UpdateApplicationPage
-                open={this.state.updateApplicationPage}
-                app={this.state.selectedApp}
+              <DialogModal
+                open={this.state.dialogModal}
                 close={() => {
-                  this.setState({ updateApplicationPage: false });
-                  refresh();
+                  this.setState({ dialogModal: false });
                 }}
-              />
-              <DeleteApplicationPage
-                open={this.state.deleteApplicationPage}
-                app={this.state.selectedApp}
-                close={() => {
-                  this.setState({ deleteApplicationPage: false });
-                  refresh();
-                }}
-              />
+              >
+                <DeleteApplicationPage
+                  app={this.state.selectedApp}
+                  close={() => {
+                    this.setState({ dialogModal: false });
+                    refresh();
+                  }}
+                />
+              </DialogModal>
               <CreateApplicationWizard
                 open={this.state.openCreateAppWizard}
                 close={() => {
