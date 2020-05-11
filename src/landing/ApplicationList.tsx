@@ -69,7 +69,7 @@ export class ApplicationList extends Component<Props, State> {
                       <Label
                         text={`${
                           app.variants ? app.variants.length : 0
-                          } variants`}
+                        } variants`}
                         icon={'fa fa-code-branch'}
                       />
                     </ListItem>
