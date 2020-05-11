@@ -9,7 +9,6 @@ import {
 } from '@patternfly/react-core';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 
-
 interface State {
   name: string;
   dialogModal: boolean;
@@ -48,30 +47,39 @@ export class DeleteApplicationPage extends Component<Props, State> {
   render(): React.ReactNode {
     return (
       <EmptyState>
-        <Form>
+        <Form className="dialog-form">
           <FormGroup
             label="Delete Application"
             fieldId="simple-form-title"
-            helperText={`Do you want to delete ${this.props.app!.name}`}
+            helperText={`Do you really want to delete "${
+              this.props.app!.name
+            }"?`}
           ></FormGroup>
           <FormGroup
-            label="please type in the name of the application to confirm"
+            helperText="Please type in the name of the application to confirm."
             fieldId="simple-form-input"
           >
             <TextInput
+              className="formInput"
               value={this.state.name}
               onChange={value => this.setState({ name: value })}
               isRequired
               css={''}
             />
           </FormGroup>
-          <Button
-            variant="primary"
-            isDisabled={this.state.name !== this.props.app!.name}
-            onClick={() => this.deleteApp(this.props.app!, this.state.name)}
-          >
-            Delete App
-          </Button>
+          <div className="formButtons">
+            <Button
+              className="deleteBtn"
+              variant="danger"
+              isDisabled={this.state.name !== this.props.app!.name}
+              onClick={() => this.deleteApp(this.props.app!, this.state.name)}
+            >
+              Delete
+            </Button>
+            <Button variant="secondary" onClick={() => this.props.close()}>
+              Cancel
+            </Button>
+          </div>
         </Form>
       </EmptyState>
     );
