@@ -5,7 +5,7 @@ import {
   TextInput,
   FormGroup,
   Button,
-  EmptyState,
+  Modal,
 } from '@patternfly/react-core';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 
@@ -16,6 +16,7 @@ interface State {
 
 interface Props {
   app?: PushApplication;
+  open: boolean;
   close: () => void;
 }
 
@@ -45,15 +46,21 @@ export class DeleteApplicationPage extends Component<Props, State> {
   };
 
   render(): React.ReactNode {
-    return (
-      <EmptyState>
+    return this.props.app ? (
+      <Modal
+        isSmall
+        title="Delete Application"
+        isOpen={this.props.open}
+        onClose={this.props.close}
+      >
         <Form className="dialog-form">
           <FormGroup
-            label="Delete Application"
             fieldId="simple-form-title"
-            helperText={`Do you really want to delete "${
-              this.props.app!.name
-            }"?`}
+            helperText={
+              <>
+                Are you sure you want to delete "<b>{this.props.app!.name}</b>"?
+              </>
+            }
           ></FormGroup>
           <FormGroup
             helperText="Please type in the name of the application to confirm."
@@ -81,7 +88,9 @@ export class DeleteApplicationPage extends Component<Props, State> {
             </Button>
           </div>
         </Form>
-      </EmptyState>
+      </Modal>
+    ) : (
+      <></>
     );
   }
 }

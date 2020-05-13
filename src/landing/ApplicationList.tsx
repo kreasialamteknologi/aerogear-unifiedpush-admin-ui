@@ -24,7 +24,6 @@ import { TrashIcon, EditIcon } from '@patternfly/react-icons';
 import { Label } from '../common/Label';
 import { CreateApplicationWizard } from '../application/wizard/CreateApplicationWizard';
 import { ApplicationListConsumer } from '../context/Context';
-import { DialogModal } from '../common/Modal';
 import { DeleteApplicationPage } from '../application/wizard/DeleteApplicationPage';
 
 interface Props {
@@ -33,7 +32,7 @@ interface Props {
 
 interface State {
   openCreateAppWizard: boolean;
-  dialogModal: boolean;
+  deleteApplicationPage: boolean;
   selectedApp?: PushApplication;
 }
 
@@ -42,7 +41,7 @@ export class ApplicationList extends Component<Props, State> {
     super(props);
     this.state = {
       openCreateAppWizard: false,
-      dialogModal: false,
+      deleteApplicationPage: false,
     };
   }
 
@@ -87,7 +86,10 @@ export class ApplicationList extends Component<Props, State> {
                         variant="secondary"
                         icon={<EditIcon />}
                         onClick={() =>
-                          this.setState({ dialogModal: true, selectedApp: app })
+                          this.setState({
+                            deleteApplicationPage: true,
+                            selectedApp: app,
+                          })
                         }
                       >
                         <EditIcon />
@@ -98,7 +100,10 @@ export class ApplicationList extends Component<Props, State> {
                         variant="danger"
                         icon={TrashIcon}
                         onClick={() =>
-                          this.setState({ dialogModal: true, selectedApp: app })
+                          this.setState({
+                            deleteApplicationPage: true,
+                            selectedApp: app,
+                          })
                         }
                       >
                         <TrashIcon />
@@ -118,20 +123,14 @@ export class ApplicationList extends Component<Props, State> {
         {({ applications, refresh }): ReactNode => {
           return (
             <>
-              <DialogModal
-                open={this.state.dialogModal}
+              <DeleteApplicationPage
+                open={this.state.deleteApplicationPage}
+                app={this.state.selectedApp}
                 close={() => {
-                  this.setState({ dialogModal: false });
+                  this.setState({ deleteApplicationPage: false });
+                  refresh();
                 }}
-              >
-                <DeleteApplicationPage
-                  app={this.state.selectedApp}
-                  close={() => {
-                    this.setState({ dialogModal: false });
-                    refresh();
-                  }}
-                />
-              </DialogModal>
+              />
               <CreateApplicationWizard
                 open={this.state.openCreateAppWizard}
                 close={() => {
