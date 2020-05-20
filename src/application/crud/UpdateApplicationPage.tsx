@@ -23,7 +23,8 @@ export class UpdateApplicationPage extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      name: '',
+      // name: ''
+      name: this.props.app!.name,
     };
   }
 
@@ -51,7 +52,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
           <FormGroup fieldId="simple-form-title" helperText="Enter a new name">
             <TextInput
               className="formInput"
-              placeholder={this.props.app!.name}
+              // placeholder={this.props.app!.name}
               value={this.state.name}
               onChange={value => this.setState({ name: value })}
               isRequired
@@ -73,7 +74,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
         </Form>
       </Modal>
     ) : (
-      <> </>
-    );
+        <> </>
+      );
   }
 }
