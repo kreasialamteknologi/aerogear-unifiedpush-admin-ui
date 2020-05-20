@@ -47,7 +47,11 @@ export class ApplicationList extends Component<Props, State> {
 
   render() {
     const dataListItem = (app: PushApplication): ReactNode => (
-      <DataListItem aria-labelledby={'item'} key={app.pushApplicationID} className='appList' >
+      <DataListItem
+        aria-labelledby={'item'}
+        key={app.pushApplicationID}
+        className="appList"
+      >
         <DataListItemRow>
           <DataListItemCells
             dataListCells={[
@@ -68,7 +72,7 @@ export class ApplicationList extends Component<Props, State> {
                       <Label
                         text={`${
                           app.variants ? app.variants.length : 0
-                          } variants`}
+                        } variants`}
                         icon={'fa fa-code-branch'}
                       />
                     </ListItem>
@@ -84,8 +88,7 @@ export class ApplicationList extends Component<Props, State> {
                   </List>
                 </div>
               </DataListCell>,
-              <DataListCell
-                key="buttons">
+              <DataListCell key="buttons">
                 <List className="buttonGroup" variant={ListVariant.inline}>
                   <ListItem>
                     <Button
@@ -119,7 +122,7 @@ export class ApplicationList extends Component<Props, State> {
                     </Button>
                   </ListItem>
                 </List>
-              </DataListCell>
+              </DataListCell>,
             ]}
           />
         </DataListItemRow>
