@@ -74,9 +74,9 @@ export class DeleteApplicationPage extends Component<Props, State> {
               css={''}
             />
           </FormGroup>
-          <div className="formButtons">
+          <div>
             <Button
-              className="deleteBtn"
+              className="formButtons"
               variant="danger"
               isDisabled={this.state.name !== this.props.app!.name}
               onClick={() => this.deleteApp(this.props.app!, this.state.name)}
@@ -90,7 +90,7 @@ export class DeleteApplicationPage extends Component<Props, State> {
         </Form>
       </Modal>
     ) : (
-      <></>
-    );
+        <></>
+      );
   }
 }

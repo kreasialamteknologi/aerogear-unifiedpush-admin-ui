@@ -143,8 +143,22 @@ h1 {
   margin-top: 20px;
 }
 
-.deleteBtn{
-  margin-top: 20px;
+.formButtons{
   margin-right: 10px;
+  margin-top: 10px;
+}
+
+
+.buttonGroup {
+  align-items: center;
+  height: 100%;
+  display: flex;
+  float: right;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.appList:hover  .buttonGroup {
+  opacity: 1;
 }
 
