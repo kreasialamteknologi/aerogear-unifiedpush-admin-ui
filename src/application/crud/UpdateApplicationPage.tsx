@@ -10,7 +10,7 @@ import {
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 
 interface State {
-  name: string;
+  name?: string;
 }
 
 interface Props {
@@ -23,8 +23,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      // name: ''
-      name: this.props.app!.name,
+      name: this.props.app?.name,
     };
   }
 
@@ -52,8 +51,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
           <FormGroup fieldId="simple-form-title" helperText="Enter a new name">
             <TextInput
               className="formInput"
-              // placeholder={this.props.app!.name}
-              value={this.state.name}
+              defaultValue={this.props.app?.name}
               onChange={value => this.setState({ name: value })}
               isRequired
               css={''}
@@ -63,7 +61,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
             <Button
               className="editBtn"
               variant="primary"
-              onClick={() => this.updateApp(this.props.app!, this.state.name)}
+              onClick={() => this.updateApp(this.props.app!, this.state.name!)}
             >
               Save
             </Button>
@@ -74,7 +72,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
         </Form>
       </Modal>
     ) : (
-        <> </>
-      );
+      <> </>
+    );
   }
 }
