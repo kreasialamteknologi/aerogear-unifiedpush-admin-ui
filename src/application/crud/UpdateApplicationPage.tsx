@@ -72,7 +72,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
         </Form>
       </Modal>
     ) : (
-        <> </>
-      );
+      <> </>
+    );
   }
 }
