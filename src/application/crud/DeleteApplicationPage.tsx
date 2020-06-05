@@ -66,15 +66,14 @@ export class DeleteApplicationPage extends Component<Props, State> {
           >
             <TextInput
               className="formInput"
-              value={this.state.name}
               onChange={value => this.setState({ name: value })}
               isRequired
               css={''}
             />
           </FormGroup>
-          <div>
+          <div className="formButtons">
             <Button
-              className="formButtons"
+              className="dialogBtn"
               variant="danger"
               isDisabled={this.state.name !== this.props.app!.name}
               onClick={() => this.deleteApp(this.props.app!, this.state.name)}
@@ -88,7 +87,7 @@ export class DeleteApplicationPage extends Component<Props, State> {
         </Form>
       </Modal>
     ) : (
-      <></>
-    );
+        <></>
+      );
   }
 }

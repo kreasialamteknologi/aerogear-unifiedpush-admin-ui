@@ -59,7 +59,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
           </FormGroup>
           <div className="formButtons">
             <Button
-              className="editBtn"
+              className="dialogBtn"
               variant="primary"
               onClick={() => this.updateApp(this.props.app!, this.state.name!)}
             >
@@ -72,7 +72,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
         </Form>
       </Modal>
     ) : (
-      <> </>
-    );
+        <> </>
+      );
   }
 }
