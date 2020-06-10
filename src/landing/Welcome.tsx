@@ -3,7 +3,14 @@ import { Component } from 'react';
 import { ApplicationListConsumer } from '../context/Context';
 
 import { WizardStep1 } from '../wizard/WizardStep1';
-import { Spinner, Grid, GridItem, Bullseye } from '@patternfly/react-core';
+import {
+  Spinner,
+  Grid,
+  GridItem,
+  Bullseye,
+  EmptyState,
+  EmptyStateVariant,
+} from '@patternfly/react-core';
 import { ApplicationList } from './ApplicationList';
 import { GeneralStats } from './GeneralStats';
 
@@ -14,9 +21,16 @@ export class Welcome extends Component<{}> {
         {({ applications, loading }): ReactNode => {
           if (loading) {
             return (
-              <Bullseye>
+              <EmptyState
+                variant={EmptyStateVariant.full}
+                style={{
+                  marginTop: '64px',
+                  marginLeft: '24px',
+                  marginRight: '24px',
+                }}
+              >
                 <Spinner />
-              </Bullseye>
+              </EmptyState>
             );
           }
           if (applications.length > 0) {

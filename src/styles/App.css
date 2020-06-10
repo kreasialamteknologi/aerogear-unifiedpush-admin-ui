@@ -38,7 +38,7 @@
   font-weight: 900;
   position: absolute;
   left: -17px;
-  top: 40px;
+  top: 100px;
   color: #999;
   z-index: auto; }
 
@@ -46,14 +46,21 @@
   position: relative;
   border-width: 1px;
   border-color: #DCDCDC;
-  border-style: solid; }
+  border-style: solid;
+  background-color: #f5f5f5;
+  box-shadow: 5px 5px 8px #aaaaaa; }
 
 .ActionBox-content {
-  margin-top: 10px;
-  text-align: center; }
+  margin-top: 30px;
+  text-align: center;
+  width: 100%; }
 
 .ActionBox-content i {
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  text-align: center; }
+
+.small {
+  font-size: 12px !important; }
 
 .ups-number {
   display: block;
@@ -72,6 +79,9 @@
   font-weight: bold;
   line-height: 34px;
   width: 34px; }
+
+.CardHead {
+  margin-top: 15; }
 
 .muted {
   color: #999;
@@ -103,6 +113,11 @@ h1 {
   width: 50px;
   text-transform: capitalize; }
 
+emptyState {
+  margin-top: 64px;
+  margin-left: 24px;
+  margin-right: 24px; }
+
 .dialog-form {
   display: flex;
   flex-direction: column;
@@ -114,17 +129,6 @@ h1 {
 .formButtons {
   margin-right: 10px;
   margin-top: 10px; }
-
-.buttonGroup {
-  align-items: center;
-  height: 100%;
-  display: flex;
-  float: right;
-  opacity: 0;
-  transition: opacity 0.4s ease-in-out; }
-
-.appList:hover .buttonGroup {
-  opacity: 1; }
 
 .buttonGroup {
   align-items: center;
