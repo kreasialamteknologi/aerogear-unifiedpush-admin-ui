@@ -66,9 +66,9 @@ export class CreateApplicationPage extends Component<Props, State> {
                 onChange={value => this.setState({ appName: value })}
                 isRequired
                 placeholder={'Application name'}
-                css={''}
                 type="text"
-                aria-label="text input example"
+                aria-label="Text Input for Application Name"
+                css={''}
               />
               <Button
                 variant="primary"

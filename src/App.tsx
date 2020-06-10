@@ -15,17 +15,20 @@ export class App extends Component<{}, UpsAdminState> {
     super(props);
     this.state = {
       applications: [],
+      total: 0,
       loading: true,
       refresh: this.refresh,
     };
   }
 
-  private readonly refresh = async () => {
-    console.log('Refresh called');
+  private readonly refresh = async (currentPage = 0) => {
     try {
-      const searchResults = await UpsClientFactory.getUpsClient().applications.find();
+      const searchResults = await UpsClientFactory.getUpsClient().applications.find(
+        { page: currentPage }
+      );
       this.setState({
         applications: searchResults.appList,
+        total: searchResults.total,
         loading: false,
         error: undefined,
       });

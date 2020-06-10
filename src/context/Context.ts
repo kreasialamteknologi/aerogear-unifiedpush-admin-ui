@@ -2,14 +2,18 @@ import React from 'react';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 
 export interface UpsAdminState {
+  //the current page being viewed
   applications: PushApplication[];
+  //total number of applications on the server
+  total: number;
   loading: boolean;
   error?: string;
-  refresh: () => void;
+  refresh: (page?: number) => void;
 }
 
 const defaultState: UpsAdminState = {
   applications: [],
+  total: 0,
   loading: false,
   error: undefined,
   refresh: () => {},

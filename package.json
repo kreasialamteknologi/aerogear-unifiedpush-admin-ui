@@ -5,7 +5,7 @@
   "dependencies": {
     "@aerogear/unifiedpush-admin-client": "0.1.9",
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@patternfly/react-core": "^3.146.0",
+    "@patternfly/react-core": "3.146.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
