@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Component } from 'react';
 
-import { LightPageSection } from '../common/LightPageSection';
+import { LightPageSection } from '../../common/LightPageSection';
 
 import {
   Title,
@@ -14,14 +14,14 @@ import {
 } from '@patternfly/react-core';
 
 import { ActionBox } from './ActionBox';
-import { ApplicationListConsumer } from '../context/Context';
-import { CreateApplicationWizard } from '../application/wizard/CreateApplicationWizard';
+import { ApplicationListConsumer } from '../../context/Context';
+import { CreateApplicationWizard } from '../../application/wizard/CreateApplicationWizard';
 
 interface State {
   openCreateAppWizard: boolean;
 }
 
-export class WizardStep1 extends Component<{}, State> {
+export class NoApplicationsPage extends Component<{}, State> {
   constructor() {
     super({});
     this.state = {

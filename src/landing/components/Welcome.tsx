@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import { Component } from 'react';
-import { ApplicationListConsumer } from '../context/Context';
+import { ApplicationListConsumer } from '../../context/Context';
 
-import { WizardStep1 } from '../wizard/WizardStep1';
+import { NoApplicationsPage } from './NoApplicationsPage';
 import {
   Spinner,
   Grid,
@@ -11,7 +11,7 @@ import {
   EmptyState,
   EmptyStateVariant,
 } from '@patternfly/react-core';
-import { ApplicationList } from './ApplicationList';
+import { ApplicationList } from '../../application/ApplicationList';
 import { GeneralStats } from './GeneralStats';
 
 export class Welcome extends Component<{}> {
@@ -52,7 +52,7 @@ export class Welcome extends Component<{}> {
               </Grid>
             );
           } else {
-            return <WizardStep1 />;
+            return <NoApplicationsPage />;
           }
         }}
       </ApplicationListConsumer>

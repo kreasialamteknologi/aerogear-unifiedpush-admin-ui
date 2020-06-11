@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { CreateApplicationPage } from './CreateApplicationPage';
+import { CreateApplicationPage } from '../crud/CreateApplicationPage';
 import {
   Wizard,
   WizardContextConsumer,
