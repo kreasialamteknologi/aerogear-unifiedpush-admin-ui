@@ -19,6 +19,7 @@ import {
 import { DeleteApplicationPage } from '../crud/DeleteApplicationPage';
 import { UpdateApplicationPage } from '../crud/UpdateApplicationPage';
 import { ApplicationListItem } from './ApplicationListItem';
+import { ApplicationDetail } from '../ApplicationDetail/ApplicationDetail';
 
 interface Props {
   apps: PushApplication[];
@@ -28,6 +29,7 @@ interface State {
   openCreateAppWizard: boolean;
   deleteApplicationPage: boolean;
   updateApplicationPage: boolean;
+  showAppDetailPage: boolean;
   selectedApp?: PushApplication;
   currentPage: number;
   totalApps: number;
@@ -40,6 +42,7 @@ export class ApplicationList extends Component<Props, State> {
       openCreateAppWizard: false,
       deleteApplicationPage: false,
       updateApplicationPage: false,
+      showAppDetailPage: false,
       currentPage: 0,
       totalApps: 0,
     };
@@ -58,11 +61,29 @@ export class ApplicationList extends Component<Props, State> {
         selectedApp: app,
       });
 
+    const showAppDetails = (app: PushApplication) =>
+      this.setState({
+        showAppDetailPage: true,
+        selectedApp: app,
+      });
+
+    const closeAllDialogs = () =>
+      this.setState({
+        showAppDetailPage: false,
+        deleteApplicationPage: false,
+        updateApplicationPage: false,
+      });
+
     return (
       <ApplicationListConsumer>
         {({ applications, refresh, total }: ContextInterface): ReactNode => {
           return (
             <>
+              <ApplicationDetail
+                app={this.state.selectedApp}
+                show={this.state.showAppDetailPage}
+                onClose={(app: PushApplication) => closeAllDialogs()}
+              />
               <UpdateApplicationPage
                 open={this.state.updateApplicationPage}
                 app={this.state.selectedApp}
@@ -117,11 +138,12 @@ export class ApplicationList extends Component<Props, State> {
                 </SplitItem>
               </Split>
               <DataList aria-label="Data list for Push Applications on the Server">
-                {applications.map(app => (
+                {applications.map((app: PushApplication) => (
                   <ApplicationListItem
                     app={app}
                     onEdit={editApp}
                     onDelete={deleteApp}
+                    onClick={showAppDetails}
                   />
                 ))}
               </DataList>

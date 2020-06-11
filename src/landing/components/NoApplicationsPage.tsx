@@ -56,7 +56,7 @@ export class NoApplicationsPage extends Component<{}, State> {
               </PageSection>
               <Divider />
               <LightPageSection>
-                <Grid sm={3} gutter={'sm'}>
+                <Grid sm={3} hasGutter>
                   <ActionBox
                     first
                     index={1}

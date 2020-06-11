@@ -22,6 +22,7 @@ interface Props {
   app: PushApplication;
   onEdit?: (app: PushApplication) => void;
   onDelete?: (app: PushApplication) => void;
+  onClick?: (app: PushApplication) => void;
 }
 
 export class ApplicationListItem extends Component<Props> {
@@ -30,6 +31,7 @@ export class ApplicationListItem extends Component<Props> {
       aria-labelledby={'item'}
       key={this.props.app.pushApplicationID}
       className="appList"
+      onClick={() => this.props.onClick && this.props.onClick(this.props.app)}
     >
       <DataListItemRow>
         <DataListItemCells
@@ -76,24 +78,27 @@ export class ApplicationListItem extends Component<Props> {
                     className="editBtn"
                     variant="secondary"
                     icon={<EditIcon />}
-                    onClick={() =>
-                      this.props.onEdit && this.props.onEdit(this.props.app)
-                    }
-                  >
-                    <EditIcon />
-                  </Button>
+                    onClick={evt => {
+                      evt.stopPropagation();
+                      return (
+                        this.props.onEdit && this.props.onEdit(this.props.app)
+                      );
+                    }}
+                  />
                 </ListItem>
                 <ListItem>
                   <Button
                     className="deleteBtn"
                     variant="danger"
-                    icon={TrashIcon}
-                    onClick={() =>
-                      this.props.onDelete && this.props.onDelete(this.props.app)
-                    }
-                  >
-                    <TrashIcon />
-                  </Button>
+                    icon={<TrashIcon />}
+                    onClick={evt => {
+                      evt.stopPropagation();
+                      return (
+                        this.props.onDelete &&
+                        this.props.onDelete(this.props.app)
+                      );
+                    }}
+                  />
                 </ListItem>
               </List>
             </DataListCell>,

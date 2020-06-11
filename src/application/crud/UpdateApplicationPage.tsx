@@ -42,10 +42,10 @@ export class UpdateApplicationPage extends Component<Props, State> {
   render(): React.ReactNode {
     return this.props.app ? (
       <Modal
-        isSmall
         title="Edit Application name"
         isOpen={this.props.open}
         onClose={this.props.close}
+        variant={'small'}
       >
         <Form className="dialog-form">
           <FormGroup fieldId="simple-form-title" helperText="Enter a new name">
@@ -54,7 +54,6 @@ export class UpdateApplicationPage extends Component<Props, State> {
               defaultValue={this.props.app?.name}
               onChange={value => this.setState({ name: value })}
               isRequired
-              css={''}
             />
           </FormGroup>
           <div className="formButtons">

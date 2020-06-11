@@ -12,7 +12,7 @@ export class GeneralStats extends Component<Props> {
       <div className={'apps-dashboard'}>
         <Title
           headingLevel="h1"
-          size="xs"
+          size="md"
           style={{ paddingTop: 51, paddingLeft: 20, paddingBottom: 21 }}
         >
           General Statistics

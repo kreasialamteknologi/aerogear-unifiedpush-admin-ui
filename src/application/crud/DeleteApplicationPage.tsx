@@ -46,10 +46,10 @@ export class DeleteApplicationPage extends Component<Props, State> {
   render(): React.ReactNode {
     return this.props.app ? (
       <Modal
-        isSmall
         title="Delete Application"
         isOpen={this.props.open}
         onClose={this.props.close}
+        variant={'small'}
       >
         <Form className="dialog-form">
           <FormGroup
@@ -68,7 +68,6 @@ export class DeleteApplicationPage extends Component<Props, State> {
               className="formInput"
               onChange={value => this.setState({ name: value })}
               isRequired
-              css={''}
             />
           </FormGroup>
           <div className="formButtons">

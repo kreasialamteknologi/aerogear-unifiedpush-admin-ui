@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 
-import { Card, CardHead, CardHeader, CardBody } from '@patternfly/react-core';
+import { Card, CardTitle, CardHeader, CardBody } from '@patternfly/react-core';
 
 interface Props {
   icon?: string;
@@ -18,15 +18,20 @@ export class ActionBox extends Component<Props> {
         <div className="ups-number">
           <span>{this.props.index}</span>
         </div>
-        <CardHead className={'CardHead'}>
+        <CardTitle className={'CardHead'}>
           <div className={'ActionBox-content'}>
             {this.props.icon ? (
               <i className={`fas ${this.props.icon} fa-3x muted`} />
             ) : null}
-            <CardHeader>{this.props.title}</CardHeader>
-            <CardBody className="small">{this.props.description}</CardBody>
           </div>
-        </CardHead>
+        </CardTitle>
+        <CardHeader>
+          <div className={'ActionBox-content'}>{this.props.title}</div>
+        </CardHeader>
+
+        <CardBody className="small">
+          <div className={'ActionBox-content'}>{this.props.description}</div>
+        </CardBody>
       </Card>
     );
   };
