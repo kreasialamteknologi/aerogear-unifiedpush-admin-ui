@@ -19,8 +19,10 @@ const defaultState: UpsAdminState = {
   refresh: () => {},
 };
 
+export interface ContextInterface extends UpsAdminState {}
+
 // tslint:disable-next-line:variable-name
-export const ApplicationListContext = React.createContext<UpsAdminState>(
+export const ApplicationListContext = React.createContext<ContextInterface>(
   defaultState
 );
 // tslint:disable-next-line:variable-name

@@ -7,7 +7,6 @@ import {
   Spinner,
   Grid,
   GridItem,
-  Bullseye,
   EmptyState,
   EmptyStateVariant,
 } from '@patternfly/react-core';
