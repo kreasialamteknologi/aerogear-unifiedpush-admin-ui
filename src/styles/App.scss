@@ -60,28 +60,6 @@ h1 {
   line-height: 1.1;
 }
 
-/* applications list */
-.title {
-  font-size: 22px;
-  color: rgb(85,85,85);
-}
-
-.subtitle {
-  font-size: 12px;
-  color: rgb(85,85,85);
-}
-
-.app-icon{
-  background-color: $aerogearBlue;
-  color: rgba(255,255,255,.9);
-  font-size: 30px;
-  font-weight: bold;
-  line-height: 50px;
-  text-align: center;
-  width: 50px;
-  text-transform: capitalize;
-}
-
 emptyState {
   margin-top: 64px;
   margin-left: 24px;
@@ -107,15 +85,6 @@ emptyState {
 
 .dialogBtn {
   margin-right: 10px;
-}
-
-.buttonGroup {
-  align-items: center;
-  height: 100%;
-  display: flex;
-  float: right;
-  opacity: 0;
-  transition: opacity 0.4s ease-in-out;
 }
 
 
