@@ -1,14 +1,16 @@
 import React from 'react';
+
 import { Component } from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
 import '@fortawesome/fontawesome-free/css/all.css';
-import './styles/App.css';
 import { Page, PageSection } from '@patternfly/react-core';
 import { Welcome } from './landing/Welcome';
 import { Header } from './common/Header';
 
 import { ApplicationListContext, UpsAdminState } from './context/Context';
 import { UpsClientFactory } from './utils/UpsClientFactory';
+
+import './styles/App.scss';
 
 export class App extends Component<{}, UpsAdminState> {
   constructor(props: {}) {
