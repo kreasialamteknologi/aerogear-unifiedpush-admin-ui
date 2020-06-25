@@ -4,12 +4,13 @@ import { Component } from 'react';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import {
   DataList,
-  Title,
+  Text,
   Split,
   SplitItem,
   Button,
   Pagination,
   PaginationVariant,
+  TextVariants,
 } from '@patternfly/react-core';
 import { CreateApplicationWizard } from '../wizard/CreateApplicationWizard';
 import {
@@ -109,9 +110,8 @@ export class ApplicationList extends Component<Props, State> {
               />
               <Split>
                 <SplitItem>
-                  <Title
-                    headingLevel="h1"
-                    size="3xl"
+                  <Text
+                    component={TextVariants.h1}
                     style={{
                       paddingTop: 40,
                       paddingLeft: 25,
@@ -119,7 +119,7 @@ export class ApplicationList extends Component<Props, State> {
                     }}
                   >
                     Applications
-                  </Title>
+                  </Text>
                 </SplitItem>
                 <SplitItem isFilled />
                 <SplitItem>

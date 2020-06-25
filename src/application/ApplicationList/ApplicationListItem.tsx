@@ -9,6 +9,9 @@ import {
   List,
   ListItem,
   ListVariant,
+  TextVariants,
+  Title,
+  Text,
 } from '@patternfly/react-core';
 import { Label } from '../../common/Label';
 import {
@@ -36,40 +39,35 @@ export class ApplicationListItem extends Component<Props> {
       <DataListItemRow>
         <DataListItemCells
           dataListCells={[
-            <DataListCell isIcon key="icon">
+            <DataListCell isIcon key="icon" width={1}>
               <div className={'app-icon'}>{this.props.app.name.charAt(0)}</div>
             </DataListCell>,
-            <DataListCell key="primary content">
-              <div className="title">{this.props.app.name}</div>
-              <div className="subtitle">
-                <List variant={ListVariant.inline}>
-                  <ListItem className="subtitle">
-                    <Label
-                      text={`created by admin ${this.props.app.developer}`}
-                      icon={<UserIcon />}
-                    />
-                  </ListItem>
-                  <ListItem className="subtitle">
-                    <Label
-                      text={`${
-                        this.props.app.variants
-                          ? this.props.app.variants.length
-                          : 0
-                      } variants`}
-                      icon={'fa fa-code-branch'}
-                    />
-                  </ListItem>
-                  <ListItem className="subtitle">
-                    <Label text={'0 messages sent'} icon={<MessagesIcon />} />
-                  </ListItem>
-                  <ListItem className="subtitle">
-                    <Label
-                      text={'0 devices registered'}
-                      icon={'fa fa-mobile'}
-                    />
-                  </ListItem>
-                </List>
-              </div>
+            <DataListCell key="primary content" width={5}>
+              <Text component={TextVariants.h1}>{this.props.app.name}</Text>
+              <List variant={ListVariant.inline} className={'subtitle'}>
+                <ListItem>
+                  <Label
+                    text={`created by ${this.props.app.developer}`}
+                    icon={<UserIcon />}
+                  />
+                </ListItem>
+                <ListItem>
+                  <Label
+                    text={`${
+                      this.props.app.variants
+                        ? this.props.app.variants.length
+                        : 0
+                    } variants`}
+                    icon={'fa fa-code-branch'}
+                  />
+                </ListItem>
+                <ListItem>
+                  <Label text={'0 messages sent'} icon={<MessagesIcon />} />
+                </ListItem>
+                <ListItem>
+                  <Label text={'0 devices registered'} icon={'fa fa-mobile'} />
+                </ListItem>
+              </List>
             </DataListCell>,
             <DataListCell key="buttons">
               <List className="buttonGroup" variant={ListVariant.inline}>

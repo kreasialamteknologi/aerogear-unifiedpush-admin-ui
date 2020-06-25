@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Component } from 'react';
+import { Text, TextVariants } from '@patternfly/react-core';
 
 interface Props {
   icon?: string | ReactElement;
@@ -25,8 +26,10 @@ export class Label extends Component<Props> {
 
     return (
       <>
-        {renderIcon()}
-        {this.props.text}
+        <Text component={TextVariants.small}>
+          {renderIcon()}
+          {this.props.text}
+        </Text>
       </>
     );
   }

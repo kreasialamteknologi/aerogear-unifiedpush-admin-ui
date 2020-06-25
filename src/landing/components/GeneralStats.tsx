@@ -1,6 +1,13 @@
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import React, { Component } from 'react';
-import { Divider, Grid, GridItem, Text, Title } from '@patternfly/react-core';
+import {
+  Divider,
+  Grid,
+  GridItem,
+  Text,
+  TextVariants,
+  Title,
+} from '@patternfly/react-core';
 
 interface Props {
   apps: PushApplication[];
@@ -10,13 +17,18 @@ export class GeneralStats extends Component<Props> {
   render() {
     return (
       <div className={'apps-dashboard'}>
-        <Title
-          headingLevel="h1"
-          size="md"
-          style={{ paddingTop: 51, paddingLeft: 20, paddingBottom: 21 }}
+        <Text
+          component={TextVariants.h6}
+          //size="md"
+          style={{
+            paddingTop: 51,
+            paddingLeft: 20,
+            paddingBottom: 21,
+            fontSize: 15,
+          }}
         >
           General Statistics
-        </Title>
+        </Text>
         <Divider />
         <Grid style={{ paddingLeft: 20, paddingTop: 20 }}>
           <GridItem sm={4}>
