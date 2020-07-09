@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aerogear/unifiedpush-admin-client": "3.2.0",
+    "@aerogear/unifiedpush-admin-client": "4.0.0",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@patternfly/react-core": "4.18.5",
     "@types/react-syntax-highlighter": "^11.0.4",
@@ -21,9 +21,9 @@
     "clean": "gts clean",
     "compile": "tsc -p .",
     "fix": "gts fix",
-    "prepare": "yarn run compile",
-    "pretest": "yarn run compile",
-    "posttest": "yarn run check",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check",
     "build-css": "node-sass --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start"

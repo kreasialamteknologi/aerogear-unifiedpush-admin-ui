@@ -25,11 +25,12 @@ export class App extends Component<{}, UpsAdminState> {
 
   private readonly refresh = async (currentPage = 0) => {
     try {
-      const searchResults = await UpsClientFactory.getUpsClient().applications.find(
-        { page: currentPage }
-      );
+      const searchResults = await UpsClientFactory.getUpsClient()
+        .applications.search()
+        .page(currentPage)
+        .execute();
       this.setState({
-        applications: searchResults.appList,
+        applications: searchResults.list,
         total: searchResults.total,
         loading: false,
         error: undefined,

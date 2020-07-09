@@ -42,7 +42,7 @@ export class GeneralStats extends Component<Props> {
               <Text className={'ups-count'}>
                 {this.props.apps.reduce(
                   (res: number, app: PushApplication) =>
-                    (app.activity ?? 0) + res,
+                    (app.metadata?.activity ?? 0) + res,
                   0
                 )}
               </Text>
@@ -54,7 +54,7 @@ export class GeneralStats extends Component<Props> {
               <Text className={'ups-count'}>
                 {this.props.apps.reduce(
                   (res: number, app: PushApplication) =>
-                    (app.deviceCount ?? 0) + res,
+                    (app.metadata?.deviceCount ?? 0) + res,
                   0
                 )}
               </Text>

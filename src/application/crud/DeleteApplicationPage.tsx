@@ -33,9 +33,10 @@ export class DeleteApplicationPage extends Component<Props, State> {
   ) => {
     try {
       if (providedName === app.name) {
-        await UpsClientFactory.getUpsClient().applications.delete({
-          pushApplicationID: app.pushApplicationID,
-        });
+        await UpsClientFactory.getUpsClient()
+          .applications.delete()
+          .withApplicationID(app.pushApplicationID)
+          .execute();
         this.props.close();
       }
     } catch (err) {

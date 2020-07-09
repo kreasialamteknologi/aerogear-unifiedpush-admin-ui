@@ -54,16 +54,16 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
       await this.setState({ updating: true });
 
       // make the call
-      await UpsClientFactory.getUpsClient().variants.update(
-        this.props.app.pushApplicationID!,
-        {
-          googleKey: this.state.googleKey || this.props.variant.googleKey,
-          projectNumber:
-            this.state.projectNumber || this.props.variant.projectNumber,
-          variantID: this.props.variant.variantID!,
-          type: this.props.variant.type,
-        }
-      );
+      await UpsClientFactory.getUpsClient()
+        .variants.android.update(
+          this.props.app.pushApplicationID!,
+          this.props.variant.variantID
+        )
+        .withGoogleKey(this.state.googleKey || this.props.variant.googleKey)
+        .withProjectNumber(
+          this.state.projectNumber || this.props.variant.projectNumber
+        )
+        .execute();
 
       console.log('updated');
 

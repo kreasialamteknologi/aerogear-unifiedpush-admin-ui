@@ -29,10 +29,10 @@ export class UpdateApplicationPage extends Component<Props, State> {
 
   private readonly updateApp = async (app: PushApplication, name: string) => {
     try {
-      await UpsClientFactory.getUpsClient().applications.rename(
-        app.pushApplicationID!,
-        name
-      );
+      await UpsClientFactory.getUpsClient()
+        .applications.update(app.pushApplicationID)
+        .withName(name)
+        .execute();
       this.props.close();
     } catch (err) {
       console.log(err);

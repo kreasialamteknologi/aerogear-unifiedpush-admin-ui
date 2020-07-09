@@ -33,7 +33,9 @@ export class CreateApplicationPage extends Component<Props, State> {
 
   private readonly createApp = async (name: string) => {
     try {
-      await UpsClientFactory.getUpsClient().applications.create(name);
+      await UpsClientFactory.getUpsClient()
+        .applications.create(name)
+        .execute();
       this.props.onFinished();
     } catch (err) {
       console.log(err);

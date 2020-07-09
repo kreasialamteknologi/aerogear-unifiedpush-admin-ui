@@ -1,7 +1,7 @@
 import {
   PushApplication,
   Variant,
-  VARIANT_TYPE,
+  VariantType,
 } from '@aerogear/unifiedpush-admin-client';
 import React, { Component } from 'react';
 import {
@@ -20,7 +20,7 @@ import { VariantItem } from './VariantItem';
 
 export interface Props {
   app?: PushApplication;
-  variantType: VARIANT_TYPE;
+  variantType: VariantType;
 }
 
 export abstract class VariantsPanel extends Component<Props> {
@@ -70,7 +70,7 @@ export abstract class VariantsPanel extends Component<Props> {
                 </ListItem>
                 <ListItem>
                   <Text style={{ fontWeight: 700 }}>
-                    {this.props.app?.deviceCount || 0}
+                    {this.props.app?.metadata?.deviceCount || 0}
                   </Text>
                 </ListItem>
                 <ListItem>Devices</ListItem>

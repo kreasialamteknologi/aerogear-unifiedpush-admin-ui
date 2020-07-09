@@ -49,11 +49,12 @@ export class RenewVariantSecret extends Component<Props, State> {
 
       // make the call
 
-      const variant = await UpsClientFactory.getUpsClient().variants.renewSecret(
-        this.props.app.pushApplicationID!,
-        this.props.variant.type,
-        this.props.variant.variantID!
-      );
+      const variant = await UpsClientFactory.getUpsClient()
+        .variants[this.props.variant.type].renewSecret(
+          this.props.app.pushApplicationID,
+          this.props.variant.variantID
+        )
+        .execute();
       console.log({ old: this.props.variant, new: variant });
       await this.setState({ refreshing: false });
       this.props.onRefreshed(variant);
