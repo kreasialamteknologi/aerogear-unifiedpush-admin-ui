@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { Tab, Tabs } from '@patternfly/react-core';
 import { CodeSnippet } from '../CodeSnippet';
 import {
-  cordova_snippet_android,
-  java_snippet,
-  push_config_android,
-  react_native_android,
+  cordova_snippet_ios,
+  ios_snippet,
+  react_native_ios,
+  push_config_ios,
 } from '../../snippets';
 
 interface Props {
@@ -18,16 +18,16 @@ interface State {
   activeCodeSnippets: string;
 }
 
-export class AndroidCodeSnippets extends Component<Props, State> {
+export class IOSTokenCodeSnippets extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      activeCodeSnippets: 'java',
+      activeCodeSnippets: 'swift',
     };
   }
 
   render = () => {
-    if (this.props.variant.type !== 'android') {
+    if (this.props.variant.type !== 'ios_token') {
       return null;
     }
 
@@ -45,32 +45,32 @@ export class AndroidCodeSnippets extends Component<Props, State> {
           eventKey: number | string
         ) => onTabSelect(eventKey as string)}
       >
-        <Tab eventKey={'java'} title="Android">
+        <Tab eventKey={'swift'} title="Swift">
           <CodeSnippet
             variant={this.props.variant}
             language={'java'}
-            snippet={java_snippet}
+            snippet={ios_snippet}
           />
         </Tab>
         <Tab eventKey={'cordova'} title="Cordova">
           <CodeSnippet
             variant={this.props.variant}
             language={'javascript'}
-            snippet={cordova_snippet_android}
+            snippet={cordova_snippet_ios}
           />
         </Tab>
         <Tab eventKey={'react-native'} title="React-Native">
           <CodeSnippet
             variant={this.props.variant}
             language={'javascript'}
-            snippet={react_native_android}
+            snippet={react_native_ios}
           />
         </Tab>
         <Tab eventKey={'push-config'} title="push-config.json">
           <CodeSnippet
             variant={this.props.variant}
             language={'json'}
-            snippet={push_config_android}
+            snippet={push_config_ios}
           />
         </Tab>
       </Tabs>

@@ -1,6 +1,9 @@
-export { snippet as ios_snippet } from './ios';
-export { snippet as java_snippet } from './java';
-export { snippet as cordova_snippet } from './cordova';
-export { snippet as react_native_android } from './react-native-android';
-export { snippet as react_native_ios } from './react-native-ios';
-export { pushConfig as push_config_android } from './push-config-android';
+export { snippet as java_snippet } from './android/java';
+export { snippet as cordova_snippet_android } from './android/cordova';
+export { snippet as react_native_android } from './android/react-native';
+export { pushConfig as push_config_android } from './android/push-config';
+
+export { snippet as react_native_ios } from './ios_token/react-native';
+export { snippet as cordova_snippet_ios } from './ios_token/cordova';
+export { snippet as ios_snippet } from './ios_token/swift';
+export { pushConfig as push_config_ios } from './ios_token/push-config';

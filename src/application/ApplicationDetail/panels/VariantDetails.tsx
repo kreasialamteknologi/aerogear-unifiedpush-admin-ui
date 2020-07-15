@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import {
-  Variant,
-  AndroidVariant,
-  PushApplication,
-} from '@aerogear/unifiedpush-admin-client';
+import { Variant, PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { RedoIcon } from '@patternfly/react-icons';
 import {
   Button,
   ButtonVariant,
+  Label,
   Text,
   TextContent,
   TextList,
@@ -20,10 +17,13 @@ import { UpsClientFactory } from '../../../utils/UpsClientFactory';
 import { RenewVariantSecret } from './dialogs/RenewVariantSecret';
 import { AndroidVariantDetails } from './android/AndroidVariantDetails';
 import { AndroidCodeSnippets } from './android/AndroidCodeSnippets';
+import { links } from '../../../links';
+import { IOSTokenVariantDetails } from './ios_token/iOSTokenVariantDetails';
+import { IOSTokenCodeSnippets } from './ios_token/iOSTokenCodeSnippets';
 
 interface Props {
   app: PushApplication;
-  variant: AndroidVariant;
+  variant: Variant;
 }
 
 interface State {
@@ -41,6 +41,59 @@ export class VariantDetails extends Component<Props, State> {
   }
 
   render = () => {
+    const intro = () => {
+      switch (this.props.variant.type) {
+        case 'android':
+          return (
+            <Text component={TextVariants.small}>
+              Firebase's Cloud Messaging Network (FCM) will be used. To learn
+              more about FCM, visit our{' '}
+              <Label
+                color="blue"
+                href={links.pushApplications.variants.android.docs.java_client}
+              >
+                Android
+              </Label>{' '}
+              or{' '}
+              <Label
+                color="blue"
+                href={
+                  links.pushApplications.variants.android.docs.cordova_client
+                }
+              >
+                Apache Cordova{' '}
+              </Label>{' '}
+              guides for push.
+            </Text>
+          );
+        case 'ios_token':
+          return (
+            <Text component={TextVariants.small}>
+              Apple's Push Network (APNs) will be used. To learn more about
+              APNs, visit our{' '}
+              <Label
+                color="blue"
+                href={links.pushApplications.variants.ios_token.docs.ios_client}
+              >
+                iOS
+              </Label>{' '}
+              or{' '}
+              <Label
+                color="blue"
+                href={
+                  links.pushApplications.variants.ios_token.docs.cordova_client
+                }
+              >
+                Apache Cordova
+              </Label>{' '}
+              guides for push.
+            </Text>
+          );
+        default:
+          return <Text component={TextVariants.small} />;
+      }
+    };
+
     const onRefreshed = (variant: Variant) => {
       this.props.variant.secret = variant.secret;
       this.setState({ refreshSecret: false });
@@ -56,11 +109,7 @@ export class VariantDetails extends Component<Props, State> {
           onRefreshed={onRefreshed}
         />
         <TextContent style={{ marginBottom: 20 }}>
-          <Text component={TextVariants.small}>
-            Firebase's Cloud Messaging Network (FCM) will be used. To learn more
-            about FCM, visit our Android, Chrome or Apache Cordova guides for
-            push.
-          </Text>
+          {intro()}
           <TextList component={TextListVariants.dl}>
             <TextListItem component={TextListItemVariants.dt}>
               Server URL:
@@ -97,8 +146,17 @@ export class VariantDetails extends Component<Props, State> {
             app={this.props.app}
             variant={this.props.variant}
           />
+
+          <IOSTokenVariantDetails
+            app={this.props.app}
+            variant={this.props.variant}
+          />
         </TextContent>
         <AndroidCodeSnippets
+          app={this.props.app}
+          variant={this.props.variant}
+        />
+        <IOSTokenCodeSnippets
           app={this.props.app}
           variant={this.props.variant}
         />

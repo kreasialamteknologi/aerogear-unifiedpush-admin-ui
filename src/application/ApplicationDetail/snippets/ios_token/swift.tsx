@@ -1,6 +1,6 @@
 export const snippet = `
 // setup registration
-let registration = DeviceRegistration(serverURL: URL(string: "<#AeroGear UnifiedPush Server URL#>")!)
+let registration = DeviceRegistration(serverURL: URL(string: "__SERVERURL__")!)
 
 // attempt to register
 registration.register(

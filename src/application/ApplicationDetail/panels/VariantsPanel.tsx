@@ -26,9 +26,11 @@ export interface Props {
 export abstract class VariantsPanel extends Component<Props> {
   private getVariants(): Variant[] {
     if (this.props.app?.variants && this.props.app?.variants.length > 0) {
-      return this.props.app.variants.filter(
+      const res = this.props.app.variants.filter(
         (variant: Variant) => variant.type === this.props.variantType
       );
+      console.log({ type: this.props.variantType, res });
+      return res;
     }
 
     return [];
@@ -42,7 +44,7 @@ export abstract class VariantsPanel extends Component<Props> {
         case 'ios':
           return '';
         case 'ios_token':
-          return '';
+          return 'fab fa-apple fa-3x muted';
         case 'web_push':
           return '';
         default:
@@ -79,7 +81,7 @@ export abstract class VariantsPanel extends Component<Props> {
           </CardHeader>
           <CardBody>
             <DataList aria-label="Expandable data list example">
-              {this.props.app?.variants?.map(variant => (
+              {variants?.map(variant => (
                 <VariantItem variant={variant} app={this.props.app!} />
               ))}
             </DataList>

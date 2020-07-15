@@ -10,7 +10,6 @@ import {
   ListItem,
   ListVariant,
   TextVariants,
-  Title,
   Text,
 } from '@patternfly/react-core';
 import { Label } from '../../common/Label';

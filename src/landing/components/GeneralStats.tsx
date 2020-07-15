@@ -6,7 +6,6 @@ import {
   GridItem,
   Text,
   TextVariants,
-  Title,
 } from '@patternfly/react-core';
 
 interface Props {

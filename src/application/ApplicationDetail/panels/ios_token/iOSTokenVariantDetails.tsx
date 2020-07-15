@@ -1,5 +1,5 @@
 import {
-  AndroidVariant,
+  IOSTokenVariant,
   PushApplication,
   Variant,
 } from '@aerogear/unifiedpush-admin-client';
@@ -13,7 +13,7 @@ import {
   TextListVariants,
 } from '@patternfly/react-core';
 import { EditIcon } from '@patternfly/react-icons';
-import { EditAndroidNetworkOptions } from './EditAndroidNetworkOptions';
+import { EditIOSTokenNetworkOptions } from './EditIOSTokenNetworkOptions';
 
 interface Props {
   app: PushApplication;
@@ -24,17 +24,17 @@ interface State {
   editNetworkOptions?: boolean;
 }
 
-export class AndroidVariantDetails extends Component<Props, State> {
+export class IOSTokenVariantDetails extends Component<Props, State> {
   render = () => {
-    if (this.props.variant.type !== 'android') {
+    if (this.props.variant.type !== 'ios_token') {
       return null;
     }
 
-    const variant = this.props.variant as AndroidVariant;
+    const variant = this.props.variant as IOSTokenVariant;
 
     return (
       <>
-        <EditAndroidNetworkOptions
+        <EditIOSTokenNetworkOptions
           visible={!!this.state?.editNetworkOptions}
           app={this.props.app}
           variant={variant}
@@ -42,17 +42,30 @@ export class AndroidVariantDetails extends Component<Props, State> {
           onSaved={() => this.setState({ editNetworkOptions: false })}
         />
         <TextList component={TextListVariants.dl}>
+          <TextListItem component={TextListItemVariants.dt}>Type:</TextListItem>
+          <TextListItem component={TextListItemVariants.dd}>
+            {variant.production ? 'Production' : 'Development'}
+          </TextListItem>
+
           <TextListItem component={TextListItemVariants.dt}>
-            Sender ID:
+            Bundle ID:
           </TextListItem>
           <TextListItem component={TextListItemVariants.dd}>
-            {variant.projectNumber}
+            {variant.bundleId}
           </TextListItem>
+
           <TextListItem component={TextListItemVariants.dt}>
-            Server Key:
+            Key ID:
           </TextListItem>
           <TextListItem component={TextListItemVariants.dd}>
-            {variant.googleKey}
+            {variant.keyId}
+          </TextListItem>
+
+          <TextListItem component={TextListItemVariants.dt}>
+            Team ID:
+          </TextListItem>
+          <TextListItem component={TextListItemVariants.dd}>
+            {variant.teamId}
           </TextListItem>
 
           <TextListItem component={TextListItemVariants.dd}>
