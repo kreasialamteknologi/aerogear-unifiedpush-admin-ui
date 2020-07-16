@@ -20,6 +20,8 @@ import { AndroidCodeSnippets } from './android/AndroidCodeSnippets';
 import { links } from '../../../links';
 import { IOSTokenVariantDetails } from './ios_token/iOSTokenVariantDetails';
 import { IOSTokenCodeSnippets } from './ios_token/iOSTokenCodeSnippets';
+import { IOSCertVariantDetails } from './ios_cert/iOSCertVariantDetails';
+import { IOSCertCodeSnippets } from './ios_cert/iOSCertCodeSnippets';
 
 interface Props {
   app: PushApplication;
@@ -66,6 +68,7 @@ export class VariantDetails extends Component<Props, State> {
               guides for push.
             </Text>
           );
+        case 'ios':
         case 'ios_token':
           return (
             <Text component={TextVariants.small}>
@@ -151,12 +154,21 @@ export class VariantDetails extends Component<Props, State> {
             app={this.props.app}
             variant={this.props.variant}
           />
+
+          <IOSCertVariantDetails
+            app={this.props.app}
+            variant={this.props.variant}
+          />
         </TextContent>
         <AndroidCodeSnippets
           app={this.props.app}
           variant={this.props.variant}
         />
         <IOSTokenCodeSnippets
+          app={this.props.app}
+          variant={this.props.variant}
+        />
+        <IOSCertCodeSnippets
           app={this.props.app}
           variant={this.props.variant}
         />

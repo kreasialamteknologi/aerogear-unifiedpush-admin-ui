@@ -30,6 +30,7 @@ export class ApplicationDetail extends Component<Props> {
           <NoVariantsPanel app={this.props.app} />
           <VariantsPanel app={this.props.app} variantType="android" />
           <VariantsPanel app={this.props.app} variantType="ios_token" />
+          <VariantsPanel app={this.props.app} variantType="ios" />
         </Tab>
       </Tabs>
     </Modal>
