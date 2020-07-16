@@ -3,6 +3,7 @@
 @import 'app-list.scss';
 @import 'globals.scss' ;
 @import 'app-details.scss';
+@import 'variant-forms.scss';
 
 :root {
   --pf-global--FontSize--4xl: 2.25rem;
@@ -105,5 +106,3 @@ emptyState {
 .dialogBtn {
   margin-right: 10px;
 }
-
-

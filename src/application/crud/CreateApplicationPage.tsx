@@ -14,13 +14,14 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { UpsClientFactory } from '../../utils/UpsClientFactory';
+import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 
 interface State {
   appName: string;
 }
 
 interface Props {
-  onFinished: () => void;
+  onFinished: (application: PushApplication) => void;
 }
 
 export class CreateApplicationPage extends Component<Props, State> {
@@ -33,10 +34,10 @@ export class CreateApplicationPage extends Component<Props, State> {
 
   private readonly createApp = async (name: string) => {
     try {
-      await UpsClientFactory.getUpsClient()
+      const app = await UpsClientFactory.getUpsClient()
         .applications.create(name)
         .execute();
-      this.props.onFinished();
+      this.props.onFinished(app);
     } catch (err) {
       console.log(err);
     }
@@ -47,7 +48,7 @@ export class CreateApplicationPage extends Component<Props, State> {
       <EmptyState variant={EmptyStateVariant.full}>
         <EmptyStateIcon icon={RocketIcon} />
         <Title headingLevel="h5" size="lg">
-          Create your an application
+          Create an application
         </Title>
         <EmptyStateBody>
           We will hold your hand and guide you all the way. Sit back and enjoy
