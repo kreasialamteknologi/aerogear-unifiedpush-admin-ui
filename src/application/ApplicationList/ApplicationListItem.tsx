@@ -16,6 +16,7 @@ import { Label } from '../../common/Label';
 import {
   EditIcon,
   MessagesIcon,
+  MobileAltIcon,
   TrashIcon,
   UserIcon,
 } from '@patternfly/react-icons';
@@ -42,7 +43,7 @@ export class ApplicationListItem extends Component<Props> {
               <div className={'app-icon'}>{this.props.app.name.charAt(0)}</div>
             </DataListCell>,
             <DataListCell key="primary content" width={5}>
-              <Text component={TextVariants.h1}>{this.props.app.name}</Text>
+              <Text component={TextVariants.h2}>{this.props.app.name}</Text>
               <List variant={ListVariant.inline} className={'subtitle'}>
                 <ListItem>
                   <Label
@@ -64,7 +65,10 @@ export class ApplicationListItem extends Component<Props> {
                   <Label text={'0 messages sent'} icon={<MessagesIcon />} />
                 </ListItem>
                 <ListItem>
-                  <Label text={'0 devices registered'} icon={'fa fa-mobile'} />
+                  <Label
+                    text={'0 devices registered'}
+                    icon={<MobileAltIcon />}
+                  />
                 </ListItem>
               </List>
             </DataListCell>,

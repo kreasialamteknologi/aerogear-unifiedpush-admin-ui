@@ -1,7 +1,7 @@
 import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
 import React, { Component } from 'react';
 import { Tab, Tabs } from '@patternfly/react-core';
-import { CodeSnippet } from '../CodeSnippet';
+import { CodeSnippet } from '../../CodeSnippet';
 import {
   cordova_snippet_ios,
   ios_snippet,

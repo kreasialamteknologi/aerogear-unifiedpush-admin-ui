@@ -2,7 +2,8 @@
   color: #999; }
 
 .ups-count {
-  font-size: 30px; }
+  font-weight: bold; }
 
 .ups-count-label {
-  font-size: 15px; }
+  font-size: 0.85rem;
+  font-weight: bold; }

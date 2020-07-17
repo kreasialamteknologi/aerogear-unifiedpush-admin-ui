@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import 'app-dashboard.scss';
 @import 'landing-page.scss';
 @import 'app-list.scss';
 @import 'globals.scss' ;
 @import 'app-details.scss';
 @import 'variant-forms.scss';
+
+body {
+  color: #333;
+}
 
 :root {
   --pf-global--FontSize--4xl: 2.25rem;
@@ -15,14 +20,27 @@
   --pf-global--FontSize--sm: 0.875rem;
   --pf-global--FontSize--xs: 0.75rem;
 
-  --pf-global--Color--dark-100: rgb(85,85,85);
+  --pf-global--Color--dark-100: #333;
   --pf-global--FontFamily--sans-serif: "Open Sans",Helvetica,Arial,sans-serif;
+
+
 }
+
+.pf-c-label {
+  --pf-c-label--FontSize: 1rem;
+}
+
+.pf-c-content {
+  --pf-c-content--h5--FontSize: 8rem;
+}
+
+
 
 // Buttons
 
 .button-small {
-  font-size: 12px;
+  font-size: 0.7rem;
+  font-weight: bold;
 }
 
 //////////
@@ -72,12 +90,12 @@
 }
 
 h1 {
-  font-size: 24px;
 }
 
 h1, h2 {
   font-weight: 300;
   line-height: 1.1;
+  font-size: 1.4rem;
 }
 
 emptyState {
@@ -105,4 +123,17 @@ emptyState {
 
 .dialogBtn {
   margin-right: 10px;
+}
+
+.ups-title-h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.code {
+  padding: 2px 4px;
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border-radius: 1px;
+  box-sizing: border-box;
 }

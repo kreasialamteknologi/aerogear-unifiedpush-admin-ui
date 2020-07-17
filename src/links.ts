@@ -18,5 +18,15 @@ export const links = {
         },
       },
     },
+    senderAPI: {
+      docs: {
+        java_client:
+          'http://aerogear.github.io/aerogear-unifiedpush-server/docs/server_sdk/javasender',
+        javadoc:
+          'https://aerogear.org/docs/specs/aerogear-unifiedpush-java-client/',
+        node_client:
+          'http://aerogear.github.io/aerogear-unifiedpush-server/docs/server_sdk/nodesender',
+      },
+    },
   },
 };
