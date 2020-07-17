@@ -1,5 +1,16 @@
 import React from 'react';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import {
+  PushApplication,
+  VariantType,
+} from '@aerogear/unifiedpush-admin-client';
+import { AlertVariant } from '@patternfly/react-core';
+
+export interface Alert {
+  key: number;
+  title: string;
+  variant: AlertVariant;
+  details: string[];
+}
 
 export interface UpsAdminState {
   //the current page being viewed
@@ -9,6 +20,12 @@ export interface UpsAdminState {
   loading: boolean;
   error?: string;
   refresh: (page?: number) => void;
+  alerts: Alert[];
+
+  alert(err: Error): Promise<void>;
+  alert(message: string, details: string[], type: AlertVariant): Promise<void>;
+
+  // alert: (message:string, details: string[], type: AlertVariant) => void;
 }
 
 const defaultState: UpsAdminState = {
@@ -17,6 +34,10 @@ const defaultState: UpsAdminState = {
   loading: false,
   error: undefined,
   refresh: () => {},
+  alert: async (): Promise<void> => {
+    return;
+  },
+  alerts: [],
 };
 
 export interface ContextInterface extends UpsAdminState {}

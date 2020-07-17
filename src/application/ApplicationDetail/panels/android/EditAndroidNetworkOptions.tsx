@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import {
-  Variant,
-  PushApplication,
   AndroidVariant,
+  PushApplication,
+  Variant,
 } from '@aerogear/unifiedpush-admin-client';
 import {
   Button,
   ButtonVariant,
-  Modal,
-  ModalVariant,
   Form,
   FormGroup,
+  Modal,
+  ModalVariant,
   TextInput,
   ValidatedOptions,
 } from '@patternfly/react-core';
 import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../../../context/Context';
 
 interface Props {
   visible: boolean;
@@ -45,36 +49,41 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
       this.setState({
         updating: false,
         nameValid: ValidatedOptions.error,
+        googleKey: undefined,
+        projectNumber: undefined,
       });
     }
   }
 
   readonly render = () => {
+    const context = this.context as ContextInterface;
+
     const update = async () => {
       await this.setState({ updating: true });
 
       // make the call
-      await UpsClientFactory.getUpsClient()
-        .variants.android.update(
-          this.props.app.pushApplicationID!,
-          this.props.variant.variantID
-        )
-        .withGoogleKey(this.state.googleKey || this.props.variant.googleKey)
-        .withProjectNumber(
-          this.state.projectNumber || this.props.variant.projectNumber
-        )
-        .execute();
+      try {
+        await UpsClientFactory.getUpsClient()
+          .variants.android.update(
+            this.props.app.pushApplicationID!,
+            this.props.variant.variantID
+          )
+          .withGoogleKey(this.state.googleKey || this.props.variant.googleKey)
+          .withProjectNumber(
+            this.state.projectNumber || this.props.variant.projectNumber
+          )
+          .execute();
 
-      console.log('updated');
-
-      this.props.variant.projectNumber =
-        this.state.projectNumber || this.props.variant.projectNumber;
-      this.props.variant.googleKey =
-        this.state.googleKey || this.props.variant.googleKey;
-      await this.setState({ updating: false });
+        this.props.variant.projectNumber =
+          this.state.projectNumber || this.props.variant.projectNumber;
+        this.props.variant.googleKey =
+          this.state.googleKey || this.props.variant.googleKey;
+        await this.setState({ updating: false });
+      } catch (err) {
+        context.alert(err);
+      }
       this.props.onSaved(this.props.variant);
     };
-
     return (
       <Modal
         variant={ModalVariant.small}
@@ -118,3 +127,4 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
     );
   };
 }
+EditAndroidNetworkOptions.contextType = ApplicationListContext;
