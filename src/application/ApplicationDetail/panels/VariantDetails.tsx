@@ -22,6 +22,8 @@ import { IOSTokenVariantDetails } from './ios_token/iOSTokenVariantDetails';
 import { IOSTokenCodeSnippets } from './ios_token/iOSTokenCodeSnippets';
 import { IOSCertVariantDetails } from './ios_cert/iOSCertVariantDetails';
 import { IOSCertCodeSnippets } from './ios_cert/iOSCertCodeSnippets';
+import { WebPushVariantDetails } from './web_push/WebPushVariantDetails';
+import { WebPushCodeSnippets } from './web_push/WebPushCodeSnippets';
 
 interface Props {
   app: PushApplication;
@@ -92,6 +94,12 @@ export class VariantDetails extends Component<Props, State> {
               guides for push.
             </Text>
           );
+        case 'web_push':
+          return (
+            <Text component={TextVariants.small}>
+              Your user's browser will determine the services used.
+            </Text>
+          );
         default:
           return <Text component={TextVariants.small} />;
       }
@@ -159,6 +167,11 @@ export class VariantDetails extends Component<Props, State> {
             app={this.props.app}
             variant={this.props.variant}
           />
+
+          <WebPushVariantDetails
+            app={this.props.app}
+            variant={this.props.variant}
+          />
         </TextContent>
         <AndroidCodeSnippets
           app={this.props.app}
@@ -169,6 +182,10 @@ export class VariantDetails extends Component<Props, State> {
           variant={this.props.variant}
         />
         <IOSCertCodeSnippets
+          app={this.props.app}
+          variant={this.props.variant}
+        />
+        <WebPushCodeSnippets
           app={this.props.app}
           variant={this.props.variant}
         />

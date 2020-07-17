@@ -45,7 +45,7 @@ export abstract class VariantsPanel extends Component<Props> {
         case 'ios_token':
           return 'fab fa-apple fa-3x muted';
         case 'web_push':
-          return '';
+          return 'fab fa-chrome fa-3x muted';
         default:
           return '';
       }

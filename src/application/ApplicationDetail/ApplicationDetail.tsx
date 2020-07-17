@@ -29,8 +29,9 @@ export class ApplicationDetail extends Component<Props> {
         <Tab eventKey={0} title="Variants">
           <NoVariantsPanel app={this.props.app} />
           <VariantsPanel app={this.props.app} variantType="android" />
-          <VariantsPanel app={this.props.app} variantType="ios_token" />
           <VariantsPanel app={this.props.app} variantType="ios" />
+          <VariantsPanel app={this.props.app} variantType="ios_token" />
+          <VariantsPanel app={this.props.app} variantType="web_push" />
         </Tab>
       </Tabs>
     </Modal>

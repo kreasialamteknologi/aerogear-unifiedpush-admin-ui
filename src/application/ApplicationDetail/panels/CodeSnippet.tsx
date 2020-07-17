@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { UpsClientFactory } from '../../../utils/UpsClientFactory';
-import { AndroidVariant, Variant } from '@aerogear/unifiedpush-admin-client';
+import {
+  AndroidVariant,
+  Variant,
+  WebPushVariant,
+} from '@aerogear/unifiedpush-admin-client';
 
 interface Props {
   variant: Variant;
@@ -24,6 +28,10 @@ export class CodeSnippet extends Component<Props> {
       template
         .replace('__VARIANTID__', this.props.variant.variantID!)
         .replace('__VARIANT_SECRET__', this.props.variant.secret!)
+        .replace(
+          '__VAPID_PUBLIC_KEY__',
+          (this.props.variant as WebPushVariant).publicKey || ''
+        )
         .replace(
           '__SENDERID__',
           (this.props.variant as AndroidVariant).projectNumber || ''

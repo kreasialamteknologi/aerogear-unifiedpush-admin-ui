@@ -7,3 +7,4 @@ export { snippet as react_native_ios } from './ios_token/react-native';
 export { snippet as cordova_snippet_ios } from './ios_token/cordova';
 export { snippet as ios_snippet } from './ios_token/swift';
 export { pushConfig as push_config_ios } from './ios_token/push-config';
+export { pushConfig as push_config_webpush } from './web_push/push-config';
