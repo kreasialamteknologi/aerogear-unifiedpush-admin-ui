@@ -19,6 +19,7 @@ export class FormField extends Component<Props> {
         return (
           <TextArea
             type="text"
+            id={`ta-${this.props.fieldId}`}
             defaultValue={this.props.defaultValue}
             onChange={this.props.onChange}
             validated={this.props.validated}
@@ -28,6 +29,7 @@ export class FormField extends Component<Props> {
         return (
           <TextInput
             type="text"
+            id={`ti-${this.props.fieldId}`}
             defaultValue={this.props.defaultValue}
             onChange={this.props.onChange}
             validated={this.props.validated}

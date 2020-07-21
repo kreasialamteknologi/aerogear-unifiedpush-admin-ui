@@ -144,6 +144,7 @@ export class ApplicationList extends Component<Props, State> {
                     onEdit={editApp}
                     onDelete={deleteApp}
                     onClick={showAppDetails}
+                    key={`${app.pushApplicationID}#item`}
                   />
                 ))}
               </DataList>

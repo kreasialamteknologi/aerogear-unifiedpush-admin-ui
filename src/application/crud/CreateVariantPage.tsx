@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { CodeBranchIcon } from '@patternfly/react-icons';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
 import {
   EmptyState,
   EmptyStateVariant,
@@ -11,7 +10,6 @@ import {
   Button,
 } from '@patternfly/react-core';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
-import { AndroidVariantForm } from '../VariantForms/AndroidVariantForm';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
 
 interface State {

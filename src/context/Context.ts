@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  PushApplication,
-  VariantType,
-} from '@aerogear/unifiedpush-admin-client';
+import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { AlertVariant } from '@patternfly/react-core';
 
 export interface Alert {

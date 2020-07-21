@@ -90,11 +90,11 @@ export class EditWebPushNetworkOptions extends Component<Props, State> {
     const validator: Validator = validatorBuilder()
       .newRule()
       .withField('publicKey')
-      .validate(RuleBuilder.required())
+      .validate(RuleBuilder.required().build())
       .withField('privateKey')
-      .validate(RuleBuilder.required())
+      .validate(RuleBuilder.required().build())
       .withField('alias')
-      .validate(RuleBuilder.required())
+      .validate(RuleBuilder.required().build())
       .build();
 
     const validationState = (field: string) => {

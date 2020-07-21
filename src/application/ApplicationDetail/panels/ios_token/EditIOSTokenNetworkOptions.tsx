@@ -13,18 +13,16 @@ import {
   Modal,
   ModalVariant,
   Switch,
-  TextArea,
-  TextInput,
-  ValidatedOptions,
 } from '@patternfly/react-core';
 import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
 import {
   validatorBuilder,
   RuleBuilder,
-  EvaluationResult,
   Data,
   Validator,
 } from 'json-data-validator';
+import { FormField } from '../FormField';
+import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
 
 interface Props {
   visible: boolean;
@@ -41,7 +39,7 @@ interface State {
   teamId?: string;
   bundleId?: string;
   production?: boolean;
-  formValidation?: EvaluationResult;
+  formValidation?: MultiEvaluationResult;
 }
 
 export class EditIOSTokenNetworkOptions extends Component<Props, State> {
@@ -88,8 +86,6 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
         .withVariantDefinition(update)
         .execute();
 
-      console.log('updated');
-
       this.props.variant.keyId = this.state.keyId || this.props.variant.keyId;
       this.props.variant.teamId =
         this.state.teamId || this.props.variant.teamId;
@@ -104,40 +100,29 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
     const validator: Validator = validatorBuilder()
       .newRule()
       .withField('keyId')
-      .validate(RuleBuilder.required())
-      .validate(RuleBuilder.length.withLength(10))
+      .validate(RuleBuilder.required().build())
+      .validate(
+        RuleBuilder.length.withLength(
+          10,
+          "Field 'Key ID' must be exactly 10 characters long"
+        )
+      )
       .withField('teamId')
-      .validate(RuleBuilder.required())
-      .validate(RuleBuilder.length.withLength(10))
+      .validate(RuleBuilder.required().build())
+      .validate(
+        RuleBuilder.length.withLength(
+          10,
+          "Field 'Team ID' must be exactly 10 characters long"
+        )
+      )
       .withField('bundleId')
-      .validate(RuleBuilder.matches('^[a-z0-9]+(\\.[a-z0-9]+)+$'))
+      .validate(
+        RuleBuilder.matches(
+          '^[a-z0-9]+(\\.[a-z0-9]+)+$',
+          'The Bundle ID must be a valid URL'
+        )
+      )
       .build();
-
-    const validationState = (field: string) => {
-      const evaluationResult = this.state.formValidation?.details?.find(
-        value => value.field === field
-      );
-      if (evaluationResult?.valid) {
-        console.log('valid');
-        return {
-          valid: true,
-          status: ValidatedOptions.success,
-        };
-      }
-      if (evaluationResult?.valid === false) {
-        console.log('error');
-        return {
-          valid: true,
-          validationResult: evaluationResult,
-          status: ValidatedOptions.error,
-        };
-      }
-      console.log('default');
-      return {
-        valid: true,
-        status: ValidatedOptions.default,
-      };
-    };
 
     const updateField = (name: string, value: string) => {
       this.setState(({
@@ -170,62 +155,71 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
         ]}
       >
         <Form isHorizontal>
-          <FormGroup
-            fieldId={'Push Network'}
+          <FormField
+            component={'textarea'}
+            fieldId={'variant-private-key'}
             label={'Push Network'}
             helperText={'Private Key'}
-          >
-            <TextArea
-              type="text"
-              defaultValue={this.props.variant.privateKey}
-              onChange={value => this.setState({ privateKey: value })}
-            />
-          </FormGroup>
-          <FormGroup
-            fieldId={'Push Network'}
+            helperTextInvalid={
+              this.state.formValidation?.getEvaluationResult('privateKey')
+                ?.message
+            }
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('privateKey')
+                ? 'success'
+                : 'error'
+            }
+            defaultValue={this.props.variant.privateKey}
+            onChange={(value: string) => updateField('privateKey', value)}
+          />
+          <FormField
+            component={'textarea'}
+            fieldId={'variant-key-id'}
             helperText={'Key Id'}
             helperTextInvalid={
-              validationState('keyId').validationResult?.message
+              this.state.formValidation?.getEvaluationResult('keyId')?.message
             }
-            validated={validationState('keyId').status}
-          >
-            <TextInput
-              type="text"
-              defaultValue={this.props.variant.keyId}
-              onChange={(value: string) => updateField('keyId', value)}
-              validated={validationState('keyId').status}
-            />
-          </FormGroup>
-          <FormGroup
-            fieldId={'Push Network'}
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('keyId')
+                ? 'success'
+                : 'error'
+            }
+            defaultValue={this.props.variant.keyId}
+            onChange={(value: string) => updateField('keyId', value)}
+          />
+          <FormField
+            fieldId={'variant-team-id'}
             helperText={'Team Id'}
             helperTextInvalid={
-              validationState('teamId').validationResult?.message
+              this.state.formValidation?.getEvaluationResult('teamId')?.message
             }
-            validated={validationState('teamId').status}
-          >
-            <TextInput
-              type="text"
-              defaultValue={this.props.variant.teamId}
-              onChange={(value: string) => updateField('teamId', value)}
-              validated={validationState('teamId').status}
-            />
-          </FormGroup>
-          <FormGroup
-            fieldId={'Push Network'}
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('teamId')
+                ? 'success'
+                : 'error'
+            }
+            defaultValue={this.props.variant.teamId}
+            onChange={(value: string) => updateField('teamId', value)}
+          />
+          <FormField
+            fieldId={'variant-bundle-id'}
             helperText={'Bundle Id'}
             helperTextInvalid={
-              validationState('bundleId').validationResult?.message
+              this.state.formValidation?.getEvaluationResult('bundleId')
+                ?.message
             }
-            validated={validationState('bundleId').status}
-          >
-            <TextInput
-              type="text"
-              defaultValue={this.props.variant.bundleId}
-              onChange={(value: string) => updateField('bundleId', value)}
-              validated={validationState('bundleId').status}
-            />
-          </FormGroup>
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('bundleId')
+                ? 'success'
+                : 'error'
+            }
+            defaultValue={this.props.variant.bundleId}
+            onChange={(value: string) => updateField('bundleId', value)}
+          />
           <FormGroup fieldId={'Push Network'}>
             <Switch
               id="simple-switch"

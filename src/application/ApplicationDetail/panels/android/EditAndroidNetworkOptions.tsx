@@ -8,17 +8,22 @@ import {
   Button,
   ButtonVariant,
   Form,
-  FormGroup,
   Modal,
   ModalVariant,
-  TextInput,
-  ValidatedOptions,
 } from '@patternfly/react-core';
 import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
 import {
   ApplicationListContext,
   ContextInterface,
 } from '../../../../context/Context';
+import { FormField } from '../FormField';
+import {
+  Data,
+  RuleBuilder,
+  Validator,
+  validatorBuilder,
+} from 'json-data-validator';
+import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
 
 interface Props {
   visible: boolean;
@@ -30,9 +35,9 @@ interface Props {
 
 interface State {
   updating: boolean;
-  nameValid: ValidatedOptions;
   googleKey?: string;
   projectNumber?: string;
+  formValidation?: MultiEvaluationResult;
 }
 
 export class EditAndroidNetworkOptions extends Component<Props, State> {
@@ -40,7 +45,8 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
     super(props);
     this.state = {
       updating: false,
-      nameValid: ValidatedOptions.error,
+      googleKey: this.props.variant.googleKey,
+      projectNumber: this.props.variant.projectNumber,
     };
   }
 
@@ -48,9 +54,9 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
     if (this.props.visible && prevProps.visible !== this.props.visible) {
       this.setState({
         updating: false,
-        nameValid: ValidatedOptions.error,
-        googleKey: undefined,
-        projectNumber: undefined,
+        googleKey: this.props.variant.googleKey,
+        projectNumber: this.props.variant.projectNumber,
+        formValidation: undefined,
       });
     }
   }
@@ -84,6 +90,45 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
       }
       this.props.onSaved(this.props.variant);
     };
+
+    const validator: Validator = validatorBuilder()
+      .newRule()
+      .withField('googleKey')
+      .validate(
+        RuleBuilder.matches(
+          '^.{1,255}$',
+          "Field 'Server Key' must be between 1 and 255 characters"
+        )
+      )
+      .validate(
+        RuleBuilder.required()
+          .withErrorMessage("Field 'Server Key' is mandatory")
+          .build()
+      )
+      .withField('projectNumber')
+      .validate(
+        RuleBuilder.matches(
+          '^.{1,255}$',
+          "Field 'Sender ID' must be between 1 and 255 characters"
+        )
+      )
+      .validate(
+        RuleBuilder.required()
+          .withErrorMessage("Field 'Sender ID' is mandatory")
+          .build()
+      )
+      .build();
+
+    const updateField = (name: string, value: string) => {
+      this.setState(({
+        [name]: value,
+        formValidation: validator.validate(
+          ({ ...this.state, [name]: value } as unknown) as Data,
+          true
+        ),
+      } as unknown) as State);
+    };
+
     return (
       <Modal
         variant={ModalVariant.small}
@@ -95,6 +140,7 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
             key="confirm"
             variant={ButtonVariant.primary}
             onClick={update}
+            isDisabled={!this.state.formValidation?.valid}
           >
             Save
           </Button>,
@@ -104,24 +150,40 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
         ]}
       >
         <Form isHorizontal>
-          <FormGroup
-            fieldId={'Push Network'}
+          <FormField
+            fieldId={'variant-server-key'}
             label={'Push Network'}
             helperText={'Server Key'}
-          >
-            <TextInput
-              type="text"
-              defaultValue={this.props.variant.googleKey}
-              onChange={value => this.setState({ googleKey: value })}
-            />
-          </FormGroup>
-          <FormGroup fieldId={'Push Network'} helperText={'Sender ID'}>
-            <TextInput
-              type="text"
-              defaultValue={this.props.variant.projectNumber}
-              onChange={value => this.setState({ projectNumber: value })}
-            />
-          </FormGroup>
+            helperTextInvalid={
+              this.state.formValidation?.getEvaluationResult('googleKey')
+                ?.message
+            }
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('googleKey')
+                ? 'success'
+                : 'error'
+            }
+            defaultValue={this.props.variant.googleKey}
+            onChange={(value: string) => updateField('googleKey', value)}
+          />
+          <FormField
+            fieldId={'variant-project-number'}
+            label={'Push Network'}
+            helperText={'Sender ID'}
+            helperTextInvalid={
+              this.state.formValidation?.getEvaluationResult('projectNumber')
+                ?.message
+            }
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('projectNumber')
+                ? 'success'
+                : 'error'
+            }
+            defaultValue={this.props.variant.projectNumber}
+            onChange={(value: string) => updateField('projectNumber', value)}
+          />
         </Form>
       </Modal>
     );

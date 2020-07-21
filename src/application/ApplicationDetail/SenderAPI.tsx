@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
+import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { Title } from '../../common/Title';
 import {
   Alert,
   Button,
   ButtonVariant,
-  Label,
   Tab,
   Tabs,
   Text,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Variant, PushApplication } from '@aerogear/unifiedpush-admin-client';
+import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import {
   Button,
   ButtonVariant,

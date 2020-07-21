@@ -30,6 +30,7 @@ export class ApplicationDetail extends Component<Props, State> {
 
     return (
       <Modal
+        aria-label={'app-details-modal'}
         title={this.props.app?.name || ''}
         isOpen={this.props.show}
         onClose={() =>

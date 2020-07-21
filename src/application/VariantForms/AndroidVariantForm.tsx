@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 
 import { TextInput, Button, Form, FormGroup } from '@patternfly/react-core';
-import {
-  AndroidVariant,
-  Variant,
-  PushApplication,
-} from '@aerogear/unifiedpush-admin-client';
+import { AndroidVariant, Variant } from '@aerogear/unifiedpush-admin-client';
 
 interface State {
   serverKey: string;

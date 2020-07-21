@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {
-  IOSTokenVariant,
-  IOSTokenVariantDefinition,
   IOSVariant,
   IOSVariantDefinition,
   PushApplication,
@@ -16,18 +14,16 @@ import {
   Modal,
   ModalVariant,
   Switch,
-  TextArea,
   TextInput,
-  ValidatedOptions,
 } from '@patternfly/react-core';
 import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
 import {
   validatorBuilder,
   RuleBuilder,
-  EvaluationResult,
   Data,
   Validator,
 } from 'json-data-validator';
+import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
 
 interface Props {
   visible: boolean;
@@ -43,7 +39,7 @@ interface State {
   filename?: string;
   certificate?: string;
   production: boolean;
-  formValidation?: EvaluationResult;
+  formValidation?: MultiEvaluationResult;
 }
 
 export class EditIOSCertNetworkOptions extends Component<Props, State> {
@@ -97,33 +93,24 @@ export class EditIOSCertNetworkOptions extends Component<Props, State> {
     const validator: Validator = validatorBuilder()
       .newRule()
       .withField('certificate')
-      .validate(RuleBuilder.matches('^data:application/x-pkcs12;base64,'))
+      .validate(
+        RuleBuilder.matches(
+          '^data:application/x-pkcs12;base64,',
+          'Uploaded file must be a Base64 encoded PKCS#12 file'
+        )
+      )
+      .validate(
+        RuleBuilder.required()
+          .withErrorMessage('Certificate file is mandatory')
+          .build()
+      )
       .withField('passphrase')
-      .validate(RuleBuilder.required())
+      .validate(
+        RuleBuilder.required()
+          .withErrorMessage("Field 'passphrase' is mandatory")
+          .build()
+      )
       .build();
-
-    const validationState = (field: string) => {
-      const evaluationResult = this.state.formValidation?.details?.find(
-        value => value.field === field
-      );
-      if (evaluationResult?.valid) {
-        return {
-          valid: true,
-          status: ValidatedOptions.success,
-        };
-      }
-      if (evaluationResult?.valid === false) {
-        return {
-          valid: true,
-          validationResult: evaluationResult,
-          status: ValidatedOptions.error,
-        };
-      }
-      return {
-        valid: true,
-        status: ValidatedOptions.default,
-      };
-    };
 
     const updateField = (name: string, value: string) => {
       this.setState(({
@@ -161,7 +148,12 @@ export class EditIOSCertNetworkOptions extends Component<Props, State> {
             label={'Push Network'}
             helperText={'Apple Push Notification Service certificate'}
             helperTextInvalid={'Selected file must be a PKCS#12 file (.p12)'}
-            validated={validationState('certificate').status}
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('certificate')
+                ? 'success'
+                : 'error'
+            }
           >
             <FileUpload
               type={'dataURL'}
@@ -170,22 +162,38 @@ export class EditIOSCertNetworkOptions extends Component<Props, State> {
               onChange={(value, filename) => {
                 updateField('certificate', value as string);
               }}
-              validated={validationState('certificate').status}
+              validated={
+                !this.state.formValidation ||
+                this.state.formValidation.isValid('certificate')
+                  ? 'success'
+                  : 'error'
+              }
             />
           </FormGroup>
           <FormGroup
             fieldId={'Push Network'}
             helperText={'passphrase'}
             helperTextInvalid={
-              validationState('passphrase').validationResult?.message
+              this.state.formValidation?.getEvaluationResult('passphrase')
+                ?.message
             }
-            validated={validationState('passphrase').status}
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('passphrase')
+                ? 'success'
+                : 'error'
+            }
           >
             <TextInput
               type="password"
               defaultValue={this.props.variant.passphrase}
               onChange={(value: string) => updateField('passphrase', value)}
-              validated={validationState('passphrase').status}
+              validated={
+                !this.state.formValidation ||
+                this.state.formValidation.isValid('passphrase')
+                  ? 'success'
+                  : 'error'
+              }
             />
           </FormGroup>
           <FormGroup fieldId={'Push Network'}>

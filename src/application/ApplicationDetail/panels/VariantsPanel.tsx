@@ -29,7 +29,6 @@ export abstract class VariantsPanel extends Component<Props> {
       const res = this.props.app.variants.filter(
         (variant: Variant) => variant.type === this.props.variantType
       );
-      console.log({ type: this.props.variantType, res });
       return res;
     }
 
@@ -81,7 +80,11 @@ export abstract class VariantsPanel extends Component<Props> {
           <CardBody>
             <DataList aria-label="Expandable data list example">
               {variants?.map(variant => (
-                <VariantItem variant={variant} app={this.props.app!} />
+                <VariantItem
+                  key={`${variant.variantID}#item`}
+                  variant={variant}
+                  app={this.props.app!}
+                />
               ))}
             </DataList>
           </CardBody>

@@ -8,10 +8,11 @@ import { PageHeader } from '@patternfly/react-core';
 export const Header = () => {
   return (
     <PageHeader
+      logoProps={{ href: 'https://aerogear.org' }}
       logo={
-        <a className="navbar-brand" href="https://aerogear.org">
-          <strong>AEROGEAR</strong> UNIFIEDPUSH SERVER
-        </a>
+        <>
+          <strong>AEROGEAR</strong>&nbsp; UNIFIEDPUSH SERVER
+        </>
       }
       showNavToggle={false}
       isNavOpen={true}

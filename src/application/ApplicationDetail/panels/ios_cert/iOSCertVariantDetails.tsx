@@ -1,5 +1,4 @@
 import {
-  IOSTokenVariant,
   IOSVariant,
   PushApplication,
   Variant,

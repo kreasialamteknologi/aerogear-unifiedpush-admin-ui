@@ -10,7 +10,6 @@ import {
 } from '@patternfly/react-core';
 import {
   PushApplication,
-  AndroidVariant,
   AndroidVariantDefinition,
   WebPushVariantDefinition,
   IOSTokenVariantDefinition,
