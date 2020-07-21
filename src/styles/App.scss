@@ -126,19 +126,25 @@ emptyState {
   margin-right: 10px;
 }
 
-.ups-title-h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
+.addVariantBtn {
+  display: flex;
+  align-items: center;
 }
 
-.code {
-  padding: 2px 4px;
-  color: #c7254e;
-  background-color: #f9f2f4;
-  border-radius: 1px;
-  box-sizing: border-box;
+//styling for buttons on the variant list
+
+.varBtnGroup {
+  align-items: center;
+  height: 100%;
+  display: flex;
+  float: right;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
 }
 
-.pf-c-dropdown__toggle:focus {
-  outline: none;
-}
+.varList:hover {
+  cursor: pointer;
+  .varBtnGroup {
+    opacity: 1;
+  }
+} 

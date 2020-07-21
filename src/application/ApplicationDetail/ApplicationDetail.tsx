@@ -44,6 +44,9 @@ export class ApplicationDetail extends Component<Props, State> {
     const onTabSelect = (tabKey: number) => {
       this.setState({ activeTab: tabKey });
     };
+    if (!this.props.app) {
+      return null;
+    }
 
     if (!this.props.app) {
       return null;
