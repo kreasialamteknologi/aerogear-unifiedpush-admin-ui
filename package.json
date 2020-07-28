@@ -7,6 +7,7 @@
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@patternfly/react-core": "^4.40.4",
     "@types/react-router-dom": "^5.1.5",
+    "@patternfly/react-table": "^4.12.1",
     "@types/react-syntax-highlighter": "^11.0.4",
     "data-urls": "^2.0.0",
     "json-data-validator": "^2.1.0",
