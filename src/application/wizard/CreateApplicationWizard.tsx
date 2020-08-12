@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Component } from 'react';
 import { CreateApplicationPage } from '../crud/CreateApplicationPage';
 import { CreateVariantPage } from '../crud/CreateVariantPage';
@@ -7,7 +7,15 @@ import {
   WizardContextConsumer,
   WizardStep,
 } from '@patternfly/react-core';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import {
+  PushApplication,
+  AndroidVariant,
+} from '@aerogear/unifiedpush-admin-client';
+import { SetupPage } from './SetupPage';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../context/Context';
 
 interface Props {
   open: boolean;
@@ -16,10 +24,19 @@ interface Props {
 
 interface State {
   app?: PushApplication;
+  stepIdReached: number;
 }
 
 export class CreateApplicationWizard extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      stepIdReached: 1,
+    };
+  }
+
   render(): React.ReactNode {
+    const { stepIdReached } = this.state;
     const createAppPage = (
       <WizardContextConsumer>
         {({
@@ -48,8 +65,33 @@ export class CreateApplicationWizard extends Component<Props, State> {
           onNext,
           onBack,
           onClose,
-        }) => <CreateVariantPage onFinished={onNext} app={this.state.app} />}
+        }) => <CreateVariantPage app={this.state.app!} />}
       </WizardContextConsumer>
+    );
+
+    const setupPage = (
+      <ApplicationListContext.Consumer>
+        {({ selectedVariant }: ContextInterface): ReactNode => {
+          return (
+            <WizardContextConsumer>
+              {({
+                activeStep,
+                goToStepByName,
+                goToStepById,
+                onNext,
+                onBack,
+                onClose,
+              }) => (
+                <SetupPage
+                  app={this.state.app!}
+                  variant={selectedVariant! as AndroidVariant}
+                  onFinished={onNext}
+                />
+              )}
+            </WizardContextConsumer>
+          );
+        }}
+      </ApplicationListContext.Consumer>
     );
 
     const steps = [
@@ -57,13 +99,21 @@ export class CreateApplicationWizard extends Component<Props, State> {
         id: 1,
         name: 'Create your first Application',
         component: createAppPage,
-        nextButtonText: 'next',
+        nextButtonText: 'Next',
       },
       {
         id: 2,
         name: 'Create Application Variant',
         component: createVariantPage,
-        nextButtonText: 'Finish',
+        canJumpTo: stepIdReached >= 2,
+        nextButtonText: 'Next',
+      },
+      {
+        id: 3,
+        name: 'Mobile device: Set up variant',
+        component: setupPage,
+        canJumpTo: stepIdReached >= 3,
+        nextButtonText: 'Next',
       } as WizardStep,
     ];
 

@@ -8,6 +8,14 @@ import {
   FileUpload,
 } from '@patternfly/react-core';
 import { Variant, IOSVariant } from '@aerogear/unifiedpush-admin-client';
+import {
+  validatorBuilder,
+  RuleBuilder,
+  Data,
+  Validator,
+} from 'json-data-validator';
+import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
+
 const parseDataURL = require('data-urls');
 
 interface State {
@@ -15,6 +23,7 @@ interface State {
   filename?: string;
   passphrase?: string;
   production: boolean;
+  formValidation?: MultiEvaluationResult;
 }
 
 interface Props {
@@ -49,12 +58,51 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
     if (!this.props.open) {
       return null;
     }
+    const validator: Validator = validatorBuilder()
+      .newRule()
+      .withField('certificateFile')
+      .validate(
+        RuleBuilder.matches(
+          '^data:application/x-pkcs12;base64,',
+          'Uploaded file must be a Base64 encoded PKCS#12 file'
+        )
+      )
+      .validate(
+        RuleBuilder.required()
+          .withErrorMessage('Certificate file is mandatory')
+          .build()
+      )
+      .withField('iosCertificatePassword')
+      .validate(
+        RuleBuilder.required()
+          .withErrorMessage("Field 'passphrase' is mandatory")
+          .build()
+      )
+      .build();
+
+    const updateField = (name: string, value: string) => {
+      this.setState(({
+        [name]: value,
+        formValidation: validator.validate(
+          ({ ...this.state, [name]: value } as unknown) as Data,
+          true
+        ),
+      } as unknown) as State);
+    };
 
     return (
       <Form className="iOSCertificateVariantForm">
         <FormGroup
-          label={'APNS Certificate'}
-          fieldId={'iOS-Certificate-Variant-Form'}
+          fieldId={'Push Network'}
+          label={'Push Network'}
+          helperText={'Apple Push Notification Service certificate'}
+          helperTextInvalid={'Selected file must be a PKCS#12 file (.p12)'}
+          validated={
+            !this.state.formValidation ||
+            this.state.formValidation.isValid('certificate')
+              ? 'success'
+              : 'error'
+          }
         >
           <FileUpload
             id="certificateFile"
@@ -70,6 +118,12 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
                 this.setState({ iosCertificate: bufferedCert, filename });
               }
             }}
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('certificate')
+                ? 'success'
+                : 'error'
+            }
           />
         </FormGroup>
         <FormGroup label={'Type'} fieldId={'iOS-Certificate-Variant-Form-Type'}>
@@ -95,17 +149,42 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
           />
         </FormGroup>
         <FormGroup
-          label={'Passphrase'}
-          fieldId={'iOS-Certificate-Variant-Form-PassPhrase'}
+          fieldId={'Push Network'}
+          helperText={'passphrase'}
+          helperTextInvalid={
+            this.state.formValidation?.getEvaluationResult('passphrase')
+              ?.message
+          }
+          validated={
+            !this.state.formValidation ||
+            this.state.formValidation.isValid('passphrase')
+              ? 'success'
+              : 'error'
+          }
         >
           <TextInput
-            id="iosCertificatePassword1"
-            isRequired
-            onChange={value => this.setState({ passphrase: value })}
+            type="password"
+            onChange={(value: string) => updateField('passphrase', value)}
+            validated={
+              !this.state.formValidation ||
+              this.state.formValidation.isValid('passphrase')
+                ? 'success'
+                : 'error'
+            }
           />
         </FormGroup>
         <div className="variantFormButtons">
-          <Button onClick={save} className="dialogBtn">
+          <Button
+            onClick={save}
+            className="dialogBtn"
+            isDisabled={
+              !this.props.variantName ||
+              this.props.variantName.trim().length === 0 ||
+              !this.state.iosCertificate ||
+              !this.state.passphrase ||
+              this.state.passphrase.trim().length === 0
+            }
+          >
             Create
           </Button>
           <Button variant="secondary" onClick={() => this.props.close()}>

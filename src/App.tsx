@@ -17,6 +17,7 @@ import { UpsClientFactory } from './utils/UpsClientFactory';
 
 import './styles/App.scss';
 import { UpsError } from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
+import { Variant } from '@aerogear/unifiedpush-admin-client';
 
 export class App extends Component<{}, UpsAdminState> {
   constructor(props: {}) {
@@ -28,6 +29,7 @@ export class App extends Component<{}, UpsAdminState> {
       refresh: this.refresh,
       alert: this.alert,
       alerts: [],
+      selectVariant: this.selectVariant,
     };
   }
 
@@ -80,6 +82,13 @@ export class App extends Component<{}, UpsAdminState> {
   // private readonly alert = async (message:string, details: string[], type: AlertVariant) => {
   //   return this.setState({alerts: [ ...this.state.alerts, {key: new Date().getTime(), title: message, variant: type, details} ]})
   // }
+  //     selectVariant: this.selectVariant,
+  //   };
+  // }
+
+  private readonly selectVariant = async (variant?: Variant) => {
+    return this.setState({ selectedVariant: variant });
+  };
 
   private readonly refresh = async (currentPage = 0) => {
     try {

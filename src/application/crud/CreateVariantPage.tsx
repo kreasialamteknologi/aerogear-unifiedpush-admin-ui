@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { CodeBranchIcon } from '@patternfly/react-icons';
 import {
   EmptyState,
@@ -8,9 +8,15 @@ import {
   EmptyStateBody,
   Bullseye,
   Button,
+  WizardContextConsumer,
 } from '@patternfly/react-core';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
+import App from '../../App';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../context/Context';
 
 interface State {
   variantName: string;
@@ -19,7 +25,6 @@ interface State {
 
 interface Props {
   app?: PushApplication;
-  onFinished: () => void;
   close?: () => void;
 }
 
@@ -61,11 +66,16 @@ export class CreateVariantPage extends Component<Props, State> {
               Create Variant
             </Button>
           </Bullseye>
-          <VariantSelectionForm
-            open={this.state.variantSelectionForm}
-            close={() => this.setState({ variantSelectionForm: false })}
-            app={this.props.app}
-          />
+          <WizardContextConsumer>
+            {({ onNext }) => (
+              <VariantSelectionForm
+                open={this.state.variantSelectionForm}
+                close={() => this.setState({ variantSelectionForm: false })}
+                app={this.props.app}
+                onFinished={onNext}
+              />
+            )}
+          </WizardContextConsumer>
         </EmptyState>
       </>
     );

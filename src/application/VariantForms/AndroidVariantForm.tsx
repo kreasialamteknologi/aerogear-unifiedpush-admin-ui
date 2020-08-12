@@ -61,7 +61,18 @@ export class AndroidVariantForm extends Component<Props, State> {
           />
         </FormGroup>
         <div className="variantFormButtons">
-          <Button className="dialogBtn" onClick={save}>
+          <Button
+            className="dialogBtn"
+            onClick={save}
+            isDisabled={
+              !this.props.variantName ||
+              this.props.variantName.trim().length === 0 ||
+              !this.state.senderID ||
+              this.state.senderID.trim().length === 0 ||
+              !this.state.serverKey ||
+              this.state.serverKey.trim().length === 0
+            }
+          >
             Create
           </Button>
           <Button variant="secondary" onClick={() => this.props.close()}>
