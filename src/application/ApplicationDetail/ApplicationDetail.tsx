@@ -36,6 +36,10 @@ export class ApplicationDetail extends Component<Props, State> {
       this.setState({ activeTab: tabKey });
     };
 
+    if (!this.props.app) {
+      return null;
+    }
+
     return (
       <Grid style={{ height: '100%' }}>
         <GridItem sm={8} md={9}>
