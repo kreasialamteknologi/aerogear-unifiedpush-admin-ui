@@ -9,6 +9,8 @@ import {
   Page,
   PageSection,
 } from '@patternfly/react-core';
+
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Welcome } from './landing';
 import { Header } from './common/Header';
 
@@ -17,7 +19,8 @@ import { UpsClientFactory } from './utils/UpsClientFactory';
 
 import './styles/App.scss';
 import { UpsError } from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
-import { Variant } from '@aerogear/unifiedpush-admin-client';
+import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
+import { ApplicationDetail } from './application/ApplicationDetail/ApplicationDetail';
 
 export class App extends Component<{}, UpsAdminState> {
   constructor(props: {}) {
@@ -158,7 +161,21 @@ export class App extends Component<{}, UpsAdminState> {
           variant={'light'}
           style={{ padding: '0 0 0 0' }}
         >
-          <Welcome />
+          <Router>
+            <Route path="/" exact={true} component={Welcome} />
+            <Route
+              path="/app/:appId"
+              render={({ match }) => {
+                return (
+                  <ApplicationDetail
+                    app={this.state.applications.find(
+                      app => app.pushApplicationID === match.params.appId
+                    )}
+                  />
+                );
+              }}
+            />
+          </Router>
         </PageSection>
       </Page>
     </ApplicationListContext.Provider>

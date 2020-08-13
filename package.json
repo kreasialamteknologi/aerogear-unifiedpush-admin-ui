@@ -6,11 +6,13 @@
     "@aerogear/unifiedpush-admin-client": "4.1.0",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@patternfly/react-core": "4.18.5",
+    "@types/react-router-dom": "^5.1.5",
     "@types/react-syntax-highlighter": "^11.0.4",
     "data-urls": "^2.0.0",
     "json-data-validator": "^2.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-syntax-highlighter": "^12.2.1"
   },

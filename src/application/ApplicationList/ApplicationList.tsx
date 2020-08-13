@@ -80,11 +80,6 @@ export class ApplicationList extends Component<Props, State> {
         {({ applications, refresh, total }: ContextInterface): ReactNode => {
           return (
             <>
-              <ApplicationDetail
-                app={this.state.selectedApp}
-                show={this.state.showAppDetailPage}
-                onClose={(app: PushApplication) => closeAllDialogs()}
-              />
               <UpdateApplicationPage
                 open={this.state.updateApplicationPage}
                 app={this.state.selectedApp}
