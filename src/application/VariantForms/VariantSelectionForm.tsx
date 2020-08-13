@@ -13,17 +13,14 @@ import {
   Variant,
   VariantType,
 } from '@aerogear/unifiedpush-admin-client';
-import { AndroidVariantForm } from './AndroidVariantForm';
 import { UpsClientFactory } from '../../utils/UpsClientFactory';
-import { WebpushVariantForm } from './WebpushVariantForm';
-import { IOSTokenVariantForm } from './IOSTokenVariantForm';
-import { IOSCertificateVariantForm } from './IOSCertificateForm';
 import {
   ApplicationListContext,
   ContextInterface,
 } from '../../context/Context';
 import { VariantDefinition } from '@aerogear/unifiedpush-admin-client/dist/src/commands/variants/Variant';
 import { UpsError } from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
+import { VariantEditForm } from './VariantEditForm';
 
 interface State {
   variantName: string;
@@ -146,61 +143,25 @@ export class VariantSelectionForm extends Component<Props, State> {
                       this.props.onFinished(newVariant);
                       this.props.close();
                     } catch (error) {
-                      console.log('details', error.details());
-                      console.log('message', error.message);
-
                       context.alert(error);
                     }
                   };
 
                   return (
-                    <>
-                      <AndroidVariantForm
-                        open={this.state.variantType === 'android'}
-                        onSave={async variant => {
-                          await createVariant(variant, 'android');
-                        }}
-                        variantName={this.state.variantName}
-                        close={() => {
-                          this.setState({ androidVariantForm: false });
-                          this.props.close();
-                        }}
-                      />
-                      <WebpushVariantForm
-                        open={this.state.variantType === 'web_push'}
-                        onSave={async variant => {
-                          console.log('variant selection form onSave');
-                          await createVariant(variant, 'web_push');
-                        }}
-                        variantName={this.state.variantName}
-                        close={() => {
-                          this.setState({ webpushVariantForm: false });
-                          this.props.close();
-                        }}
-                      />
-                      <IOSTokenVariantForm
-                        open={this.state.variantType === 'ios_token'}
-                        onSave={async variant => {
-                          await createVariant(variant, 'ios_token');
-                        }}
-                        variantName={this.state.variantName}
-                        close={() => {
-                          this.setState({ iosTokenVariantForm: false });
-                          this.props.close();
-                        }}
-                      />
-                      <IOSCertificateVariantForm
-                        open={this.state.variantType === 'ios'}
-                        onSave={async variant => {
-                          await createVariant(variant, 'ios');
-                        }}
-                        variantName={this.state.variantName}
-                        close={() => {
-                          this.setState({ iosCertificateVariantForm: false });
-                          this.props.close();
-                        }}
-                      />
-                    </>
+                    <VariantEditForm
+                      type={this.state.variantType}
+                      name={this.state.variantName}
+                      onCancel={() => {
+                        this.setState({ androidVariantForm: false });
+                        this.props.close();
+                      }}
+                      onSave={async variant => {
+                        await createVariant(
+                          variant,
+                          this.state.variantType as VariantType
+                        );
+                      }}
+                    />
                   );
                 }}
               </ApplicationListContext.Consumer>

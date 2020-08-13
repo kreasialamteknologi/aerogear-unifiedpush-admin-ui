@@ -12,6 +12,7 @@ import { MobileAltIcon, PlusIcon } from '@patternfly/react-icons';
 
 interface Props {
   app?: PushApplication;
+  onCreateNew: () => void;
 }
 
 export class NoVariantsPanel extends Component<Props> {
@@ -32,7 +33,11 @@ export class NoVariantsPanel extends Component<Props> {
           </a>
           .
         </EmptyStateBody>
-        <Button variant="primary" icon={<PlusIcon />}>
+        <Button
+          variant="primary"
+          icon={<PlusIcon />}
+          onClick={this.props.onCreateNew}
+        >
           Add A Variant
         </Button>
       </EmptyState>
