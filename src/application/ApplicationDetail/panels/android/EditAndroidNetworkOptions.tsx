@@ -7,7 +7,6 @@ import {
 import {
   Button,
   ButtonVariant,
-  Form,
   Modal,
   ModalVariant,
 } from '@patternfly/react-core';
@@ -16,7 +15,7 @@ import {
   ApplicationListContext,
   ContextInterface,
 } from '../../../../context/Context';
-import { FormField } from '../FormField';
+import { UPSForm, UPSFormField } from '../UPSForm';
 import {
   Data,
   RuleBuilder,
@@ -119,16 +118,6 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
       )
       .build();
 
-    const updateField = (name: string, value: string) => {
-      this.setState(({
-        [name]: value,
-        formValidation: validator.validate(
-          ({ ...this.state, [name]: value } as unknown) as Data,
-          true
-        ),
-      } as unknown) as State);
-    };
-
     return (
       <Modal
         variant={ModalVariant.small}
@@ -140,7 +129,9 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
             key="confirm"
             variant={ButtonVariant.primary}
             onClick={update}
-            isDisabled={!this.state.formValidation?.valid}
+            isDisabled={
+              !validator.validate((this.state as unknown) as Data).valid
+            }
           >
             Save
           </Button>,
@@ -149,42 +140,24 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
           </Button>,
         ]}
       >
-        <Form isHorizontal>
-          <FormField
-            fieldId={'variant-server-key'}
+        <UPSForm validator={validator}>
+          <UPSFormField
+            fieldId="googleKey"
             label={'Push Network'}
             helperText={'Server Key'}
-            helperTextInvalid={
-              this.state.formValidation?.getEvaluationResult('googleKey')
-                ?.message
-            }
-            validated={
-              !this.state.formValidation ||
-              this.state.formValidation.isValid('googleKey')
-                ? 'success'
-                : 'error'
-            }
             defaultValue={this.props.variant.googleKey}
-            onChange={(value: string) => updateField('googleKey', value)}
+            onChange={(value: string) => this.setState({ googleKey: value })}
           />
-          <FormField
-            fieldId={'variant-project-number'}
-            label={'Push Network'}
+
+          <UPSFormField
+            fieldId="projectNumber"
             helperText={'Sender ID'}
-            helperTextInvalid={
-              this.state.formValidation?.getEvaluationResult('projectNumber')
-                ?.message
-            }
-            validated={
-              !this.state.formValidation ||
-              this.state.formValidation.isValid('projectNumber')
-                ? 'success'
-                : 'error'
-            }
             defaultValue={this.props.variant.projectNumber}
-            onChange={(value: string) => updateField('projectNumber', value)}
+            onChange={(value: string) =>
+              this.setState({ projectNumber: value })
+            }
           />
-        </Form>
+        </UPSForm>
       </Modal>
     );
   };

@@ -8,7 +8,6 @@ import {
 import {
   Button,
   ButtonVariant,
-  Form,
   FormGroup,
   Modal,
   ModalVariant,
@@ -21,7 +20,7 @@ import {
   Data,
   Validator,
 } from 'json-data-validator';
-import { FormField } from '../FormField';
+import { UPSForm, UPSFormField } from '../UPSForm';
 import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
 
 interface Props {
@@ -99,8 +98,18 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
 
     const validator: Validator = validatorBuilder()
       .newRule()
+      .withField('privateKey')
+      .validate(
+        RuleBuilder.required()
+          .withErrorMessage('Private Key is required')
+          .build()
+      )
       .withField('keyId')
-      .validate(RuleBuilder.required().build())
+      .validate(
+        RuleBuilder.required()
+          .withErrorMessage('Key ID is required')
+          .build()
+      )
       .validate(
         RuleBuilder.length.withLength(
           10,
@@ -117,22 +126,17 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
       )
       .withField('bundleId')
       .validate(
+        RuleBuilder.required()
+          .withErrorMessage('The Bundle IS is required')
+          .build()
+      )
+      .validate(
         RuleBuilder.matches(
           '^[a-z0-9]+(\\.[a-z0-9]+)+$',
           'The Bundle ID must be a valid URL'
         )
       )
       .build();
-
-    const updateField = (name: string, value: string) => {
-      this.setState(({
-        [name]: value,
-        formValidation: validator.validate(
-          ({ ...this.state, [name]: value } as unknown) as Data,
-          true
-        ),
-      } as unknown) as State);
-    };
 
     return (
       <Modal
@@ -145,7 +149,9 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
             key="confirm"
             variant={ButtonVariant.primary}
             onClick={update}
-            isDisabled={!this.state.formValidation?.valid}
+            isDisabled={
+              !validator.validate((this.state as unknown) as Data).valid
+            }
           >
             Save
           </Button>,
@@ -154,72 +160,37 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
           </Button>,
         ]}
       >
-        <Form isHorizontal>
-          <FormField
-            component={'textarea'}
-            fieldId={'variant-private-key'}
+        <UPSForm validator={validator}>
+          <UPSFormField
+            fieldId="privateKey"
             label={'Push Network'}
             helperText={'Private Key'}
-            helperTextInvalid={
-              this.state.formValidation?.getEvaluationResult('privateKey')
-                ?.message
-            }
-            validated={
-              !this.state.formValidation ||
-              this.state.formValidation.isValid('privateKey')
-                ? 'success'
-                : 'error'
-            }
             defaultValue={this.props.variant.privateKey}
-            onChange={(value: string) => updateField('privateKey', value)}
+            onChange={(value: string) => this.setState({ privateKey: value })}
           />
-          <FormField
+
+          <UPSFormField
+            fieldId="keyId"
             component={'textarea'}
-            fieldId={'variant-key-id'}
             helperText={'Key Id'}
-            helperTextInvalid={
-              this.state.formValidation?.getEvaluationResult('keyId')?.message
-            }
-            validated={
-              !this.state.formValidation ||
-              this.state.formValidation.isValid('keyId')
-                ? 'success'
-                : 'error'
-            }
             defaultValue={this.props.variant.keyId}
-            onChange={(value: string) => updateField('keyId', value)}
+            onChange={(value: string) => this.setState({ keyId: value })}
           />
-          <FormField
-            fieldId={'variant-team-id'}
+
+          <UPSFormField
+            fieldId="teamId"
             helperText={'Team Id'}
-            helperTextInvalid={
-              this.state.formValidation?.getEvaluationResult('teamId')?.message
-            }
-            validated={
-              !this.state.formValidation ||
-              this.state.formValidation.isValid('teamId')
-                ? 'success'
-                : 'error'
-            }
             defaultValue={this.props.variant.teamId}
-            onChange={(value: string) => updateField('teamId', value)}
+            onChange={(value: string) => this.setState({ teamId: value })}
           />
-          <FormField
-            fieldId={'variant-bundle-id'}
+
+          <UPSFormField
+            fieldId="bundleId"
             helperText={'Bundle Id'}
-            helperTextInvalid={
-              this.state.formValidation?.getEvaluationResult('bundleId')
-                ?.message
-            }
-            validated={
-              !this.state.formValidation ||
-              this.state.formValidation.isValid('bundleId')
-                ? 'success'
-                : 'error'
-            }
             defaultValue={this.props.variant.bundleId}
-            onChange={(value: string) => updateField('bundleId', value)}
+            onChange={(value: string) => this.setState({ bundleId: value })}
           />
+
           <FormGroup fieldId={'Push Network'}>
             <Switch
               id="simple-switch"
@@ -231,7 +202,7 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
               }
             />
           </FormGroup>
-        </Form>
+        </UPSForm>
       </Modal>
     );
   };

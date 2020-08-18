@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { Button, Form } from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
 import { AndroidVariant, Variant } from '@aerogear/unifiedpush-admin-client';
-import { FormField } from '../ApplicationDetail/panels/FormField';
+import { UPSForm, UPSFormField } from '../ApplicationDetail/panels/UPSForm';
 import {
   Data,
   RuleBuilder,
@@ -10,7 +10,6 @@ import {
   validatorBuilder,
 } from 'json-data-validator';
 import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
-import { formIsValid, validatorToPF4Status } from '../../utils/ValidatorUtils';
 
 interface State {
   serverKey: string;
@@ -76,16 +75,6 @@ export class AndroidVariantForm extends Component<Props, State> {
       )
       .build();
 
-    const updateField = (name: string, value: string) => {
-      this.setState(({
-        [name]: value,
-        formValidation: validator.validate(
-          ({ ...this.state, [name]: value } as unknown) as Data,
-          true
-        ),
-      } as unknown) as State);
-    };
-
     const save = () => {
       const variant = {
         name: this.props.variantName,
@@ -97,41 +86,28 @@ export class AndroidVariantForm extends Component<Props, State> {
     };
 
     return (
-      <Form className="AndroidVariantForm" isHorizontal>
-        <FormField
-          fieldId={'server-key'}
+      <UPSForm validator={validator}>
+        <UPSFormField
+          fieldId="serverKey"
           label={'Push Network'}
           helperText={'Server Key'}
-          onChange={value => updateField('serverKey', value)}
-          helperTextInvalid={
-            this.state.formValidation?.getEvaluationResult('serverKey')?.message
-          }
-          validated={validatorToPF4Status(
-            this.state.formValidation,
-            'serverKey'
-          )}
+          onChange={value => this.setState({ serverKey: value })}
         />
 
-        <FormField
-          fieldId={'sender-id'}
+        <UPSFormField
+          fieldId="senderID"
           helperText={'Sender ID'}
-          onChange={value => updateField('senderID', value)}
-          helperTextInvalid={
-            this.state.formValidation?.getEvaluationResult('senderID')?.message
-          }
-          validated={validatorToPF4Status(
-            this.state.formValidation,
-            'senderID'
-          )}
+          onChange={value => this.setState({ senderID: value })}
         />
+
         <div className="variantFormButtons">
           <Button
             className="dialogBtn"
             onClick={save}
             isDisabled={
               !this.props.variantName ||
-              this.props.variantName.length === 0 ||
-              !formIsValid(this.state.formValidation)
+              this.props.variantName.trim().length === 0 ||
+              !validator.validate((this.state as unknown) as Data).valid
             }
           >
             Create
@@ -140,7 +116,7 @@ export class AndroidVariantForm extends Component<Props, State> {
             Cancel
           </Button>
         </div>
-      </Form>
+      </UPSForm>
     );
   }
 }

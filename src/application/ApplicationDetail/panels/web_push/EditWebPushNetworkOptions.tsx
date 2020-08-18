@@ -8,10 +8,8 @@ import {
 import {
   Button,
   ButtonVariant,
-  Form,
   Modal,
   ModalVariant,
-  ValidatedOptions,
 } from '@patternfly/react-core';
 import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
 import {
@@ -21,7 +19,7 @@ import {
   Data,
   Validator,
 } from 'json-data-validator';
-import { FormField } from '../FormField';
+import { UPSForm, UPSFormField } from '../UPSForm';
 
 interface Props {
   visible: boolean;
@@ -97,39 +95,6 @@ export class EditWebPushNetworkOptions extends Component<Props, State> {
       .validate(RuleBuilder.required().build())
       .build();
 
-    const validationState = (field: string) => {
-      const evaluationResult = this.state.formValidation?.details?.find(
-        value => value.field === field
-      );
-      if (evaluationResult?.valid) {
-        return {
-          valid: true,
-          status: ValidatedOptions.success,
-        };
-      }
-      if (evaluationResult?.valid === false) {
-        return {
-          valid: true,
-          validationResult: evaluationResult,
-          status: ValidatedOptions.error,
-        };
-      }
-      return {
-        valid: true,
-        status: ValidatedOptions.default,
-      };
-    };
-
-    const updateField = (name: string, value: string) => {
-      this.setState(({
-        [name]: value,
-        formValidation: validator.validate(
-          ({ ...this.state, [name]: value } as unknown) as Data,
-          true
-        ),
-      } as unknown) as State);
-    };
-
     return (
       <Modal
         variant={ModalVariant.small}
@@ -141,7 +106,9 @@ export class EditWebPushNetworkOptions extends Component<Props, State> {
             key="confirm"
             variant={ButtonVariant.primary}
             onClick={() => update()}
-            isDisabled={!this.state.formValidation?.valid}
+            isDisabled={
+              !validator.validate((this.state as unknown) as Data).valid
+            }
           >
             Save
           </Button>,
@@ -150,40 +117,29 @@ export class EditWebPushNetworkOptions extends Component<Props, State> {
           </Button>,
         ]}
       >
-        <Form isHorizontal>
-          <FormField
-            fieldId={'vapid-public-key'}
+        <UPSForm validator={validator}>
+          <UPSFormField
+            fieldId="publicKey"
             label={'Push Network'}
             helperText={'Vapid Public Key'}
-            helperTextInvalid={
-              validationState('publicKey').validationResult?.message
-            }
-            validated={validationState('publicKey').status}
             defaultValue={this.props.variant.publicKey}
-            onChange={(value: string) => updateField('publicKey', value)}
+            onChange={(value: string) => this.setState({ publicKey: value })}
           />
 
-          <FormField
-            fieldId={'vapid-private-key'}
+          <UPSFormField
+            fieldId="privateKey"
             helperText={'Vapid Private Key'}
-            helperTextInvalid={
-              validationState('privateKey').validationResult?.message
-            }
-            validated={validationState('privateKey').status}
             defaultValue={this.props.variant.privateKey}
-            onChange={(value: string) => updateField('privateKey', value)}
+            onChange={(value: string) => this.setState({ privateKey: value })}
           />
-          <FormField
-            fieldId={'alias'}
+
+          <UPSFormField
+            fieldId="alias"
             helperText={'Alias'}
-            helperTextInvalid={
-              validationState('alias').validationResult?.message
-            }
             defaultValue={this.props.variant.alias}
-            onChange={(value: string) => updateField('alias', value)}
-            validated={validationState('alias').status}
+            onChange={(value: string) => this.setState({ alias: value })}
           />
-        </Form>
+        </UPSForm>
       </Modal>
     );
   };

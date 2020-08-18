@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button, Form, ValidatedOptions } from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
 import { Variant, WebPushVariant } from '@aerogear/unifiedpush-admin-client';
 import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
 import {
@@ -9,8 +9,7 @@ import {
   Data,
   Validator,
 } from 'json-data-validator';
-import { FormField } from '../ApplicationDetail/panels/FormField';
-import { validatorToPF4Status } from '../../utils/ValidatorUtils';
+import { UPSForm, UPSFormField } from '../ApplicationDetail/panels/UPSForm';
 
 interface State {
   webpushVapidPublicKey: string;
@@ -47,7 +46,6 @@ export class WebpushVariantForm extends Component<Props, State> {
 
   render(): React.ReactNode {
     const save = () => {
-      console.log('saving');
       const variant = {
         name: this.props.variantName,
         type: 'web_push',
@@ -86,90 +84,36 @@ export class WebpushVariantForm extends Component<Props, State> {
       )
       .build();
 
-    const validationState = (field: string) => {
-      const evaluationResult = this.state.formValidation?.details?.find(
-        value => value.field === field
-      );
-      if (evaluationResult?.valid) {
-        return {
-          valid: true,
-          status: ValidatedOptions.success,
-        };
-      }
-      if (evaluationResult?.valid === false) {
-        return {
-          valid: true,
-          validationResult: evaluationResult,
-          status: ValidatedOptions.error,
-        };
-      }
-      return {
-        valid: true,
-        status: ValidatedOptions.default,
-      };
-    };
-
-    const updateField = (name: string, value: string) => {
-      this.setState(({
-        [name]: value,
-        formValidation: validator.validate(
-          ({ ...this.state, [name]: value } as unknown) as Data,
-          true
-        ),
-      } as unknown) as State);
-    };
-
     return (
-      <Form className="WebPushVariantForm" isHorizontal>
-        <FormField
-          fieldId={'vapid-public-key'}
+      <UPSForm validator={validator}>
+        <UPSFormField
+          fieldId="webpushVapidPublicKey"
           label={'Push Network'}
           helperText={'Vapid Public Key'}
-          helperTextInvalid={
-            validationState('webpushVapidPublicKey').validationResult?.message
-          }
-          validated={validatorToPF4Status(
-            this.state.formValidation,
-            'webpushVapidPublicKey'
-          )}
-          onChange={value => {
-            updateField('webpushVapidPublicKey', value as string);
-          }}
+          onChange={value => this.setState({ webpushVapidPublicKey: value })}
         />
-        <FormField
-          fieldId={'vapid-private-key'}
+
+        <UPSFormField
+          fieldId="webpushVapidPrivateKey"
           helperText={'Vapid Private Key'}
-          helperTextInvalid={
-            validationState('webpushVapidPrivateKey').validationResult?.message
-          }
-          onChange={value => {
-            updateField('webpushVapidPrivateKey', value as string);
-          }}
-          validated={validatorToPF4Status(
-            this.state.formValidation,
-            'webpushVapidPrivateKey'
-          )}
+          onChange={value => this.setState({ webpushVapidPrivateKey: value })}
         />
-        <FormField
-          fieldId={'alias'}
+
+        <UPSFormField
+          fieldId="webpushAlias"
           helperText={'Alias'}
-          helperTextInvalid={
-            validationState('webpushAlias').validationResult?.message
-          }
-          onChange={value => {
-            updateField('webpushAlias', value as string);
-          }}
-          validated={validatorToPF4Status(
-            this.state.formValidation,
-            'webpushAlias'
-          )}
+          onChange={value => this.setState({ webpushAlias: value })}
         />
 
         <div className="variantFormButtons">
           <Button
             onClick={save}
             className="dialogBtn"
-            isDisabled={!this.state.formValidation?.valid}
+            isDisabled={
+              !this.props.variantName ||
+              this.props.variantName.trim().length === 0 ||
+              !validator.validate((this.state as unknown) as Data).valid
+            }
           >
             Create
           </Button>
@@ -177,7 +121,7 @@ export class WebpushVariantForm extends Component<Props, State> {
             Cancel
           </Button>
         </div>
-      </Form>
+      </UPSForm>
     );
   }
 }

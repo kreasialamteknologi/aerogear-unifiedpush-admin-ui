@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Switch } from '@patternfly/react-core';
+import { Button, FormGroup, Switch } from '@patternfly/react-core';
 import { Variant, IOSTokenVariant } from '@aerogear/unifiedpush-admin-client';
 import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
 import {
@@ -8,8 +8,7 @@ import {
   Data,
   Validator,
 } from 'json-data-validator';
-import { FormField } from '../ApplicationDetail/panels/FormField';
-import { formIsValid, validatorToPF4Status } from '../../utils/ValidatorUtils';
+import { UPSForm, UPSFormField } from '../ApplicationDetail/panels/UPSForm';
 
 interface State {
   privateKey: string;
@@ -100,74 +99,42 @@ export class IOSTokenVariantForm extends Component<Props, State> {
       )
       .build();
 
-    const updateField = (name: string, value: string) => {
-      this.setState(({
-        [name]: value,
-        formValidation: validator.validate(
-          ({ ...this.state, [name]: value } as unknown) as Data,
-          true
-        ),
-      } as unknown) as State);
-    };
-
     return (
-      <Form className="ios TokenVariantForm" isHorizontal>
-        <FormField
-          component={'textarea'}
-          fieldId={'variant-private-key'}
+      <UPSForm validator={validator}>
+        <UPSFormField
+          fieldId="privateKey"
           label={'Push Network'}
+          component={'textarea'}
           helperText={'Private Key'}
-          helperTextInvalid={
-            this.state.formValidation?.getEvaluationResult('privateKey')
-              ?.message
-          }
-          validated={validatorToPF4Status(
-            this.state.formValidation,
-            'privateKey'
-          )}
-          onChange={(value: string) => updateField('privateKey', value)}
+          onChange={value => this.setState({ privateKey: value })}
         />
-        <FormField
-          fieldId={'variant-key-id'}
+
+        <UPSFormField
+          fieldId="keyId"
           helperText={'Key Id'}
-          helperTextInvalid={
-            this.state.formValidation?.getEvaluationResult('keyId')?.message
-          }
-          validated={validatorToPF4Status(this.state.formValidation, 'keyId')}
-          onChange={(value: string) => updateField('keyId', value)}
+          onChange={value => this.setState({ keyId: value })}
         />
-        <FormField
-          fieldId={'variant-team-id'}
+
+        <UPSFormField
+          fieldId="teamId"
           helperText={'Team Id'}
-          helperTextInvalid={
-            this.state.formValidation?.getEvaluationResult('teamId')?.message
-          }
-          validated={validatorToPF4Status(this.state.formValidation, 'teamId')}
-          onChange={(value: string) => updateField('teamId', value)}
+          onChange={value => this.setState({ teamId: value })}
         />
-        <FormField
-          fieldId={'variant-bundle-id'}
+
+        <UPSFormField
+          fieldId="bundleId"
           helperText={'Bundle Id'}
-          helperTextInvalid={
-            this.state.formValidation?.getEvaluationResult('bundleId')?.message
-          }
-          validated={validatorToPF4Status(
-            this.state.formValidation,
-            'bundleId'
-          )}
-          onChange={(value: string) => updateField('bundleId', value)}
+          onChange={value => this.setState({ bundleId: value })}
         />
+
         <FormGroup fieldId={'production'}>
           <Switch
             id="simple-switch"
             label="Production"
             labelOff="Development"
             isChecked={this.state.production}
-            onChange={() => {
-              this.setState({ production: !this.state.production });
-              this.setState(({
-                production: !this.state.production,
-              } as unknown) as State);
+            onChange={(checked: boolean) => {
+              this.setState({ production: checked });
             }}
           />
         </FormGroup>
@@ -178,7 +145,7 @@ export class IOSTokenVariantForm extends Component<Props, State> {
             isDisabled={
               !this.props.variantName ||
               this.props.variantName.trim().length === 0 ||
-              !formIsValid(this.state.formValidation)
+              !validator.validate((this.state as unknown) as Data).valid
             }
           >
             Create
@@ -187,7 +154,7 @@ export class IOSTokenVariantForm extends Component<Props, State> {
             Cancel
           </Button>
         </div>
-      </Form>
+      </UPSForm>
     );
   }
 }
