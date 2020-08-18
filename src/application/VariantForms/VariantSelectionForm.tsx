@@ -40,7 +40,7 @@ interface Props {
   onFinished: (variant: Variant | undefined) => void;
 }
 
-const initialState : State = {
+const initialState: State = {
   variantName: '',
   androidVariantForm: false,
   webpushVariantForm: false,
@@ -52,12 +52,12 @@ const initialState : State = {
 export class VariantSelectionForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {...initialState};
+    this.state = { ...initialState };
   }
 
   componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
     if (prevProps.open && !this.props.open) {
-      this.setState( initialState );
+      this.setState(initialState);
     }
   }
 
