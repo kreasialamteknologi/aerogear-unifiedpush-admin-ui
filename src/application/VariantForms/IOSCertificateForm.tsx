@@ -22,7 +22,7 @@ interface State {
   filename?: string;
   passphrase?: string;
   production: boolean;
-  formValidation?: MultiEvaluationResult;
+  formValidation?: MultiEvaluationResult | null;
 }
 
 interface Props {
@@ -32,15 +32,24 @@ interface Props {
   close: () => void;
 }
 
+const initialState: State = {
+  iosCertificate: '',
+  filename: '',
+  passphrase: '',
+  production: false,
+  formValidation: null,
+};
+
 export class IOSCertificateVariantForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      iosCertificate: '',
-      filename: '',
-      passphrase: '',
-      production: false,
-    };
+    this.state = { ...initialState };
+  }
+
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+    if (prevProps.open && !this.props.open) {
+      this.setState(initialState);
+    }
   }
 
   render(): React.ReactNode {
