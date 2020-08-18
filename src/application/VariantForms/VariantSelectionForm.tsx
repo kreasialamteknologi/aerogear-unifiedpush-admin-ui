@@ -40,17 +40,25 @@ interface Props {
   onFinished: (variant: Variant | undefined) => void;
 }
 
+const initialState : State = {
+  variantName: '',
+  androidVariantForm: false,
+  webpushVariantForm: false,
+  iosTokenVariantForm: false,
+  iosCertificateVariantForm: false,
+  variantType: 'android',
+};
+
 export class VariantSelectionForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      variantName: '',
-      androidVariantForm: false,
-      webpushVariantForm: false,
-      iosTokenVariantForm: false,
-      iosCertificateVariantForm: false,
-      variantType: 'android',
-    };
+    this.state = {...initialState};
+  }
+
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+    if (prevProps.open && !this.props.open) {
+      this.setState( initialState );
+    }
   }
 
   render(): React.ReactNode {
