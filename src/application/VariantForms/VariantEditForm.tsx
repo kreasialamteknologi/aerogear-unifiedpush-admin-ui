@@ -1,10 +1,9 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component } from 'react';
 import { AndroidVariantForm } from './AndroidVariantForm';
 import { WebpushVariantForm } from './WebpushVariantForm';
 import { IOSTokenVariantForm } from './IOSTokenVariantForm';
 import { IOSCertificateVariantForm } from './IOSCertificateForm';
-import { Variant, VariantType } from '@aerogear/unifiedpush-admin-client';
-import { Modal, ModalVariant } from '@patternfly/react-core';
+import { Variant } from '@aerogear/unifiedpush-admin-client';
 
 interface Props {
   type: string;
@@ -51,18 +50,3 @@ class AbstractVariantEditForm<T extends Props> extends Component<T> {
 }
 
 export class VariantEditForm extends AbstractVariantEditForm<Props> {}
-
-export class VariantEditFormModal extends AbstractVariantEditForm<ModalProps> {
-  render = () => {
-    return (
-      <Modal
-        variant={ModalVariant.large}
-        title={'Add Variant'}
-        isOpen={this.props.open}
-        onClose={this.props.onCancel}
-      >
-        {super.render()}
-      </Modal>
-    );
-  };
-}

@@ -19,7 +19,7 @@ import { UpsClientFactory } from './utils/UpsClientFactory';
 
 import './styles/App.scss';
 import { UpsError } from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
+import { Variant } from '@aerogear/unifiedpush-admin-client';
 import { ApplicationDetail } from './application/ApplicationDetail/ApplicationDetail';
 
 export class App extends Component<{}, UpsAdminState> {

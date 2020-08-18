@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Radio, Switch } from '@patternfly/react-core';
+import { Button, Form, FormGroup, Switch } from '@patternfly/react-core';
 import { Variant, IOSTokenVariant } from '@aerogear/unifiedpush-admin-client';
 import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
 import {

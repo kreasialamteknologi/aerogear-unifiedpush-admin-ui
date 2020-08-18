@@ -12,11 +12,6 @@ import {
 } from '@patternfly/react-core';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
-import App from '../../App';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
 
 interface State {
   variantName: string;

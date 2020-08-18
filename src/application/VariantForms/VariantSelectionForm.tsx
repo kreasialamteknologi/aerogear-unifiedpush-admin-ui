@@ -6,7 +6,6 @@ import {
   Form,
   FormGroup,
   Radio,
-  List,
 } from '@patternfly/react-core';
 import {
   PushApplication,

@@ -1,6 +1,5 @@
 import React, { Component, ReactNode } from 'react';
 import {
-  Modal,
   TextContent,
   Text,
   Button,
@@ -9,12 +8,10 @@ import {
   TextList,
   TextListItem,
   TextListVariants,
-  variantIcons,
 } from '@patternfly/react-core';
 import {
   PushApplication,
   AndroidVariant,
-  Variant,
   WebPushVariant,
   IOSVariant,
   IOSTokenVariant,
