@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { TextInput, Button, Form, FormGroup } from '@patternfly/react-core';
+import { Button, Form } from '@patternfly/react-core';
 import { AndroidVariant, Variant } from '@aerogear/unifiedpush-admin-client';
 import { FormField } from '../ApplicationDetail/panels/FormField';
 import {
@@ -10,6 +10,7 @@ import {
   validatorBuilder,
 } from 'json-data-validator';
 import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
+import { formIsValid, validatorToPF4Status } from '../../utils/ValidatorUtils';
 
 interface State {
   serverKey: string;
@@ -90,44 +91,38 @@ export class AndroidVariantForm extends Component<Props, State> {
       <Form className="AndroidVariantForm" isHorizontal>
         <FormField
           fieldId={'server-key'}
-          component="textinput"
           label={'Push Network'}
-          helperText={'Server Key1'}
+          helperText={'Server Key'}
           onChange={value => updateField('serverKey', value)}
           helperTextInvalid={
             this.state.formValidation?.getEvaluationResult('serverKey')?.message
           }
-          validated={
-            this.state.formValidation
-              ? this.state.formValidation.isValid('serverKey')
-                ? 'success'
-                : 'error'
-              : 'default'
-          }
+          validated={validatorToPF4Status(
+            this.state.formValidation,
+            'serverKey'
+          )}
         />
 
         <FormField
           fieldId={'server-key'}
-          component="textinput"
-          helperText={'Sender ID1'}
+          helperText={'Sender ID'}
           onChange={value => updateField('senderID', value)}
           helperTextInvalid={
             this.state.formValidation?.getEvaluationResult('senderID')?.message
           }
-          validated={
-            this.state.formValidation
-              ? this.state.formValidation.isValid('senderID')
-                ? 'success'
-                : 'error'
-              : 'default'
-          }
+          validated={validatorToPF4Status(
+            this.state.formValidation,
+            'senderID'
+          )}
         />
         <div className="variantFormButtons">
           <Button
             className="dialogBtn"
             onClick={save}
             isDisabled={
-              !this.state.formValidation || !this.state.formValidation.valid
+              !this.props.variantName ||
+              this.props.variantName.length === 0 ||
+              !formIsValid(this.state.formValidation)
             }
           >
             Create
