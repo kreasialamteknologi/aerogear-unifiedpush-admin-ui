@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  TextInput,
-  Button,
-  Form,
-  FormGroup,
-  Radio,
-  TextArea,
-} from '@patternfly/react-core';
+import { Button, Form, FormGroup, Radio, Switch } from '@patternfly/react-core';
 import { Variant, IOSTokenVariant } from '@aerogear/unifiedpush-admin-client';
 import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
 import {
@@ -16,6 +9,7 @@ import {
   Validator,
 } from 'json-data-validator';
 import { FormField } from '../ApplicationDetail/panels/FormField';
+import { formIsValid, validatorToPF4Status } from '../../utils/ValidatorUtils';
 
 interface State {
   privateKey: string;
@@ -23,7 +17,7 @@ interface State {
   teamId: string;
   bundleId: string;
   production: boolean;
-  formValidation?: MultiEvaluationResult;
+  formValidation?: MultiEvaluationResult | null;
 }
 
 interface Props {
@@ -33,16 +27,25 @@ interface Props {
   close: () => void;
 }
 
+const initialState: State = {
+  privateKey: '',
+  keyId: '',
+  teamId: '',
+  bundleId: '',
+  production: false,
+  formValidation: null,
+};
+
 export class IOSTokenVariantForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      privateKey: '',
-      keyId: '',
-      teamId: '',
-      bundleId: '',
-      production: false,
-    };
+    this.state = { ...initialState };
+  }
+
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+    if (prevProps.open && !this.props.open) {
+      this.setState(initialState);
+    }
   }
 
   render(): React.ReactNode {
@@ -65,9 +68,13 @@ export class IOSTokenVariantForm extends Component<Props, State> {
 
     const validator: Validator = validatorBuilder()
       .newRule()
-      .withField('iosTokenPrivateKey')
-      .validate(RuleBuilder.matches(''))
-      .withField('iosTokenKeyId')
+      .withField('privateKey')
+      .validate(
+        RuleBuilder.required()
+          .withErrorMessage("Field 'Private Key' is required")
+          .build()
+      )
+      .withField('keyId')
       .validate(RuleBuilder.required().build())
       .validate(
         RuleBuilder.length.withLength(
@@ -75,7 +82,7 @@ export class IOSTokenVariantForm extends Component<Props, State> {
           "Field 'Key ID' must be excactly 10 characters long"
         )
       )
-      .withField('iosTokenKeyId')
+      .withField('teamId')
       .validate(RuleBuilder.required().build())
       .validate(
         RuleBuilder.length.withLength(
@@ -83,7 +90,8 @@ export class IOSTokenVariantForm extends Component<Props, State> {
           "Field 'Team ID' must be exactly 10 characters long"
         )
       )
-      .withField('iosBundleId')
+      .withField('bundleId')
+      .validate(RuleBuilder.required().build())
       .validate(
         RuleBuilder.matches(
           '^[a-z0-9]+(\\.[a-z0-9]+)+$',
@@ -103,7 +111,7 @@ export class IOSTokenVariantForm extends Component<Props, State> {
     };
 
     return (
-      <Form className="ios TokenVariantForm">
+      <Form className="ios TokenVariantForm" isHorizontal>
         <FormField
           component={'textarea'}
           fieldId={'variant-private-key'}
@@ -113,27 +121,19 @@ export class IOSTokenVariantForm extends Component<Props, State> {
             this.state.formValidation?.getEvaluationResult('privateKey')
               ?.message
           }
-          validated={
-            !this.state.formValidation ||
-            this.state.formValidation.isValid('privateKey')
-              ? 'success'
-              : 'error'
-          }
+          validated={validatorToPF4Status(
+            this.state.formValidation,
+            'privateKey'
+          )}
           onChange={(value: string) => updateField('privateKey', value)}
         />
         <FormField
-          component={'textarea'}
           fieldId={'variant-key-id'}
           helperText={'Key Id'}
           helperTextInvalid={
             this.state.formValidation?.getEvaluationResult('keyId')?.message
           }
-          validated={
-            !this.state.formValidation ||
-            this.state.formValidation.isValid('keyId')
-              ? 'success'
-              : 'error'
-          }
+          validated={validatorToPF4Status(this.state.formValidation, 'keyId')}
           onChange={(value: string) => updateField('keyId', value)}
         />
         <FormField
@@ -142,12 +142,7 @@ export class IOSTokenVariantForm extends Component<Props, State> {
           helperTextInvalid={
             this.state.formValidation?.getEvaluationResult('teamId')?.message
           }
-          validated={
-            !this.state.formValidation ||
-            this.state.formValidation.isValid('teamId')
-              ? 'success'
-              : 'error'
-          }
+          validated={validatorToPF4Status(this.state.formValidation, 'teamId')}
           onChange={(value: string) => updateField('teamId', value)}
         />
         <FormField
@@ -156,34 +151,26 @@ export class IOSTokenVariantForm extends Component<Props, State> {
           helperTextInvalid={
             this.state.formValidation?.getEvaluationResult('bundleId')?.message
           }
-          validated={
-            !this.state.formValidation ||
-            this.state.formValidation.isValid('bundleId')
-              ? 'success'
-              : 'error'
-          }
+          validated={validatorToPF4Status(
+            this.state.formValidation,
+            'bundleId'
+          )}
           onChange={(value: string) => updateField('bundleId', value)}
         />
-        <Radio
-          className="radioBtn"
-          id={'iOSTokenProduction'}
-          name="Production"
-          label="Production"
-          isChecked={this.state.production}
-          onChange={checked => {
-            this.setState({ production: checked });
-          }}
-        />
-        <Radio
-          className="radioBtn"
-          id={'iOSTokenDevelopment'}
-          name="Development"
-          label="Development"
-          isChecked={!this.state.production}
-          onChange={checked => {
-            this.setState({ production: !checked });
-          }}
-        />
+        <FormGroup fieldId={'production'}>
+          <Switch
+            id="simple-switch"
+            label="Production"
+            labelOff="Development"
+            isChecked={this.state.production}
+            onChange={() => {
+              this.setState({ production: !this.state.production });
+              this.setState(({
+                production: !this.state.production,
+              } as unknown) as State);
+            }}
+          />
+        </FormGroup>
         <div className="variantFormButtons">
           <Button
             onClick={save}
@@ -191,14 +178,7 @@ export class IOSTokenVariantForm extends Component<Props, State> {
             isDisabled={
               !this.props.variantName ||
               this.props.variantName.trim().length === 0 ||
-              !this.state.bundleId ||
-              this.state.bundleId.trim().length === 0 ||
-              !this.state.keyId ||
-              this.state.keyId.trim().length === 0 ||
-              !this.state.privateKey ||
-              this.state.privateKey.trim().length === 0 ||
-              !this.state.teamId ||
-              this.state.teamId.trim().length === 0
+              !formIsValid(this.state.formValidation)
             }
           >
             Create
