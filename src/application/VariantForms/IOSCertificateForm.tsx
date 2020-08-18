@@ -4,8 +4,8 @@ import {
   Button,
   Form,
   FormGroup,
-  Radio,
   FileUpload,
+  Switch,
 } from '@patternfly/react-core';
 import { Variant, IOSVariant } from '@aerogear/unifiedpush-admin-client';
 import {
@@ -15,8 +15,7 @@ import {
   Validator,
 } from 'json-data-validator';
 import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
-
-const parseDataURL = require('data-urls');
+import { formIsValid, validatorToPF4Status } from '../../utils/ValidatorUtils';
 
 interface State {
   iosCertificate?: string;
@@ -48,7 +47,9 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
     const save = () => {
       const variant = {
         name: this.props.variantName,
-        certificate: this.state.iosCertificate,
+        certificate: this.state.iosCertificate!.substr(
+          'data:application/x-pkcs12;base64,'.length
+        ),
         passphrase: this.state.passphrase,
         production: this.state.production,
       } as IOSVariant;
@@ -60,7 +61,7 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
     }
     const validator: Validator = validatorBuilder()
       .newRule()
-      .withField('certificateFile')
+      .withField('iosCertificate')
       .validate(
         RuleBuilder.matches(
           '^data:application/x-pkcs12;base64,',
@@ -72,7 +73,7 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
           .withErrorMessage('Certificate file is mandatory')
           .build()
       )
-      .withField('iosCertificatePassword')
+      .withField('passphrase')
       .validate(
         RuleBuilder.required()
           .withErrorMessage("Field 'passphrase' is mandatory")
@@ -91,18 +92,16 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
     };
 
     return (
-      <Form className="iOSCertificateVariantForm">
+      <Form className="iOSCertificateVariantForm" isHorizontal>
         <FormGroup
           fieldId={'Push Network'}
           label={'Push Network'}
           helperText={'Apple Push Notification Service certificate'}
           helperTextInvalid={'Selected file must be a PKCS#12 file (.p12)'}
-          validated={
-            !this.state.formValidation ||
-            this.state.formValidation.isValid('certificate')
-              ? 'success'
-              : 'error'
-          }
+          validated={validatorToPF4Status(
+            this.state.formValidation,
+            'iosCertificate'
+          )}
         >
           <FileUpload
             id="certificateFile"
@@ -110,42 +109,13 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
             value={this.state.iosCertificate}
             filename={this.state.filename}
             onChange={(value, filename) => {
-              if (value && (value as string).length > 0) {
-                const parsedCertificate = parseDataURL(value);
-                const bufferedCert = Buffer.from(
-                  parsedCertificate.body
-                ).toString('base64');
-                this.setState({ iosCertificate: bufferedCert, filename });
-              }
+              updateField('iosCertificate', value as string);
+              updateField('filename', filename);
             }}
-            validated={
-              !this.state.formValidation ||
-              this.state.formValidation.isValid('certificate')
-                ? 'success'
-                : 'error'
-            }
-          />
-        </FormGroup>
-        <FormGroup label={'Type'} fieldId={'iOS-Certificate-Variant-Form-Type'}>
-          <Radio
-            className="radioBtn"
-            id={'iOSCertificateProduction'}
-            name="Production"
-            label="Production"
-            isChecked={this.state.production}
-            onChange={checked => {
-              this.setState({ production: checked });
-            }}
-          />
-          <Radio
-            className="radioBtn"
-            id={'iOSCertificateDevelopment'}
-            name="Development"
-            label="Development"
-            isChecked={!this.state.production}
-            onChange={checked => {
-              this.setState({ production: !checked });
-            }}
+            validated={validatorToPF4Status(
+              this.state.formValidation,
+              'iosCertificate'
+            )}
           />
         </FormGroup>
         <FormGroup
@@ -155,22 +125,32 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
             this.state.formValidation?.getEvaluationResult('passphrase')
               ?.message
           }
-          validated={
-            !this.state.formValidation ||
-            this.state.formValidation.isValid('passphrase')
-              ? 'success'
-              : 'error'
-          }
+          validated={validatorToPF4Status(
+            this.state.formValidation,
+            'passphrase'
+          )}
         >
           <TextInput
             type="password"
             onChange={(value: string) => updateField('passphrase', value)}
-            validated={
-              !this.state.formValidation ||
-              this.state.formValidation.isValid('passphrase')
-                ? 'success'
-                : 'error'
-            }
+            validated={validatorToPF4Status(
+              this.state.formValidation,
+              'passphrase'
+            )}
+          />
+        </FormGroup>
+        <FormGroup fieldId={'iOS-Certificate-Variant-Form-Type'}>
+          <Switch
+            id="simple-switch"
+            label="Production"
+            labelOff="Development"
+            isChecked={this.state.production}
+            onChange={() => {
+              this.setState({ production: !this.state.production });
+              this.setState(({
+                production: !this.state.production,
+              } as unknown) as State);
+            }}
           />
         </FormGroup>
         <div className="variantFormButtons">
@@ -180,9 +160,7 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
             isDisabled={
               !this.props.variantName ||
               this.props.variantName.trim().length === 0 ||
-              !this.state.iosCertificate ||
-              !this.state.passphrase ||
-              this.state.passphrase.trim().length === 0
+              !formIsValid(this.state.formValidation)
             }
           >
             Create
