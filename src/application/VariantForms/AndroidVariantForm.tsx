@@ -15,7 +15,7 @@ import { formIsValid, validatorToPF4Status } from '../../utils/ValidatorUtils';
 interface State {
   serverKey: string;
   senderID: string;
-  formValidation?: MultiEvaluationResult;
+  formValidation?: MultiEvaluationResult | null;
 }
 
 interface Props {
@@ -25,13 +25,22 @@ interface Props {
   close: () => void;
 }
 
+const initialState: State = {
+  serverKey: '',
+  senderID: '',
+  formValidation: null,
+};
+
 export class AndroidVariantForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      serverKey: '',
-      senderID: '',
-    };
+    this.state = { ...initialState };
+  }
+
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+    if (prevProps.open && !this.props.open) {
+      this.setState(initialState);
+    }
   }
 
   render(): React.ReactNode {
