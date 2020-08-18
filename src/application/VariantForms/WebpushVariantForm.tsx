@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 
-import {
-  TextInput,
-  Button,
-  Form,
-  FormGroup,
-  ValidatedOptions,
-} from '@patternfly/react-core';
+import { Button, Form, ValidatedOptions } from '@patternfly/react-core';
 import { Variant, WebPushVariant } from '@aerogear/unifiedpush-admin-client';
 import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
 import {
@@ -16,12 +10,13 @@ import {
   Validator,
 } from 'json-data-validator';
 import { FormField } from '../ApplicationDetail/panels/FormField';
+import { validatorToPF4Status } from '../../utils/ValidatorUtils';
 
 interface State {
   webpushVapidPublicKey: string;
   webpushVapidPrivateKey: string;
   webpushAlias: string;
-  formValidation?: MultiEvaluationResult;
+  formValidation?: MultiEvaluationResult | null;
 }
 
 interface Props {
@@ -31,15 +26,25 @@ interface Props {
   close: () => void;
 }
 
+const initialState: State = {
+  webpushVapidPublicKey: '',
+  webpushVapidPrivateKey: '',
+  webpushAlias: '',
+  formValidation: null,
+};
+
 export class WebpushVariantForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      webpushVapidPublicKey: '',
-      webpushVapidPrivateKey: '',
-      webpushAlias: '',
-    };
+    this.state = { ...initialState };
   }
+
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+    if (prevProps.open && !this.props.open) {
+      this.setState(initialState);
+    }
+  }
+
   render(): React.ReactNode {
     const save = () => {
       console.log('saving');
@@ -70,16 +75,13 @@ export class WebpushVariantForm extends Component<Props, State> {
       .validate(RuleBuilder.matches('^[A-Za-z0-9_-]*$'))
       .validate(
         RuleBuilder.required()
-          .withErrorMessage(
-            'Private Key is invalid or does not match Public key'
-          )
+          .withErrorMessage('A Valid private key is required')
           .build()
       )
       .withField('webpushAlias')
-      .validate(RuleBuilder.matches(''))
       .validate(
         RuleBuilder.required()
-          .withErrorMessage('Please enter an appropriate mailto')
+          .withErrorMessage('Please enter a mailto or URL address')
           .build()
       )
       .build();
@@ -118,7 +120,7 @@ export class WebpushVariantForm extends Component<Props, State> {
     };
 
     return (
-      <Form className="WebPushVariantForm">
+      <Form className="WebPushVariantForm" isHorizontal>
         <FormField
           fieldId={'vapid-public-key'}
           label={'Push Network'}
@@ -126,12 +128,10 @@ export class WebpushVariantForm extends Component<Props, State> {
           helperTextInvalid={
             validationState('webpushVapidPublicKey').validationResult?.message
           }
-          validated={
-            !this.state.formValidation ||
-            this.state.formValidation.isValid('webpushVapidPublicKey')
-              ? 'success'
-              : 'error'
-          }
+          validated={validatorToPF4Status(
+            this.state.formValidation,
+            'webpushVapidPublicKey'
+          )}
           onChange={value => {
             updateField('webpushVapidPublicKey', value as string);
           }}
@@ -145,12 +145,10 @@ export class WebpushVariantForm extends Component<Props, State> {
           onChange={value => {
             updateField('webpushVapidPrivateKey', value as string);
           }}
-          validated={
-            !this.state.formValidation ||
-            this.state.formValidation.isValid('webpushVapidPrivateKey')
-              ? 'success'
-              : 'error'
-          }
+          validated={validatorToPF4Status(
+            this.state.formValidation,
+            'webpushVapidPrivateKey'
+          )}
         />
         <FormField
           fieldId={'alias'}
@@ -161,12 +159,10 @@ export class WebpushVariantForm extends Component<Props, State> {
           onChange={value => {
             updateField('webpushAlias', value as string);
           }}
-          validated={
-            !this.state.formValidation ||
-            this.state.formValidation.isValid('webpushAlias')
-              ? 'success'
-              : 'error'
-          }
+          validated={validatorToPF4Status(
+            this.state.formValidation,
+            'webpushAlias'
+          )}
         />
 
         <div className="variantFormButtons">

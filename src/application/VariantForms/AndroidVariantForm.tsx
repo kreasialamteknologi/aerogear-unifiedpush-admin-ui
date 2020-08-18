@@ -113,7 +113,7 @@ export class AndroidVariantForm extends Component<Props, State> {
         />
 
         <FormField
-          fieldId={'server-key'}
+          fieldId={'sender-id'}
           helperText={'Sender ID'}
           onChange={value => updateField('senderID', value)}
           helperTextInvalid={

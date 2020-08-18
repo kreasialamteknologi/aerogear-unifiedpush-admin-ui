@@ -140,6 +140,7 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
           )}
         >
           <TextInput
+            id="certificate-password"
             type="password"
             onChange={(value: string) => updateField('passphrase', value)}
             validated={validatorToPF4Status(
