@@ -55,13 +55,11 @@ export class RenewVariantSecret extends Component<Props, State> {
           this.props.variant.variantID
         )
         .execute();
-      console.log({ old: this.props.variant, new: variant });
       await this.setState({ refreshing: false });
       this.props.onRefreshed(variant);
     };
 
     const handleAppNameInput = (value: string) => {
-      console.log('verify', value);
       if (value === this.props.variant.name) {
         this.setState({ nameValid: ValidatedOptions.success });
       } else {

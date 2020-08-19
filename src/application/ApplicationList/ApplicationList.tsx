@@ -142,13 +142,11 @@ export class ApplicationList extends Component<Props, State> {
                 variant={PaginationVariant.bottom}
                 onNextClick={(_event, currentPage) => {
                   this.setState({ currentPage });
-                  console.log(currentPage);
                   refresh(currentPage - 1);
                 }}
                 onPreviousClick={(_event, currentPage) => {
                   this.setState({ currentPage });
                   refresh(currentPage - 1);
-                  console.log(currentPage);
                 }}
               />
             </>

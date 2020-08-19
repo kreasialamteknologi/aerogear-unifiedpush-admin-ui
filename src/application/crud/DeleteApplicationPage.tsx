@@ -8,6 +8,10 @@ import {
   Modal,
 } from '@patternfly/react-core';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../context/Context';
 
 interface State {
   name: string;
@@ -40,7 +44,7 @@ export class DeleteApplicationPage extends Component<Props, State> {
         this.props.close();
       }
     } catch (err) {
-      console.log(err);
+      (this.context as ContextInterface).alert(err);
     }
   };
 
@@ -66,6 +70,7 @@ export class DeleteApplicationPage extends Component<Props, State> {
             fieldId="simple-form-input"
           >
             <TextInput
+              id="app-name"
               className="formInput"
               onChange={value => this.setState({ name: value })}
               isRequired
@@ -91,3 +96,4 @@ export class DeleteApplicationPage extends Component<Props, State> {
     );
   }
 }
+DeleteApplicationPage.contextType = ApplicationListContext;

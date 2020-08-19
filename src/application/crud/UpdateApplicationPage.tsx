@@ -8,6 +8,10 @@ import {
   Modal,
 } from '@patternfly/react-core';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../context/Context';
 
 interface State {
   name?: string;
@@ -35,7 +39,7 @@ export class UpdateApplicationPage extends Component<Props, State> {
         .execute();
       this.props.close();
     } catch (err) {
-      console.log(err);
+      (this.context as ContextInterface).alert(err);
     }
   };
 
@@ -75,3 +79,4 @@ export class UpdateApplicationPage extends Component<Props, State> {
     );
   }
 }
+UpdateApplicationPage.contextType = ApplicationListContext;

@@ -135,7 +135,6 @@ export class VariantSelectionForm extends Component<Props, State> {
                 variant: VariantDefinition,
                 variantType: VariantType
               ) => {
-                console.log('Creating Variant');
                 try {
                   const newVariant = await UpsClientFactory.getUpsClient()
                     .variants[variantType].create(
