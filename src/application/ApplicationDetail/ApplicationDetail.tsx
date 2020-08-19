@@ -130,7 +130,7 @@ export class ApplicationDetail extends Component<Props, State> {
                 </Tab>
                 <Tab eventKey={2} title="Activity Log">
                   <ActivityLogPanel app={this.props.app!} />
-              </Tab>
+                </Tab>
               </Tabs>
             </div>
           </GridItem>

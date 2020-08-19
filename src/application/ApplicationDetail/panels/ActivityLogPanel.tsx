@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { Component } from 'react';
-import {  PushApplication } from '@aerogear/unifiedpush-admin-client';
-import {  
+import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import {
   EmptyState,
   EmptyStateBody,
   EmptyStateIcon,
@@ -10,7 +10,7 @@ import {
   Label,
   Alert,
   Pagination,
-  PaginationVariant
+  PaginationVariant,
 } from '@patternfly/react-core';
 import { TableIcon, ErrorCircleOIcon } from '@patternfly/react-icons';
 import { UpsClientFactory } from '../../../utils/UpsClientFactory';
@@ -51,7 +51,7 @@ export class ActivityLogPanel extends Component<Props, State> {
       total: 0,
       log: [],
       columns: [
-        { title: 'Message', cellFormatters:[expandable] },
+        { title: 'Message', cellFormatters: [expandable] },
         { title: 'IP Address' },
         { title: 'Status' },
         { title: 'Sent' },
@@ -60,49 +60,71 @@ export class ActivityLogPanel extends Component<Props, State> {
     };
 
     this.onCollapse = this.onCollapse.bind(this);
-
   }
 
   loadActivityLog = async (page = 0) => {
+    const makeDetail = (
+      message: string,
+      metric: FlatPushMessageInformation
+    ): React.ReactNode => {
+      let errorElement = <></>;
 
-    const makeDetail = (message: string, metric: FlatPushMessageInformation) : React.ReactNode => {
-
-      var errorElement = <></>;
-      
       if (metric.errors && metric.errors[0]) {
-        errorElement = <Alert variant="warning" title={`Variant ${metric.errors![0].variant.name} has failed`}>
-          { metric.errors![0].errorReason }
-        </Alert>        
+        errorElement = (
+          <Alert
+            variant="warning"
+            title={`Variant ${metric.errors![0].variant.name} has failed`}
+          >
+            {metric.errors![0].errorReason}
+          </Alert>
+        );
       }
-    
-      return <> 
-        {errorElement}
-        <CodeSnippet language="json" snippet={JSON.stringify(message,null,2)}></CodeSnippet>
-      </>;
-    }
+
+      return (
+        <>
+          {errorElement}
+          <CodeSnippet
+            language="json"
+            snippet={JSON.stringify(message, null, 2)}
+          ></CodeSnippet>
+        </>
+      );
+    };
 
     const metrics = await UpsClientFactory.getUpsClient()
       .applications.metrics(this.props.app.pushApplicationID)
       .withPageSize(this.state.perPage)
       .withPage(page)
       .execute();
-    
+
     const rows = metrics.list.flatMap((metric, index) => {
       const message = JSON.parse(metric.rawJsonMessage);
-      return [{
-        isOpen: false,
-        cells: [
-          <><EllipsisText message={message.alert} maxLength={15} /></>,
-          metric.ipAddress,
-          <>{metric.errors && metric.errors.length > 0 ? <Label icon={<ErrorCircleOIcon/>} color="red">Failed</Label> : <Label color="green">Processed</Label>}</>,
-          moment(metric.submitDate).format('d MMM, HH:mm:ss, yyyy'),
-        ]}, {
+      return [
+        {
+          isOpen: false,
+          cells: [
+            <>
+              <EllipsisText message={message.alert} maxLength={15} />
+            </>,
+            metric.ipAddress,
+            <>
+              {metric.errors && metric.errors.length > 0 ? (
+                <Label icon={<ErrorCircleOIcon />} color="red">
+                  Failed
+                </Label>
+              ) : (
+                <Label color="green">Processed</Label>
+              )}
+            </>,
+            moment(metric.submitDate).format('d MMM, HH:mm:ss, yyyy'),
+          ],
+        },
+        {
           parent: index * 2,
           fullWidth: true,
-          cells: [
-              <>{makeDetail(message, metric)}</>
-          ]
-        }];
+          cells: [<>{makeDetail(message, metric)}</>],
+        },
+      ];
     });
 
     const total = metrics.total;
@@ -114,9 +136,7 @@ export class ActivityLogPanel extends Component<Props, State> {
     this.loadActivityLog();
   };
 
-  onCollapse(event: React.MouseEvent,
-    rowKey: number,
-    isOpen: boolean) {
+  onCollapse(event: React.MouseEvent, rowKey: number, isOpen: boolean) {
     const { rows } = this.state;
     /**
      * Please do not use rowKey as row index for more complex tables.
@@ -124,7 +144,7 @@ export class ActivityLogPanel extends Component<Props, State> {
      */
     rows[rowKey].isOpen = isOpen;
     this.setState({
-      rows
+      rows,
     });
   }
 
@@ -154,42 +174,47 @@ export class ActivityLogPanel extends Component<Props, State> {
           <Text component={'small'}>
             Explore push messages that you have sent to the registered devices.
           </Text>
-          <Table cells={this.state.columns} rows={this.state.rows}
-                  onCollapse={this.onCollapse} className={"activityTable"}
+          <Table
+            cells={this.state.columns}
+            rows={this.state.rows}
+            onCollapse={this.onCollapse}
+            className={'activityTable'}
           >
             <TableHeader />
-            <TableBody 
-            />
+            <TableBody />
           </Table>
           <Pagination
-                itemCount={this.state.total}
-                perPage={this.state.perPage}
-                widgetId="pagination-options-menu-bottom"
-                page={this.state.currentPage}
-                variant={PaginationVariant.bottom}
-                onNextClick={(_event, currentPage) => {
-                  this.setState({ currentPage });
-                  console.log(currentPage);
-                  this.loadActivityLog(currentPage - 1);
-                }}
-                onPreviousClick={(_event, currentPage) => {
-                  this.setState({ currentPage });
-                  this.loadActivityLog(currentPage - 1);
-                  console.log(currentPage);
-                }}
-                onFirstClick={()=>{this.setState({ currentPage:1 });
-                  this.loadActivityLog(0);
-                }}
-                onLastClick={()=>{this.setState({ currentPage:Math.ceil(this.state.total/10) });
-                  this.loadActivityLog(Math.ceil(this.state.total/10) - 1);
-                }}
-                onPerPageSelect= {(event, perPage, currentPage) => {
-                  this.setState({ currentPage, perPage}, ()=>this.loadActivityLog(currentPage-1));
-                }}
-              />
+            itemCount={this.state.total}
+            perPage={this.state.perPage}
+            widgetId="pagination-options-menu-bottom"
+            page={this.state.currentPage}
+            variant={PaginationVariant.bottom}
+            onNextClick={(_event, currentPage) => {
+              this.setState({ currentPage });
+              console.log(currentPage);
+              this.loadActivityLog(currentPage - 1);
+            }}
+            onPreviousClick={(_event, currentPage) => {
+              this.setState({ currentPage });
+              this.loadActivityLog(currentPage - 1);
+              console.log(currentPage);
+            }}
+            onFirstClick={() => {
+              this.setState({ currentPage: 1 });
+              this.loadActivityLog(0);
+            }}
+            onLastClick={() => {
+              this.setState({ currentPage: Math.ceil(this.state.total / 10) });
+              this.loadActivityLog(Math.ceil(this.state.total / 10) - 1);
+            }}
+            onPerPageSelect={(event, perPage, currentPage) => {
+              this.setState({ currentPage, perPage }, () =>
+                this.loadActivityLog(currentPage - 1)
+              );
+            }}
+          />
         </>
       );
     }
   };
 }
-
