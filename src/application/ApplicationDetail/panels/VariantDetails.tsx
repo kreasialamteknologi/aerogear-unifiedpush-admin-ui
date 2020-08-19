@@ -24,6 +24,7 @@ import { IOSCertVariantDetails } from './ios_cert/iOSCertVariantDetails';
 import { IOSCertCodeSnippets } from './ios_cert/iOSCertCodeSnippets';
 import { WebPushVariantDetails } from './web_push/WebPushVariantDetails';
 import { WebPushCodeSnippets } from './web_push/WebPushCodeSnippets';
+import { Secret } from '../../../common/Secret';
 
 interface Props {
   app: PushApplication;
@@ -138,7 +139,7 @@ export class VariantDetails extends Component<Props, State> {
               Variant Secret:
             </TextListItem>
             <TextListItem component={TextListItemVariants.dd}>
-              {this.props.variant.secret}
+              <Secret text={this.props.variant.secret} />
             </TextListItem>
 
             <TextListItem component={TextListItemVariants.dd}>

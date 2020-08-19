@@ -22,6 +22,7 @@ import { snippet as java_snippet } from './snippets/sender/java';
 import { snippet as node_snippet } from './snippets/sender/node';
 import { snippet as curl_snippet } from './snippets/sender/curl';
 import { links } from '../../links';
+import { Secret } from '../../common/Secret';
 
 interface State {
   refreshSecret: boolean;
@@ -80,7 +81,7 @@ export class SenderAPI extends Component<Props, State> {
               Master Secret:
             </TextListItem>
             <TextListItem component={TextListItemVariants.dd}>
-              {this.props.app.masterSecret}
+              <Secret text={this.props.app.masterSecret} />
             </TextListItem>
 
             <TextListItem component={TextListItemVariants.dd}>
