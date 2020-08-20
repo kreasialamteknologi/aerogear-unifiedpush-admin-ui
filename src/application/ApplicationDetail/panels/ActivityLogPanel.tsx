@@ -72,6 +72,7 @@ export class ActivityLogPanel extends Component<Props, State> {
       if (metric.errors && metric.errors[0]) {
         errorElement = (
           <Alert
+            isInline
             variant="warning"
             title={`Variant ${metric.errors![0].variant.name} has failed`}
           >
