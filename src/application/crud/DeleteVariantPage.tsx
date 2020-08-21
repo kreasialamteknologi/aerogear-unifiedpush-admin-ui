@@ -7,8 +7,15 @@ import {
   Button,
   Modal,
 } from '@patternfly/react-core';
-import { PushApplication, Variant, VariantType } from '@aerogear/unifiedpush-admin-client';
-import { ApplicationListContext, ContextInterface } from '../../context/Context';
+import {
+  PushApplication,
+  Variant,
+  VariantType,
+} from '@aerogear/unifiedpush-admin-client';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../context/Context';
 
 interface State {
   varName: string;
@@ -50,7 +57,6 @@ export class DeleteVariantPage extends Component<Props, State> {
   };
 
   render(): React.ReactNode {
-
     const context = this.context as ContextInterface;
 
     return this.props.app ? (
@@ -65,7 +71,8 @@ export class DeleteVariantPage extends Component<Props, State> {
             fieldId="simple-form-title"
             helperText={
               <>
-                Are you sure you want to delete "<b>{context.selectedVariant?.name}</b>"?
+                Are you sure you want to delete "
+                <b>{context.selectedVariant?.name}</b>"?
               </>
             }
           ></FormGroup>
@@ -88,10 +95,9 @@ export class DeleteVariantPage extends Component<Props, State> {
                 this.deleteVariant(
                   this.props.app!,
                   context.selectedVariant!,
-                  this.state.varName,
+                  this.state.varName
                 )
               }
-
             >
               Delete
             </Button>
@@ -102,9 +108,8 @@ export class DeleteVariantPage extends Component<Props, State> {
         </Form>
       </Modal>
     ) : (
-        <></>
-      );
-
-  };
+      <></>
+    );
+  }
 }
 DeleteVariantPage.contextType = ApplicationListContext;

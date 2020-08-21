@@ -8,7 +8,10 @@ import {
   Modal,
 } from '@patternfly/react-core';
 import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import { ApplicationListContext, ContextInterface } from '../../context/Context';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../context/Context';
 
 interface State {
   varName: string;
@@ -47,7 +50,6 @@ export class RenameVariantPage extends Component<Props, State> {
   };
 
   render(): React.ReactNode {
-
     const context = this.context as ContextInterface;
 
     return this.props.app ? (
@@ -81,7 +83,6 @@ export class RenameVariantPage extends Component<Props, State> {
             <Button
               className="dialogBtn"
               variant="primary"
-
               onClick={() =>
                 this.editVariant(
                   this.props.app!,
@@ -99,8 +100,8 @@ export class RenameVariantPage extends Component<Props, State> {
         </Form>
       </Modal>
     ) : (
-        <></>
-      );
+      <></>
+    );
   }
 }
 RenameVariantPage.contextType = ApplicationListContext;

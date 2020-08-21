@@ -22,7 +22,10 @@ import { VariantDetails } from './VariantDetails';
 import { EditIcon, TrashIcon } from '@patternfly/react-icons';
 import { DeleteVariantPage } from '../../crud/DeleteVariantPage';
 import { RenameVariantPage } from '../../crud/RenameVariantPage';
-import { ApplicationListContext, ContextInterface } from '../../../context/Context';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../../context/Context';
 
 interface Props {
   app: PushApplication;
@@ -86,7 +89,10 @@ export class VariantItem extends Component<Props, State> {
                         className="editBtn"
                         variant="secondary"
                         icon={<EditIcon />}
-                        onClick={async () => { await context.selectVariant(this.props.variant); this.setState({ editVariantPage: true }) }}
+                        onClick={async () => {
+                          await context.selectVariant(this.props.variant);
+                          this.setState({ editVariantPage: true });
+                        }}
                       />
                     </ListItem>
                     <ListItem>
@@ -94,8 +100,10 @@ export class VariantItem extends Component<Props, State> {
                         className="deleteBtn"
                         variant="danger"
                         icon={<TrashIcon />}
-                        onClick={async () => { await context.selectVariant(this.props.variant); this.setState({ deleteVariantPage: true }) }
-                        }
+                        onClick={async () => {
+                          await context.selectVariant(this.props.variant);
+                          this.setState({ deleteVariantPage: true });
+                        }}
                       />
                     </ListItem>
                   </List>
