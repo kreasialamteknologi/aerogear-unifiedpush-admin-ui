@@ -69,7 +69,10 @@ export class ApplicationListItem extends Component<Props> {
                   </ListItem>
                   <ListItem>
                     <Label
-                      text={'0 devices registered'}
+                      text={`${this.props.app.metadata?.deviceCount ||
+                        0} device${
+                        this.props.app.metadata?.deviceCount === 1 ? '' : 's'
+                      } registered`}
                       icon={<MobileAltIcon />}
                     />
                   </ListItem>

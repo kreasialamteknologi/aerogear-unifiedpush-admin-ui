@@ -70,7 +70,16 @@ export abstract class VariantsPanel extends Component<Props> {
                 </ListItem>
                 <ListItem>
                   <Text style={{ fontWeight: 700 }}>
-                    {this.props.app?.metadata?.deviceCount || 0}
+                    {this.props.app?.variants
+                      ?.filter(
+                        variant => variant.type === this.props.variantType
+                      )
+                      .map(variant => variant.metadata?.deviceCount || 0)
+                      .reduce(
+                        (currentTotal: number, currentValue: number) =>
+                          currentTotal + currentValue,
+                        0
+                      )}
                   </Text>
                 </ListItem>
                 <ListItem>Devices</ListItem>
