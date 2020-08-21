@@ -65,7 +65,11 @@ export class ApplicationListItem extends Component<Props> {
                     />
                   </ListItem>
                   <ListItem>
-                    <Label text={'0 messages sent'} icon={<MessagesIcon />} />
+                    <Label
+                      text={`${this.props.app.metadata?.activity ||
+                        0} messages sent`}
+                      icon={<MessagesIcon />}
+                    />
                   </ListItem>
                   <ListItem>
                     <Label
