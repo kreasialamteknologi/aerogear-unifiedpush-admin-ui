@@ -150,14 +150,42 @@ export class ActivityLogPanel extends Component<Props, State> {
   }
 
   render = () => {
-    if (this.state.rows.length === 0) {
+
+    const noDevices = ()=> {
+      console.log(this.props.app);
+      return !(this.props.app.variants?.find((variant)=> {
+        return variant.metadata && variant.metadata!.deviceCount > 0;
+      }));
+    }
+
+    const noMessages = ()=> {
+      return this.state.rows.length === 0;
+    }
+
+    if (noDevices()) {
+      return (<>
+        <EmptyState variant={EmptyStateVariant.full}>
+          <EmptyStateIcon icon={TableIcon} />
+          <Title>You have no devices registered</Title>
+          <EmptyStateBody>
+            There are no registered devices for this application.
+            <br />
+            Check out the documentation on how to get started to{' '}
+            <a href="https://aerogear.org/getstarted/guides/#push">
+              register a device
+            </a>
+            .
+          </EmptyStateBody>
+        </EmptyState>
+      </>);
+    } else if (noMessages()) {
       return (
         <>
           <EmptyState variant={EmptyStateVariant.full}>
             <EmptyStateIcon icon={TableIcon} />
-            <Title>You have no devices registered</Title>
+            <Title>You have not sent a message</Title>
             <EmptyStateBody>
-              There are no registered devices for this application.
+              No messages have been sent for this application.
               <br />
               Check out the documentation on how to get started to{' '}
               <a href="https://aerogear.org/getstarted/guides/#push">
