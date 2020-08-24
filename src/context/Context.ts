@@ -25,8 +25,9 @@ export interface UpsAdminState {
   alert(err: Error): Promise<void>;
   alert(message: string, details: string[], type: AlertVariant): Promise<void>;
 
-  // alert: (message:string, details: string[], type: AlertVariant) => void;
   selectVariant: (variant: Variant) => void;
+
+  authConfig: Record<string, string>;
 }
 
 const defaultState: UpsAdminState = {
@@ -41,6 +42,7 @@ const defaultState: UpsAdminState = {
   },
   alerts: [],
   selectVariant: async (variant: Variant) => {},
+  authConfig: {},
 };
 
 export interface ContextInterface extends UpsAdminState {}
