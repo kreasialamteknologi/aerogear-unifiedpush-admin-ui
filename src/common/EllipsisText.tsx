@@ -8,7 +8,6 @@ interface EllipsisTextProps extends TextProps {
 
 export class EllipsisText extends Component<EllipsisTextProps> {
   render = () => {
-    console.log(this.props);
     return (
       <Text {...this.props}>
         {this.props.message.length <= this.props.maxLength

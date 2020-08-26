@@ -87,7 +87,7 @@ export class ActivityLogPanel extends Component<Props, State> {
           <CodeSnippet
             language="json"
             snippet={JSON.stringify(message, null, 2)}
-          ></CodeSnippet>
+          />
         </>
       );
     };
@@ -150,35 +150,28 @@ export class ActivityLogPanel extends Component<Props, State> {
   }
 
   render = () => {
+    const noDevices = this.props.app.metadata!.deviceCount === 0;
+    const noMessages = this.state.rows.length === 0;
 
-    const noDevices = ()=> {
-      console.log(this.props.app);
-      return !(this.props.app.variants?.find((variant)=> {
-        return variant.metadata && variant.metadata!.deviceCount > 0;
-      }));
-    }
-
-    const noMessages = ()=> {
-      return this.state.rows.length === 0;
-    }
-
-    if (noDevices()) {
-      return (<>
-        <EmptyState variant={EmptyStateVariant.full}>
-          <EmptyStateIcon icon={TableIcon} />
-          <Title>You have no devices registered</Title>
-          <EmptyStateBody>
-            There are no registered devices for this application.
-            <br />
-            Check out the documentation on how to get started to{' '}
-            <a href="https://aerogear.org/getstarted/guides/#push">
-              register a device
-            </a>
-            .
-          </EmptyStateBody>
-        </EmptyState>
-      </>);
-    } else if (noMessages()) {
+    if (noDevices && noMessages) {
+      return (
+        <>
+          <EmptyState variant={EmptyStateVariant.full}>
+            <EmptyStateIcon icon={TableIcon} />
+            <Title>You have no devices registered</Title>
+            <EmptyStateBody>
+              There are no registered devices for this application.
+              <br />
+              Check out the documentation on how to get started to{' '}
+              <a href="https://aerogear.org/getstarted/guides/#push">
+                register a device
+              </a>
+              .
+            </EmptyStateBody>
+          </EmptyState>
+        </>
+      );
+    } else if (noMessages) {
       return (
         <>
           <EmptyState variant={EmptyStateVariant.full}>
@@ -220,13 +213,11 @@ export class ActivityLogPanel extends Component<Props, State> {
             variant={PaginationVariant.bottom}
             onNextClick={(_event, currentPage) => {
               this.setState({ currentPage });
-              console.log(currentPage);
               this.loadActivityLog(currentPage - 1);
             }}
             onPreviousClick={(_event, currentPage) => {
               this.setState({ currentPage });
               this.loadActivityLog(currentPage - 1);
-              console.log(currentPage);
             }}
             onFirstClick={() => {
               this.setState({ currentPage: 1 });
