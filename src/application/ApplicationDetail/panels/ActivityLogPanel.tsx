@@ -40,6 +40,7 @@ interface Props {
 
 interface State {
   loading: boolean;
+  pushApplicationId: string;
   log: FlatPushMessageInformation[];
   columns: ICell[];
   rows: IRow[];
@@ -53,6 +54,7 @@ export class ActivityLogPanel extends Component<Props, State> {
     super(props);
     this.state = {
       currentPage: 1,
+      pushApplicationId: props.app.pushApplicationID,
       perPage: 10,
       loading: true,
       total: 0,
@@ -140,8 +142,16 @@ export class ActivityLogPanel extends Component<Props, State> {
     this.setState({ rows, total });
   };
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.loadActivityLog();
+  };
+
+  componentDidUpdate = (prevProps: Props, prevState: State) => {
+    if (
+      this.props.app.metadata!.activity !== prevProps.app.metadata!.activity
+    ) {
+      this.loadActivityLog();
+    }
   };
 
   onCollapse(event: React.MouseEvent, rowKey: number, isOpen: boolean) {
@@ -210,6 +220,7 @@ export class ActivityLogPanel extends Component<Props, State> {
             rows={this.state.rows}
             onCollapse={this.onCollapse}
             className={'activityTable'}
+            aria-label="Table displaying recently sent messages"
           >
             <TableHeader />
             <TableBody />

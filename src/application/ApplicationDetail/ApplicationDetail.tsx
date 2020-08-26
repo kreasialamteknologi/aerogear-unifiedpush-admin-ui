@@ -18,9 +18,10 @@ import {
 import { VariantsPanel } from './panels/VariantsPanel';
 import { SenderAPI } from './SenderAPI';
 import { ApplicationStats } from '../../landing/components/ApplicationStats';
-import { PlusIcon } from '@patternfly/react-icons';
+import { PlusIcon, ShareIcon } from '@patternfly/react-icons';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
 import { ActivityLogPanel } from './panels/ActivityLogPanel';
+import { SendNotifications } from './panels/dialogs/SendNotification';
 
 interface Props {
   app?: PushApplication;
@@ -29,6 +30,7 @@ interface Props {
 interface State {
   activeTab: number;
   addVariantModel: boolean;
+  sendNotificationModel: boolean;
 }
 
 export class ApplicationDetail extends Component<Props, State> {
@@ -37,6 +39,7 @@ export class ApplicationDetail extends Component<Props, State> {
     this.state = {
       activeTab: 0,
       addVariantModel: false,
+      sendNotificationModel: false,
     };
   }
 
@@ -54,6 +57,11 @@ export class ApplicationDetail extends Component<Props, State> {
 
     return (
       <>
+        <SendNotifications
+          app={this.props.app}
+          visible={this.state.sendNotificationModel}
+          close={() => this.setState({ sendNotificationModel: false })}
+        />
         <VariantSelectionForm
           app={this.props.app}
           open={this.state.addVariantModel}
@@ -79,15 +87,27 @@ export class ApplicationDetail extends Component<Props, State> {
                   this.props.app!.name
                 }: Variants`}</BreadcrumbItem>
               </Breadcrumb>
-              <Text
-                component={TextVariants.h1}
-                style={{
-                  paddingTop: 40,
-                  paddingBottom: 20,
-                }}
-              >
-                {this.props.app!.name}
-              </Text>
+              <Split style={{ paddingTop: 20, paddingBottom: 10 }}>
+                <SplitItem>
+                  <Text component={TextVariants.h1}>
+                    {this.props.app!.name}
+                  </Text>
+                </SplitItem>
+                <SplitItem isFilled />
+                <SplitItem>
+                  <Button
+                    className={'button-small'}
+                    icon={<ShareIcon />}
+                    variant={ButtonVariant.primary}
+                    onClick={() =>
+                      this.setState({ sendNotificationModel: true })
+                    }
+                  >
+                    Send Notification To This App
+                  </Button>
+                </SplitItem>
+              </Split>
+
               <Tabs
                 activeKey={this.state.activeTab}
                 isBox={true}

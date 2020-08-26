@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownToggleCheckbox,
-} from '@patternfly/react-core';
+import { Dropdown, DropdownItem, DropdownToggle } from '@patternfly/react-core';
 import { CaretDownIcon, UserIcon } from '@patternfly/react-icons';
 import { useKeycloak } from '@react-keycloak/web';
 
