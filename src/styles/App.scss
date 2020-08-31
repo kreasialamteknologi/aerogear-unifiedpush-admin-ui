@@ -138,3 +138,7 @@ emptyState {
   border-radius: 1px;
   box-sizing: border-box;
 }
+
+.pf-c-dropdown__toggle:focus {
+  outline: none;
+}

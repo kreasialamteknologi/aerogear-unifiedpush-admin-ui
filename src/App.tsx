@@ -6,11 +6,8 @@ import {
   AlertActionCloseButton,
   AlertGroup,
   AlertVariant,
-  EmptyState,
-  EmptyStateVariant,
   Page,
   PageSection,
-  Spinner,
 } from '@patternfly/react-core';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';

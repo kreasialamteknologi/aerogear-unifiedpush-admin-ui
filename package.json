@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aerogear/unifiedpush-admin-client": "4.2.3",
+    "@aerogear/unifiedpush-admin-client": "4.3.0",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@patternfly/react-core": "^4.40.4",
     "@react-keycloak/web": "^2.1.4",
