@@ -74,7 +74,7 @@ export class RenameVariantPage extends Component<Props, State> {
           >
             <TextInput
               className="formInput"
-              defaultValue={this.props.app?.variants![0].name}
+              defaultValue={context.selectedVariant?.name}
               onChange={value => this.setState({ varName: value })}
               isRequired
             />

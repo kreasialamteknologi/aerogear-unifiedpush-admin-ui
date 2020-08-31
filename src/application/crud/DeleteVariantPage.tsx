@@ -7,11 +7,7 @@ import {
   Button,
   Modal,
 } from '@patternfly/react-core';
-import {
-  PushApplication,
-  Variant,
-  VariantType,
-} from '@aerogear/unifiedpush-admin-client';
+import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
 import {
   ApplicationListContext,
   ContextInterface,

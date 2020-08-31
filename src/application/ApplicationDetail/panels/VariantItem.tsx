@@ -58,20 +58,20 @@ export class VariantItem extends Component<Props, State> {
       <>
         <DataListItem
           className="varList"
-          aria-labelledby="ex-item1"
+          aria-labelledby={'cell-' + this.props.variant.id}
           isExpanded={this.state.expanded}
         >
           <DataListItemRow>
             <DataListToggle
               onClick={() => toggle()}
               isExpanded={this.state.expanded}
-              id="ex-toggle1"
-              aria-controls="ex-expand1"
+              id={'toggle-' + this.props.variant.id}
+              aria-controls={'expand-' + this.props.variant.id}
             />
             <DataListItemCells
               dataListCells={[
                 <DataListCell key="primary content">
-                  <div id="ex-item1">
+                  <div id={'cell-' + this.props.variant.id}>
                     {this.props.variant.name}
                     <Text
                       style={{ paddingLeft: 20, color: '#999' }}
@@ -113,7 +113,7 @@ export class VariantItem extends Component<Props, State> {
           </DataListItemRow>
           <DataListContent
             aria-label="Primary Content Details"
-            id="ex-expand1"
+            id={'expand-' + this.props.variant.id}
             isHidden={!this.state.expanded}
           >
             <VariantDetails

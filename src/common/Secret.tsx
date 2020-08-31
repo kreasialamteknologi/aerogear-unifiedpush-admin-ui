@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextVariants, Tooltip } from '@patternfly/react-core';
+import { Text, TextVariants } from '@patternfly/react-core';
 import { EyeIcon, EyeSlashIcon } from '@patternfly/react-icons';
 
 interface State {
