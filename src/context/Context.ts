@@ -1,13 +1,7 @@
 import React from 'react';
 import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
 import { AlertVariant } from '@patternfly/react-core';
-
-export interface Alert {
-  key: number;
-  title: string;
-  variant: AlertVariant;
-  details: string[];
-}
+import { Alert } from '../utils/Alerts';
 
 export interface UpsAdminState {
   //the current page being viewed

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import '@patternfly/react-core/dist/styles/base.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import {
@@ -17,14 +18,15 @@ import { Header } from './common/Header';
 import { ApplicationListContext, UpsAdminState } from './context/Context';
 import { UpsClientFactory } from './utils/UpsClientFactory';
 
-import './styles/App.scss';
-import { UpsError } from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
 import { Variant } from '@aerogear/unifiedpush-admin-client';
 import { ApplicationDetail } from './application/ApplicationDetail/ApplicationDetail';
 import { initKeycloak } from './keycloak';
 import { KeycloakTokens, KeycloakProvider } from '@react-keycloak/web';
 import { KeycloakInstance } from 'keycloak-js';
 import { Loading } from './common/Loading';
+
+import { addAlert, removeAlert } from './utils/Alerts';
+import './styles/App.scss';
 
 export class App extends Component<{}, UpsAdminState> {
   private keycloak: KeycloakInstance | null = null;
@@ -36,13 +38,18 @@ export class App extends Component<{}, UpsAdminState> {
       total: 0,
       loading: true,
       refresh: this.refresh,
-      alert: this.alert,
+      alert: (
+        messageOrError: string | Error,
+        details?: string[],
+        type?: AlertVariant
+      ) => addAlert(messageOrError, this, details, type),
       alerts: [],
       selectVariant: this.selectVariant,
       authConfig: {},
     };
   }
 
+<<<<<<< HEAD
   private readonly alert = async (
     messageOrError: string | Error,
     details?: string[],
@@ -95,12 +102,15 @@ export class App extends Component<{}, UpsAdminState> {
     });
   };
 
+=======
+>>>>>>> feat: 🎸 adding dynamic configuration
   private readonly selectVariant = async (variant?: Variant) => {
     return this.setState({ selectedVariant: variant });
   };
 
   private readonly refresh = async (currentPage = 0) => {
     try {
+      await UpsClientFactory.init();
       const searchResults = await UpsClientFactory.getUpsClient()
         .applications.search()
         .page(currentPage)
@@ -112,7 +122,7 @@ export class App extends Component<{}, UpsAdminState> {
         error: undefined,
       });
     } catch (err) {
-      await this.alert(err.message, [], AlertVariant.danger);
+      await this.state.alert(err.message, [], AlertVariant.danger);
       this.setState({
         applications: [],
         loading: false,
@@ -121,6 +131,7 @@ export class App extends Component<{}, UpsAdminState> {
     }
   };
 
+<<<<<<< HEAD
   private readonly loadKeycloakConfig = async (): Promise<
     Record<string, string>
   > => {
@@ -226,6 +237,47 @@ export class App extends Component<{}, UpsAdminState> {
             });
             this.refresh();
           }}
+=======
+  componentDidMount() {
+    this.refresh();
+  }
+
+  render = (): React.ReactElement => (
+    <ApplicationListContext.Provider value={this.state}>
+      <AlertGroup isToast>
+        {this.state.alerts.map(({ key, variant, title, details }) => (
+          <Alert
+            isLiveRegion
+            variant={AlertVariant[variant]}
+            title={title}
+            actionClose={
+              <AlertActionCloseButton
+                title={title}
+                variantLabel={`${variant} alert`}
+                onClose={() => removeAlert(key, this)}
+              />
+            }
+            key={key}
+          >
+            {details.length === 0 ? null : (
+              <ul>
+                {details.map(detail => (
+                  <p>{detail}</p>
+                ))}
+              </ul>
+            )}
+          </Alert>
+        ))}
+      </AlertGroup>
+      <Page
+        header={<Header />}
+        style={{ flexGrow: 1, flexDirection: 'column' }}
+      >
+        <PageSection
+          isFilled={true}
+          variant={'light'}
+          style={{ padding: '0 0 0 0' }}
+>>>>>>> feat: 🎸 adding dynamic configuration
         >
           {this.render1()}
         </KeycloakProvider>
