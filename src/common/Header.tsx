@@ -24,9 +24,11 @@ import {
 } from 'react-device-detect';
 import packageJson from '../../package.json';
 import { UserTool } from './UserTool';
+import { Config, UpsConfig } from '../utils/Config';
 
 interface State {
   aboutDialogOpen: boolean;
+  docLinks?: UpsConfig;
 }
 
 // tslint:disable-next-line:variable-name
@@ -38,7 +40,20 @@ export class Header extends Component<{}, State> {
     };
   }
 
+  async componentDidMount() {
+    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
+  }
+
   readonly render = () => {
+    const getLink = (key: string, section = 'DOCS_LINKS') => {
+      const docLinks = this.state.docLinks as Record<
+        string,
+        Record<string, string>
+      >;
+
+      return docLinks?.[section]?.[key] || '#';
+    };
+
     const handleModalToggle = () => this.setState({ aboutDialogOpen: false });
 
     const headerTools = () => (
@@ -82,7 +97,7 @@ export class Header extends Component<{}, State> {
           </TextContent>
         </AboutModal>
         <PageHeader
-          logoProps={{ href: 'https://aerogear.org' }}
+          logoProps={{ href: getLink('homepage') }}
           logo={
             <>
               <strong>AEROGEAR</strong>&nbsp; UNIFIEDPUSH SERVER

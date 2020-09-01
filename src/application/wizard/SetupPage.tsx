@@ -24,8 +24,11 @@ import { AndroidCodeSnippets } from '../ApplicationDetail/panels/android/Android
 import { WebPushCodeSnippets } from '../ApplicationDetail/panels/web_push/WebPushCodeSnippets';
 import { IOSCertCodeSnippets } from '../ApplicationDetail/panels/ios_cert/iOSCertCodeSnippets';
 import { IOSTokenCodeSnippets } from '../ApplicationDetail/panels/ios_token/iOSTokenCodeSnippets';
+import { Config, UpsConfig } from '../../utils/Config';
 
-interface State {}
+interface State {
+  docLinks?: UpsConfig;
+}
 
 interface Props {
   app: PushApplication;
@@ -39,7 +42,20 @@ export class SetupPage extends Component<Props, State> {
     this.state = {};
   }
 
+  async componentDidMount() {
+    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
+  }
+
   render(): React.ReactNode {
+    const getLink = (key: string, section = 'DOCS_LINKS') => {
+      const docLinks = this.state.docLinks as Record<
+        string,
+        Record<string, string>
+      >;
+
+      return docLinks?.[section]?.[key] || '#';
+    };
+
     return (
       <>
         <Page>
@@ -49,7 +65,7 @@ export class SetupPage extends Component<Props, State> {
               We are half way there! Use the code snippet below to{' '}
               <Text
                 component={TextVariants.a}
-                href="https://aerogear.org/docs/unifiedpush/aerogear-push-android/guides/#_registration_with_the_unifiedpush_server"
+                href={getLink('register-device-android')}
               >
                 {' '}
                 register your device{' '}
@@ -58,7 +74,7 @@ export class SetupPage extends Component<Props, State> {
               Server. If you don't know how to do this, go to the{' '}
               <Text
                 component={TextVariants.a}
-                href="https://aerogear.org/docs/unifiedpush/aerogear-push-android/guides/"
+                href={getLink('step-by-step-android')}
               >
                 documentation for full step by step explanation.
               </Text>
@@ -116,7 +132,7 @@ export class SetupPage extends Component<Props, State> {
               Next we are going to send a test notification. Make sure you {''}
               <Text
                 component={TextVariants.a}
-                href="https://aerogear.org/docs/unifiedpush/aerogear-push-android/guides/#_handling_notification"
+                href={getLink('build-and-deploy-android')}
               >
                 build or deploy your app
               </Text>

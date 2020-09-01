@@ -17,7 +17,6 @@ import { UpsClientFactory } from '../../../utils/UpsClientFactory';
 import { RenewVariantSecret } from './dialogs/RenewVariantSecret';
 import { AndroidVariantDetails } from './android/AndroidVariantDetails';
 import { AndroidCodeSnippets } from './android/AndroidCodeSnippets';
-import { links } from '../../../links';
 import { IOSTokenVariantDetails } from './ios_token/iOSTokenVariantDetails';
 import { IOSTokenCodeSnippets } from './ios_token/iOSTokenCodeSnippets';
 import { IOSCertVariantDetails } from './ios_cert/iOSCertVariantDetails';
@@ -25,6 +24,7 @@ import { IOSCertCodeSnippets } from './ios_cert/iOSCertCodeSnippets';
 import { WebPushVariantDetails } from './web_push/WebPushVariantDetails';
 import { WebPushCodeSnippets } from './web_push/WebPushCodeSnippets';
 import { Secret } from '../../../common/Secret';
+import { Config, UpsConfig } from '../../../utils/Config';
 
 interface Props {
   app: PushApplication;
@@ -35,6 +35,7 @@ interface State {
   activeCodeSnippets: string;
   refreshSecret?: boolean;
   editNetworkOptions?: boolean;
+  docLinks?: UpsConfig;
 }
 
 export class VariantDetails extends Component<Props, State> {
@@ -45,7 +46,20 @@ export class VariantDetails extends Component<Props, State> {
     };
   }
 
+  async componentDidMount() {
+    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
+  }
+
   render = () => {
+    const getLink = (key: string, section = 'DOCS_LINKS') => {
+      const docLinks = this.state.docLinks as Record<
+        string,
+        Record<string, string>
+      >;
+
+      return docLinks?.[section]?.[key] || '#';
+    };
+
     const intro = () => {
       switch (this.props.variant.type) {
         case 'android':
@@ -53,19 +67,11 @@ export class VariantDetails extends Component<Props, State> {
             <Text component={TextVariants.small}>
               Firebase's Cloud Messaging Network (FCM) will be used. To learn
               more about FCM, visit our{' '}
-              <Label
-                color="blue"
-                href={links.pushApplications.variants.android.docs.java_client}
-              >
+              <Label color="blue" href={getLink('docs-push-android')}>
                 Android
               </Label>{' '}
               or{' '}
-              <Label
-                color="blue"
-                href={
-                  links.pushApplications.variants.android.docs.cordova_client
-                }
-              >
+              <Label color="blue" href={getLink('docs-push-cordova')}>
                 Apache Cordova{' '}
               </Label>{' '}
               guides for push.
@@ -77,19 +83,11 @@ export class VariantDetails extends Component<Props, State> {
             <Text component={TextVariants.small}>
               Apple's Push Network (APNs) will be used. To learn more about
               APNs, visit our{' '}
-              <Label
-                color="blue"
-                href={links.pushApplications.variants.ios_token.docs.ios_client}
-              >
+              <Label color="blue" href={getLink('docs-push-ios')}>
                 iOS
               </Label>{' '}
               or{' '}
-              <Label
-                color="blue"
-                href={
-                  links.pushApplications.variants.ios_token.docs.cordova_client
-                }
-              >
+              <Label color="blue" href={getLink('docs-push-cordova')}>
                 Apache Cordova
               </Label>{' '}
               guides for push.

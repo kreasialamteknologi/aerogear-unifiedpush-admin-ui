@@ -12,10 +12,12 @@ import {
 } from '@patternfly/react-core';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
+import { Config, UpsConfig } from '../../utils/Config';
 
 interface State {
   variantName: string;
   variantSelectionForm: boolean;
+  docLinks?: UpsConfig;
 }
 
 interface Props {
@@ -32,7 +34,20 @@ export class CreateVariantPage extends Component<Props, State> {
     };
   }
 
+  async componentDidMount() {
+    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
+  }
+
   render(): React.ReactNode {
+    const getLink = (key: string, section = 'DOCS_LINKS') => {
+      const docLinks = this.state.docLinks as Record<
+        string,
+        Record<string, string>
+      >;
+
+      return docLinks?.[section]?.[key] || '#';
+    };
+
     return (
       <>
         <EmptyState variant={EmptyStateVariant.full}>
@@ -44,14 +59,7 @@ export class CreateVariantPage extends Component<Props, State> {
             The first step to set up your mobile device is to add a variants.
             That will generate the code necessary to register UPS on your
             device. Learn more about variants in the{' '}
-            <a
-              href={
-                'https://docs.aerogear.org/aerogear/latest/getting-started-running.html#running'
-              }
-            >
-              {' '}
-              documentation{' '}
-            </a>
+            <a href={getLink('getting-started#running')}> documentation </a>
           </EmptyStateBody>
           <Bullseye>
             <Button

@@ -9,14 +9,37 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { MobileAltIcon, PlusIcon } from '@patternfly/react-icons';
+import { Config, UpsConfig } from '../../../utils/Config';
 
 interface Props {
   app?: PushApplication;
   onCreateNew: () => void;
 }
 
-export class NoVariantsPanel extends Component<Props> {
+interface State {
+  docLinks?: UpsConfig;
+}
+
+export class NoVariantsPanel extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {};
+  }
+
+  async componentDidMount() {
+    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
+  }
+
   render = () => {
+    const getLink = (key: string, section = 'DOCS_LINKS') => {
+      const docLinks = this.state.docLinks as Record<
+        string,
+        Record<string, string>
+      >;
+
+      return docLinks?.[section]?.[key] || '#';
+    };
+
     const noVariants = () => (
       <EmptyState variant={EmptyStateVariant.full}>
         <EmptyStateIcon icon={MobileAltIcon} />
@@ -28,10 +51,7 @@ export class NoVariantsPanel extends Component<Props> {
           will generate the code necessary to register UPS on your device.
           <br />
           Learn more about variants in the{' '}
-          <a href="https://aerogear.org/docs/unifiedpush/ups_userguide/index/#_create_and_manage_variants">
-            documentation
-          </a>
-          .
+          <a href={getLink('add-variant')}>documentation</a>.
         </EmptyStateBody>
         <Button
           variant="primary"

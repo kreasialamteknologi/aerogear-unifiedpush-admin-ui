@@ -26,6 +26,7 @@ import {
 } from '@patternfly/react-table';
 import { EllipsisText } from '../../../common/EllipsisText';
 import { CodeSnippet } from '../CodeSnippet';
+import { Config, UpsConfig } from '../../../utils/Config';
 
 interface Props {
   app: PushApplication;
@@ -39,6 +40,7 @@ interface State {
   total: number;
   currentPage: number;
   perPage: number;
+  docLinks?: UpsConfig;
 }
 
 export class ActivityLogPanel extends Component<Props, State> {
@@ -60,6 +62,10 @@ export class ActivityLogPanel extends Component<Props, State> {
     };
 
     this.onCollapse = this.onCollapse.bind(this);
+  }
+
+  async componentDidMount() {
+    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
   }
 
   loadActivityLog = async (page = 0) => {
@@ -153,6 +159,15 @@ export class ActivityLogPanel extends Component<Props, State> {
     const noDevices = this.props.app.metadata!.deviceCount === 0;
     const noMessages = this.state.rows.length === 0;
 
+    const getLink = (key: string, section = 'DOCS_LINKS') => {
+      const docLinks = this.state.docLinks as Record<
+        string,
+        Record<string, string>
+      >;
+
+      return docLinks?.[section]?.[key] || '#';
+    };
+
     if (noDevices && noMessages) {
       return (
         <>
@@ -163,7 +178,7 @@ export class ActivityLogPanel extends Component<Props, State> {
               There are no registered devices for this application.
               <br />
               Check out the documentation on how to get started to{' '}
-              <a href="https://aerogear.org/getstarted/guides/#push">
+              <a href={getLink('docs-push-getting-started')}>
                 register a device
               </a>
               .
@@ -181,7 +196,7 @@ export class ActivityLogPanel extends Component<Props, State> {
               No messages have been sent for this application.
               <br />
               Check out the documentation on how to get started to{' '}
-              <a href="https://aerogear.org/getstarted/guides/#push">
+              <a href={getLink('docs-push-getting-started')}>
                 register a device
               </a>
               .

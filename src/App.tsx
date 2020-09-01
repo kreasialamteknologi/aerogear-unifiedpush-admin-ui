@@ -49,61 +49,6 @@ export class App extends Component<{}, UpsAdminState> {
     };
   }
 
-<<<<<<< HEAD
-  private readonly alert = async (
-    messageOrError: string | Error,
-    details?: string[],
-    type?: AlertVariant
-  ): Promise<void> => {
-    if (messageOrError instanceof Error) {
-      if (messageOrError instanceof UpsError) {
-        const error: UpsError = messageOrError;
-        const errorDetails = error.details() ?? {};
-        return this.setState({
-          alerts: [
-            {
-              key: new Date().getTime(),
-              details: Object.keys(errorDetails).map(
-                key => `${key} : ${errorDetails[key]}`
-              ),
-              title: messageOrError.message,
-              variant: AlertVariant.danger,
-            },
-          ],
-        });
-      }
-      return this.setState({
-        alerts: [
-          {
-            key: new Date().getTime(),
-            details: [],
-            title: messageOrError.message,
-            variant: AlertVariant.danger,
-          },
-        ],
-      });
-    }
-
-    return this.setState({
-      alerts: [
-        {
-          key: new Date().getTime(),
-          details: details!,
-          title: messageOrError,
-          variant: type!,
-        },
-      ],
-    });
-  };
-
-  private readonly removeAlert = (key: number) => {
-    this.setState({
-      alerts: [...this.state.alerts.filter(el => el.key !== key)],
-    });
-  };
-
-=======
->>>>>>> feat: 🎸 adding dynamic configuration
   private readonly selectVariant = async (variant?: Variant) => {
     return this.setState({ selectedVariant: variant });
   };
@@ -131,7 +76,6 @@ export class App extends Component<{}, UpsAdminState> {
     }
   };
 
-<<<<<<< HEAD
   private readonly loadKeycloakConfig = async (): Promise<
     Record<string, string>
   > => {
@@ -141,6 +85,7 @@ export class App extends Component<{}, UpsAdminState> {
   };
 
   async componentDidMount() {
+    await UpsClientFactory.init();
     const authConfig = await this.loadKeycloakConfig();
 
     if (authConfig['auth-enabled']) {
@@ -164,7 +109,7 @@ export class App extends Component<{}, UpsAdminState> {
                 <AlertActionCloseButton
                   title={title}
                   variantLabel={`${variant} alert`}
-                  onClose={() => this.removeAlert(key)}
+                  onClose={() => removeAlert(key, this)}
                 />
               }
               key={key}
@@ -237,47 +182,6 @@ export class App extends Component<{}, UpsAdminState> {
             });
             this.refresh();
           }}
-=======
-  componentDidMount() {
-    this.refresh();
-  }
-
-  render = (): React.ReactElement => (
-    <ApplicationListContext.Provider value={this.state}>
-      <AlertGroup isToast>
-        {this.state.alerts.map(({ key, variant, title, details }) => (
-          <Alert
-            isLiveRegion
-            variant={AlertVariant[variant]}
-            title={title}
-            actionClose={
-              <AlertActionCloseButton
-                title={title}
-                variantLabel={`${variant} alert`}
-                onClose={() => removeAlert(key, this)}
-              />
-            }
-            key={key}
-          >
-            {details.length === 0 ? null : (
-              <ul>
-                {details.map(detail => (
-                  <p>{detail}</p>
-                ))}
-              </ul>
-            )}
-          </Alert>
-        ))}
-      </AlertGroup>
-      <Page
-        header={<Header />}
-        style={{ flexGrow: 1, flexDirection: 'column' }}
-      >
-        <PageSection
-          isFilled={true}
-          variant={'light'}
-          style={{ padding: '0 0 0 0' }}
->>>>>>> feat: 🎸 adding dynamic configuration
         >
           {this.render1()}
         </KeycloakProvider>
