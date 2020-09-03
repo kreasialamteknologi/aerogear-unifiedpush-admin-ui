@@ -5,19 +5,15 @@ import {
   ButtonVariant,
   Modal,
   ModalVariant,
-  Text,
-  TextVariants,
   TextArea,
-  Radio,
   FormGroup,
-  List,
-  ListVariant,
-  ListItem,
   Flex,
   FlexItem,
   Checkbox,
   Form,
   TextInput,
+  Popover,
+  Switch,
 } from '@patternfly/react-core';
 
 import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
@@ -25,11 +21,14 @@ import {
   ContextInterface,
   ApplicationListContext,
 } from '../../../../context/Context';
+import { HelpIcon } from '@patternfly/react-icons';
+import { NoVariantsPanel } from '../NoVariantsPanel';
 
 interface Props {
   visible: boolean;
   app: PushApplication;
   close: () => void;
+  createNewVariant: () => void;
 }
 
 interface State {
@@ -62,22 +61,47 @@ export class SendNotifications extends Component<Props, State> {
     };
   }
 
+  readonly closeAndReset = () => {
+    this.setState({
+      message: '',
+      categories: [],
+      deviceTypes: [],
+      alias: [],
+      variants: this.props.app.variants?.map(variant => variant.id) || [],
+      priority: 'normal',
+      formValidation: {
+        message: true,
+        variants: true,
+      },
+    });
+    this.props.close();
+  };
+
   readonly render = () => {
     const context = this.context as ContextInterface;
 
-    const updateVariants = (add: boolean, variantId: string) => {
+    const updateVariants = async (add: boolean, variantId: string) => {
       const variants = this.state.variants;
       if (add) {
         if (!variants.includes(variantId)) {
           variants.push(variantId);
-          this.setState({ variants });
+          await this.setState({ variants });
         }
       } else {
         if (variants.includes(variantId)) {
-          const index = variants.indexOf(variantId, 0);
-          this.setState({ variants: variants.filter(id => id !== variantId) });
+          console.log(this.state);
+          await this.setState({
+            variants: variants.filter(id => id !== variantId),
+          });
         }
       }
+
+      this.setState({
+        formValidation: {
+          ...this.state.formValidation,
+          variants: this.state.variants.length > 0,
+        },
+      });
     };
 
     const send = async () => {
@@ -100,6 +124,7 @@ export class SendNotifications extends Component<Props, State> {
           ...(this.state.categories.length > 0 && {
             categories: this.state.categories,
           }),
+          variants: this.state.variants,
         };
 
         try {
@@ -117,7 +142,7 @@ export class SendNotifications extends Component<Props, State> {
             { criteria }
           );
           context.refresh();
-          this.props.close();
+          this.closeAndReset();
         } catch (err) {
           context.alert(err);
         }
@@ -132,12 +157,31 @@ export class SendNotifications extends Component<Props, State> {
       }
     };
 
+    if (this.props.app.variants?.length === 0) {
+      return (
+        <Modal
+          variant={ModalVariant.large}
+          title={`Send push to ${this.props.app.name}`}
+          isOpen={this.props.visible}
+          onClose={this.closeAndReset}
+        >
+          <NoVariantsPanel
+            onCreateNew={() => {
+              this.closeAndReset();
+              this.props.createNewVariant();
+            }}
+          />
+          ;
+        </Modal>
+      );
+    }
+
     return (
       <Modal
         variant={ModalVariant.large}
         title={`Send push to ${this.props.app.name}`}
         isOpen={this.props.visible}
-        onClose={this.props.close}
+        onClose={this.closeAndReset}
         actions={[
           <Button
             key="send"
@@ -145,6 +189,8 @@ export class SendNotifications extends Component<Props, State> {
             onClick={() => {
               send();
             }}
+            isDisabled={this.state.variants?.length === 0}
+            isAriaDisabled={this.state.variants?.length === 0}
           >
             Send Message
           </Button>,
@@ -162,44 +208,30 @@ export class SendNotifications extends Component<Props, State> {
           >
             <TextArea
               aria-label="Message Text Area"
-              onChange={text => {
-                this.setState({ message: text });
+              onChange={async text => {
+                await this.setState({ message: text });
+                this.setState({
+                  formValidation: {
+                    ...this.state.formValidation,
+                    message: this.state.message.length > 0,
+                  },
+                });
               }}
             />
           </FormGroup>
-          <FormGroup label="Priority" fieldId="priority">
-            <List variant={ListVariant.inline}>
-              <ListItem>
-                <Radio
-                  className="radioBtn"
-                  name="priority"
-                  id="normal"
-                  label="Normal"
-                  isChecked={this.state.priority === 'normal'}
-                  onChange={checked => {
-                    if (checked) {
-                      this.setState({ priority: 'normal' });
-                    }
-                  }}
-                />
-              </ListItem>
-              <ListItem>
-                <Radio
-                  className="radioBtn"
-                  name="priority"
-                  id="high"
-                  label="High"
-                  isChecked={this.state.priority === 'high'}
-                  onChange={checked => {
-                    if (checked) {
-                      this.setState({ priority: 'high' });
-                    }
-                  }}
-                />
-              </ListItem>
-            </List>
+          <FormGroup fieldId="priority" hasNoPaddingTop>
+            <Switch
+              label="High Priority"
+              aria-label="High Priority"
+              labelOff="Normal Priority"
+              isChecked={this.state.priority === 'high'}
+              onChange={(checked: boolean) =>
+                this.setState({ priority: checked ? 'high' : 'normal' })
+              }
+            />
           </FormGroup>
           <FormGroup
+            hasNoPaddingTop
             label="Variants"
             fieldId="variants"
             helperTextInvalid="You must select at least one variant."
@@ -224,33 +256,63 @@ export class SendNotifications extends Component<Props, State> {
             </Flex>
           </FormGroup>
 
-          <FormGroup label="alias" fieldId="alias">
+          <FormGroup
+            label="Criteria"
+            labelIcon={
+              <Popover
+                headerContent={
+                  <div>Criteria used to filter the list of targets</div>
+                }
+                bodyContent={
+                  'You can provide multiple values at a time by separating them by commas.'
+                }
+              >
+                <button
+                  aria-label="More info for name field"
+                  onClick={e => e.preventDefault()}
+                  aria-describedby="simple-form-name"
+                  className="pf-c-form__group-label-help"
+                >
+                  <HelpIcon noVerticalAlign />
+                </button>
+              </Popover>
+            }
+            fieldId="alias"
+            helperText="Alias"
+          >
             <TextInput
               id="alias"
-              onChange={text => this.setState({ alias: text.split(',') })}
+              onChange={text =>
+                this.setState({
+                  alias: text.split(',').map(alias => alias.trim()),
+                })
+              }
             />
           </FormGroup>
 
-          <FormGroup label="Device Types" fieldId="device-type">
+          <FormGroup fieldId="device-type" helperText="Device Types">
             <TextInput
               id="device-type"
-              onChange={text => this.setState({ deviceTypes: text.split(',') })}
+              onChange={text =>
+                this.setState({
+                  deviceTypes: text.split(',').map(type => type.trim()),
+                })
+              }
               label="Device Types"
             />
           </FormGroup>
 
-          <FormGroup label="Categories" fieldId="categories">
+          <FormGroup helperText="Categories" fieldId="categories">
             <TextInput
               id="categories"
-              onChange={text => this.setState({ categories: text.split(',') })}
+              onChange={text =>
+                this.setState({
+                  categories: text.split(',').map(category => category.trim()),
+                })
+              }
               label="Categories"
             />
           </FormGroup>
-
-          <Text component={TextVariants.small}>
-            You can provide multiple values at a time by separating them by
-            commas.
-          </Text>
         </Form>
       </Modal>
     );

@@ -58,7 +58,10 @@ export class AndroidVariantDetails extends Component<Props, State> {
           >
             Server Key:
           </TextListItem>
-          <TextListItem component={TextListItemVariants.dd}>
+          <TextListItem
+            component={TextListItemVariants.dd}
+            style={{ wordBreak: 'break-word' }}
+          >
             {variant.googleKey}
           </TextListItem>
 

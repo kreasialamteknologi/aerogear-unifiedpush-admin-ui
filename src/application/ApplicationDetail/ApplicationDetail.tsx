@@ -61,6 +61,7 @@ export class ApplicationDetail extends Component<Props, State> {
           app={this.props.app}
           visible={this.state.sendNotificationModel}
           close={() => this.setState({ sendNotificationModel: false })}
+          createNewVariant={() => this.setState({ addVariantModel: true })}
         />
         <VariantSelectionForm
           app={this.props.app}
