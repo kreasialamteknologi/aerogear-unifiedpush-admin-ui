@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component } from 'react';
 import {
   TextContent,
   Text,
@@ -37,6 +37,41 @@ export class SetupPage extends Component<Props> {
     const context = this.context as ContextInterface;
     const getLink = (key: string) => _getLink(context.upsConfig, key);
 
+    const getCodeSnippet = () => {
+      switch (context.selectedVariant?.type) {
+        case 'android':
+          return (
+            <AndroidCodeSnippets
+              app={this.props.app}
+              variant={context.selectedVariant! as AndroidVariant}
+            />
+          );
+        case 'web_push':
+          return (
+            <WebPushCodeSnippets
+              app={this.props.app}
+              variant={context.selectedVariant! as WebPushVariant}
+            />
+          );
+        case 'ios':
+          return (
+            <IOSCertCodeSnippets
+              app={this.props.app}
+              variant={context.selectedVariant! as IOSVariant}
+            />
+          );
+        case 'ios_token':
+          return (
+            <IOSTokenCodeSnippets
+              app={this.props.app}
+              variant={context.selectedVariant! as IOSTokenVariant}
+            />
+          );
+        default:
+          return <></>;
+      }
+    };
+
     return (
       <>
         <Page>
@@ -68,52 +103,15 @@ export class SetupPage extends Component<Props> {
               <TextListItem>Click Next(below)</TextListItem>
             </TextList>
           </TextContent>
-          <ApplicationListContext.Consumer>
-            {({ selectedVariant }: ContextInterface): ReactNode => {
-              if (selectedVariant?.type === 'android') {
-                return (
-                  <AndroidCodeSnippets
-                    app={this.props.app}
-                    variant={selectedVariant! as AndroidVariant}
-                  />
-                );
-              }
-              if (selectedVariant?.type === 'web_push') {
-                return (
-                  <WebPushCodeSnippets
-                    app={this.props.app}
-                    variant={selectedVariant! as WebPushVariant}
-                  />
-                );
-              }
-              if (selectedVariant?.type === 'ios') {
-                return (
-                  <IOSCertCodeSnippets
-                    app={this.props.app}
-                    variant={selectedVariant! as IOSVariant}
-                  />
-                );
-              }
-              if (selectedVariant?.type === 'ios_token') {
-                return (
-                  <IOSTokenCodeSnippets
-                    app={this.props.app}
-                    variant={selectedVariant! as IOSTokenVariant}
-                  />
-                );
-              }
-
-              return () => {
-                console.log('missing code snippets');
-              };
-            }}
-          </ApplicationListContext.Consumer>
+          {getCodeSnippet()}
           <TextContent>
             <Text component={TextVariants.p}>
               Next we are going to send a test notification. Make sure you {''}
               <Text
                 component={TextVariants.a}
-                href={getLink('build-and-deploy-android')}
+                href={getLink(
+                  `build-and-deploy-${context.selectedVariant?.type}`
+                )}
               >
                 build or deploy your app
               </Text>

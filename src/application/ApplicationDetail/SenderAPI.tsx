@@ -117,7 +117,7 @@ export class SenderAPI extends Component<Props, State> {
             <Text component={'small'}>
               First add{' '}
               <code className={'code'}>unifiedpush-java-client.jar</code> as a{' '}
-              <a href={'links.pushApplications.senderAPI.docs.java_client'}>
+              <a href={getLink('sender-api-java')}>
                 dependency to your Java project
               </a>
               .
@@ -149,7 +149,7 @@ export class SenderAPI extends Component<Props, State> {
           <Tab eventKey={'node-sender-api'} title="Node.js Sender API">
             <Title headingLevel={'h1'}>Set up Node.js Sender API</Title>
             <Text component={'small'}>
-              First add <code className={'code'}>unifiedpush-jnode-sender</code>{' '}
+              First add <code className={'code'}>unifiedpush-node-sender</code>{' '}
               as a{' '}
               <a href={getLink('sender-api-nodejs')}>
                 dependency to your project
