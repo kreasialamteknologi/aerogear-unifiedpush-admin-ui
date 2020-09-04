@@ -16,6 +16,9 @@ package-lock.json
 .idea
 *.iml
 
+# vscode
+.vscode
+
 # misc
 .DS_Store
 .env.local
@@ -30,3 +33,4 @@ yarn-error.log*
 .project
 *.css
 *.iml
+.tmp
