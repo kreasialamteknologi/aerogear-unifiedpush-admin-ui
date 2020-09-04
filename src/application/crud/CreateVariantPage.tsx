@@ -13,6 +13,7 @@ import {
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
 import { Config, UpsConfig } from '../../utils/Config';
+import { getLink as _getLink } from '../../utils/DocLinksUtils';
 
 interface State {
   variantName: string;
@@ -39,14 +40,7 @@ export class CreateVariantPage extends Component<Props, State> {
   }
 
   render(): React.ReactNode {
-    const getLink = (key: string, section = 'DOCS_LINKS') => {
-      const docLinks = this.state.docLinks as Record<
-        string,
-        Record<string, string>
-      >;
-
-      return docLinks?.[section]?.[key] || '#';
-    };
+    const getLink = (key: string) => _getLink(this.state.docLinks, key);
 
     return (
       <>

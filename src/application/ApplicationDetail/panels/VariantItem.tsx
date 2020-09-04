@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useState } from 'react';
 import {
   AndroidVariant,
   Variant,
@@ -39,7 +39,100 @@ interface State {
   selectedVariant?: Variant;
 }
 
-export class VariantItem extends Component<Props, State> {
+export function VariantItem(props: Props) {
+  const [expanded, setExpanded] = useState<boolean>(false);
+  const [deleteVariant, openDeleteVariant] = useState<boolean>(false);
+  const [editVariant, openEditVariant] = useState<boolean>(false);
+
+  const context = useContext<ContextInterface>(ApplicationListContext);
+
+  return (
+    <>
+      <DataListItem
+        className="varList"
+        aria-labelledby={'cell-' + props.variant.id}
+        isExpanded={expanded}
+      >
+        <DataListItemRow>
+          <DataListToggle
+            onClick={() => setExpanded(!expanded)}
+            isExpanded={expanded}
+            id={'toggle-' + props.variant.id}
+            aria-controls={'expand-' + props.variant.id}
+          />
+          <DataListItemCells
+            dataListCells={[
+              <DataListCell key="primary content">
+                <div id={'cell-' + props.variant.id}>
+                  {props.variant.name}
+                  <Text
+                    style={{ paddingLeft: 20, color: '#999' }}
+                    component={TextVariants.small}
+                  >
+                    <i style={{ paddingRight: 5 }} className="fas fa-ban" />
+                    {!props.variant.metadata?.deviceCount
+                      ? 'No installation yet'
+                      : `${props.variant.metadata?.deviceCount} Device${
+                          props.variant.metadata?.deviceCount > 1 ? 's' : ''
+                        }`}
+                  </Text>
+                </div>
+              </DataListCell>,
+              <DataListCell key="buttons">
+                <List className="varBtnGroup" variant={ListVariant.inline}>
+                  <ListItem>
+                    <Button
+                      className="editBtn"
+                      variant="secondary"
+                      icon={<EditIcon />}
+                      onClick={async () => {
+                        await context.selectVariant(props.variant);
+                        openEditVariant(true);
+                      }}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <Button
+                      className="deleteBtn"
+                      variant="danger"
+                      icon={<TrashIcon />}
+                      onClick={async () => {
+                        await context.selectVariant(props.variant);
+                        openDeleteVariant(true);
+                      }}
+                    />
+                  </ListItem>
+                </List>
+              </DataListCell>,
+            ]}
+          />
+        </DataListItemRow>
+        <DataListContent
+          aria-label="Primary Content Details"
+          id={'expand-' + props.variant.id}
+          isHidden={!expanded}
+        >
+          <VariantDetails
+            variant={props.variant as AndroidVariant}
+            app={props.app}
+          />
+        </DataListContent>
+      </DataListItem>
+      <DeleteVariantPage
+        open={deleteVariant}
+        close={() => openDeleteVariant(false)}
+        app={props.app}
+      />
+      <RenameVariantPage
+        open={editVariant}
+        close={() => openEditVariant(false)}
+        app={props.app}
+      />
+    </>
+  );
+}
+
+export class VariantItem2 extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {

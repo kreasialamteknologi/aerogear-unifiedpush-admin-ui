@@ -23,6 +23,7 @@ import { snippet as node_snippet } from './snippets/sender/node';
 import { snippet as curl_snippet } from './snippets/sender/curl';
 import { Secret } from '../../common/Secret';
 import { Config, UpsConfig } from '../../utils/Config';
+import { getLink as _getLink } from '../../utils/DocLinksUtils';
 
 interface State {
   refreshSecret: boolean;
@@ -46,14 +47,7 @@ export class SenderAPI extends Component<Props, State> {
   }
 
   readonly render = () => {
-    const getLink = (key: string, section = 'DOCS_LINKS') => {
-      const docLinks = this.state.docLinks as Record<
-        string,
-        Record<string, string>
-      >;
-
-      return docLinks?.[section]?.[key] || '#';
-    };
+    const getLink = (key: string) => _getLink(this.state.docLinks, key);
 
     const onRefreshed = (app: PushApplication) => {
       this.props.app.masterSecret = app.masterSecret;

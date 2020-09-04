@@ -52,6 +52,16 @@ export abstract class VariantsPanel extends Component<Props> {
 
     const variants = this.getVariants();
 
+    const deviceCount =
+      this.props.app?.variants
+        ?.filter(variant => variant.type === this.props.variantType)
+        .map(variant => variant.metadata?.deviceCount || 0)
+        .reduce(
+          (currentTotal: number, currentValue: number) =>
+            currentTotal + currentValue,
+          0
+        ) || 0;
+
     if (variants.length > 0) {
       return (
         <Card className={'variant-details'}>
@@ -69,20 +79,11 @@ export abstract class VariantsPanel extends Component<Props> {
                   <i className={`fas fa-mobile-alt`} />{' '}
                 </ListItem>
                 <ListItem>
-                  <Text style={{ fontWeight: 700 }}>
-                    {this.props.app?.variants
-                      ?.filter(
-                        variant => variant.type === this.props.variantType
-                      )
-                      .map(variant => variant.metadata?.deviceCount || 0)
-                      .reduce(
-                        (currentTotal: number, currentValue: number) =>
-                          currentTotal + currentValue,
-                        0
-                      )}
-                  </Text>
+                  <Text style={{ fontWeight: 700 }}>{deviceCount}</Text>
                 </ListItem>
-                <ListItem>Devices</ListItem>
+                <ListItem>{`Device${
+                  deviceCount > 1 || deviceCount === 0 ? 's' : ''
+                }`}</ListItem>
               </List>
             </CardHeaderMain>
           </CardHeader>

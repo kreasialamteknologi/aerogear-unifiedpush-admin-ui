@@ -27,6 +27,7 @@ import {
 import { EllipsisText } from '../../../common/EllipsisText';
 import { CodeSnippet } from '../CodeSnippet';
 import { Config, UpsConfig } from '../../../utils/Config';
+import { getLink as _getLink } from '../../../utils/DocLinksUtils';
 
 interface Props {
   app: PushApplication;
@@ -158,15 +159,7 @@ export class ActivityLogPanel extends Component<Props, State> {
   render = () => {
     const noDevices = this.props.app.metadata!.deviceCount === 0;
     const noMessages = this.state.rows.length === 0;
-
-    const getLink = (key: string, section = 'DOCS_LINKS') => {
-      const docLinks = this.state.docLinks as Record<
-        string,
-        Record<string, string>
-      >;
-
-      return docLinks?.[section]?.[key] || '#';
-    };
+    const getLink = (key: string) => _getLink(this.state.docLinks, key);
 
     if (noDevices && noMessages) {
       return (

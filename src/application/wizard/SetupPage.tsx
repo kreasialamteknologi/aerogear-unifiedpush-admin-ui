@@ -25,6 +25,7 @@ import { WebPushCodeSnippets } from '../ApplicationDetail/panels/web_push/WebPus
 import { IOSCertCodeSnippets } from '../ApplicationDetail/panels/ios_cert/iOSCertCodeSnippets';
 import { IOSTokenCodeSnippets } from '../ApplicationDetail/panels/ios_token/iOSTokenCodeSnippets';
 import { Config, UpsConfig } from '../../utils/Config';
+import { getLink as _getLink } from '../../utils/DocLinksUtils';
 
 interface State {
   docLinks?: UpsConfig;
@@ -47,14 +48,7 @@ export class SetupPage extends Component<Props, State> {
   }
 
   render(): React.ReactNode {
-    const getLink = (key: string, section = 'DOCS_LINKS') => {
-      const docLinks = this.state.docLinks as Record<
-        string,
-        Record<string, string>
-      >;
-
-      return docLinks?.[section]?.[key] || '#';
-    };
+    const getLink = (key: string) => _getLink(this.state.docLinks, key);
 
     return (
       <>

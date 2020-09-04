@@ -7,10 +7,14 @@ import React, { Component } from 'react';
 import {
   Button,
   ButtonVariant,
+  Label,
   TextList,
   TextListItem,
   TextListItemVariants,
   TextListVariants,
+  Text,
+  TextVariants,
+  ClipboardCopy,
 } from '@patternfly/react-core';
 import { EditIcon } from '@patternfly/react-icons';
 import { EditAndroidNetworkOptions } from './EditAndroidNetworkOptions';
@@ -48,7 +52,10 @@ export class AndroidVariantDetails extends Component<Props, State> {
           <TextListItem component={TextListItemVariants.dd}>
             {variant.projectNumber}
           </TextListItem>
-          <TextListItem component={TextListItemVariants.dt}>
+          <TextListItem
+            style={{ width: '100%' }}
+            component={TextListItemVariants.dt}
+          >
             Server Key:
           </TextListItem>
           <TextListItem component={TextListItemVariants.dd}>
