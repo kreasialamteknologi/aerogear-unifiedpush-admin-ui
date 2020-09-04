@@ -19,12 +19,10 @@ import {
   ApplicationListContext,
   ContextInterface,
 } from '../../context/Context';
-import { Config, UpsConfig } from '../../utils/Config';
 import { getLink as _getLink } from '../../utils/DocLinksUtils';
 
 interface State {
   appName: string;
-  docLinks?: UpsConfig;
 }
 
 interface Props {
@@ -39,10 +37,6 @@ export class CreateApplicationPage extends Component<Props, State> {
     };
   }
 
-  async componentDidMount() {
-    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
-  }
-
   private readonly createApp = async (name: string) => {
     try {
       const app = await UpsClientFactory.getUpsClient()
@@ -55,7 +49,8 @@ export class CreateApplicationPage extends Component<Props, State> {
   };
 
   render(): React.ReactNode {
-    const getLink = (key: string) => _getLink(this.state.docLinks, key);
+    const context = this.context as ContextInterface;
+    const getLink = (key: string) => _getLink(context.upsConfig, key);
 
     return (
       <EmptyState variant={EmptyStateVariant.full}>

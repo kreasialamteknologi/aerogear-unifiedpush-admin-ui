@@ -28,6 +28,11 @@ import { EllipsisText } from '../../../common/EllipsisText';
 import { CodeSnippet } from '../CodeSnippet';
 import { Config, UpsConfig } from '../../../utils/Config';
 import { getLink as _getLink } from '../../../utils/DocLinksUtils';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../../context/Context';
+import { SenderAPI } from '../SenderAPI';
 
 interface Props {
   app: PushApplication;
@@ -41,7 +46,6 @@ interface State {
   total: number;
   currentPage: number;
   perPage: number;
-  docLinks?: UpsConfig;
 }
 
 export class ActivityLogPanel extends Component<Props, State> {
@@ -63,10 +67,6 @@ export class ActivityLogPanel extends Component<Props, State> {
     };
 
     this.onCollapse = this.onCollapse.bind(this);
-  }
-
-  async componentDidMount() {
-    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
   }
 
   loadActivityLog = async (page = 0) => {
@@ -157,9 +157,10 @@ export class ActivityLogPanel extends Component<Props, State> {
   }
 
   render = () => {
+    const context = this.context as ContextInterface;
     const noDevices = this.props.app.metadata!.deviceCount === 0;
     const noMessages = this.state.rows.length === 0;
-    const getLink = (key: string) => _getLink(this.state.docLinks, key);
+    const getLink = (key: string) => _getLink(context.upsConfig, key);
 
     if (noDevices && noMessages) {
       return (
@@ -246,3 +247,4 @@ export class ActivityLogPanel extends Component<Props, State> {
     }
   };
 }
+ActivityLogPanel.contextType = ApplicationListContext;

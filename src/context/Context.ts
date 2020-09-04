@@ -2,6 +2,7 @@ import React from 'react';
 import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
 import { AlertVariant } from '@patternfly/react-core';
 import { Alert } from '../utils/Alerts';
+import { UpsConfig } from '../utils/Config';
 
 export interface UpsAdminState {
   //the current page being viewed
@@ -22,6 +23,7 @@ export interface UpsAdminState {
   selectVariant: (variant: Variant) => void;
 
   authConfig: Record<string, string>;
+  upsConfig: UpsConfig;
 }
 
 const defaultState: UpsAdminState = {
@@ -37,6 +39,7 @@ const defaultState: UpsAdminState = {
   alerts: [],
   selectVariant: async (variant: Variant) => {},
   authConfig: {},
+  upsConfig: {},
 };
 
 export interface ContextInterface extends UpsAdminState {}

@@ -14,11 +14,15 @@ import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
 import { Config, UpsConfig } from '../../utils/Config';
 import { getLink as _getLink } from '../../utils/DocLinksUtils';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../context/Context';
+import { ActivityLogPanel } from '../ApplicationDetail/panels/ActivityLogPanel';
 
 interface State {
   variantName: string;
   variantSelectionForm: boolean;
-  docLinks?: UpsConfig;
 }
 
 interface Props {
@@ -35,12 +39,9 @@ export class CreateVariantPage extends Component<Props, State> {
     };
   }
 
-  async componentDidMount() {
-    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
-  }
-
   render(): React.ReactNode {
-    const getLink = (key: string) => _getLink(this.state.docLinks, key);
+    const context = this.context as ContextInterface;
+    const getLink = (key: string) => _getLink(context.upsConfig, key);
 
     return (
       <>
@@ -78,3 +79,4 @@ export class CreateVariantPage extends Component<Props, State> {
     );
   }
 }
+CreateVariantPage.contextType = ApplicationListContext;

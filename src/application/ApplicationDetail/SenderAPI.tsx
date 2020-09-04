@@ -22,13 +22,15 @@ import { snippet as java_snippet } from './snippets/sender/java';
 import { snippet as node_snippet } from './snippets/sender/node';
 import { snippet as curl_snippet } from './snippets/sender/curl';
 import { Secret } from '../../common/Secret';
-import { Config, UpsConfig } from '../../utils/Config';
 import { getLink as _getLink } from '../../utils/DocLinksUtils';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../context/Context';
 
 interface State {
   refreshSecret: boolean;
   activeTab: string;
-  docLinks?: UpsConfig;
 }
 interface Props {
   app: PushApplication;
@@ -42,12 +44,9 @@ export class SenderAPI extends Component<Props, State> {
     };
   }
 
-  async componentDidMount() {
-    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
-  }
-
   readonly render = () => {
-    const getLink = (key: string) => _getLink(this.state.docLinks, key);
+    const context = this.context as ContextInterface;
+    const getLink = (key: string) => _getLink(context.upsConfig, key);
 
     const onRefreshed = (app: PushApplication) => {
       this.props.app.masterSecret = app.masterSecret;
@@ -198,3 +197,4 @@ export class SenderAPI extends Component<Props, State> {
     );
   };
 }
+SenderAPI.contextType = ApplicationListContext;

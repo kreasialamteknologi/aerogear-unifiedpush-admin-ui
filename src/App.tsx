@@ -46,6 +46,7 @@ export class App extends Component<{}, UpsAdminState> {
       alerts: [],
       selectVariant: this.selectVariant,
       authConfig: {},
+      upsConfig: {},
     };
   }
 
@@ -93,7 +94,12 @@ export class App extends Component<{}, UpsAdminState> {
     } else {
       this.refresh();
     }
-    this.setState({ authConfig });
+    this.setState({
+      authConfig,
+      upsConfig: await UpsClientFactory.getUpsClient()
+        .config.ui.get()
+        .execute(),
+    });
   }
 
   render1 = (): React.ReactElement => {

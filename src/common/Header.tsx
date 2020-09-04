@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import { QuestionCircleIcon } from '@patternfly/react-icons';
 
 import { PageHeader, PageHeaderTools } from '@patternfly/react-core';
 import { UserTool } from './UserTool';
-import { Config, UpsConfig } from '../utils/Config';
 import { UPSAboutDialog } from './UPSAboutDialog';
 import { getLink as _getLink } from '../utils/DocLinksUtils';
+import { ApplicationListContext, ContextInterface } from '../context/Context';
 
 export function Header() {
   const [isAboutDialogOpen, openAboutDialog] = useState<boolean>(false);
-  const [docLinks, setDocLinks] = useState<UpsConfig | undefined>(undefined);
 
-  useEffect(() => {
-    (async () => setDocLinks(await Config.getInstance().getDocsConfig()))();
-  });
-
-  const getLink = (key: string) => _getLink(docLinks, key);
+  const context = useContext<ContextInterface>(ApplicationListContext);
+  const getLink = (key: string) => _getLink(context.upsConfig, key);
 
   const headerTools = () => (
     <React.Fragment>

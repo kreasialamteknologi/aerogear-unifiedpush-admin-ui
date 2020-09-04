@@ -24,12 +24,7 @@ import { AndroidCodeSnippets } from '../ApplicationDetail/panels/android/Android
 import { WebPushCodeSnippets } from '../ApplicationDetail/panels/web_push/WebPushCodeSnippets';
 import { IOSCertCodeSnippets } from '../ApplicationDetail/panels/ios_cert/iOSCertCodeSnippets';
 import { IOSTokenCodeSnippets } from '../ApplicationDetail/panels/ios_token/iOSTokenCodeSnippets';
-import { Config, UpsConfig } from '../../utils/Config';
 import { getLink as _getLink } from '../../utils/DocLinksUtils';
-
-interface State {
-  docLinks?: UpsConfig;
-}
 
 interface Props {
   app: PushApplication;
@@ -37,18 +32,10 @@ interface Props {
   onFinished: () => void;
 }
 
-export class SetupPage extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {};
-  }
-
-  async componentDidMount() {
-    this.setState({ docLinks: await Config.getInstance().getDocsConfig() });
-  }
-
+export class SetupPage extends Component<Props> {
   render(): React.ReactNode {
-    const getLink = (key: string) => _getLink(this.state.docLinks, key);
+    const context = this.context as ContextInterface;
+    const getLink = (key: string) => _getLink(context.upsConfig, key);
 
     return (
       <>
@@ -145,3 +132,4 @@ export class SetupPage extends Component<Props, State> {
     );
   }
 }
+SetupPage.contextType = ApplicationListContext;
