@@ -11,7 +11,7 @@ export class Config {
   private static instance?: Config;
 
   static readonly getUPSServerURL = async (): Promise<string> =>
-    (await axios.default.get<string>('/config')).data;
+    (await axios.default.get<string>('/config.txt')).data;
 
   static readonly getInstance = () => {
     if (!Config.instance) {
