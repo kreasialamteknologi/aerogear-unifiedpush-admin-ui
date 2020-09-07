@@ -1,8 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 set -o nounset
 set -o errexit
 
-destfile="/srv/config.txt"
-echo "$UPS_HOST" >> "$destfile"
-
-serve -s /srv
+destfile="/usr/share/nginx/html/config.txt"
+echo "$UPS_HOST" > "$destfile"
+nginx -g "daemon off;"

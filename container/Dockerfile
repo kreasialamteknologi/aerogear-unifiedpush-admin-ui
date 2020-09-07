@@ -1,15 +1,11 @@
-FROM node:14.9.0-alpine3.10 as build0
-
+FROM nginx
 WORKDIR /srv
 COPY  . ./
-RUN npm install
-RUN npm run build
-COPY  ./startup.sh ./build/
-
-FROM node:14.9.0-alpine3.10
-
-EXPOSE 5000
-RUN npm install -g serve
-WORKDIR /srv
-COPY --from=build0 /srv/build /srv/
-#ENTRYPOINT [ "/srv/startup.sh" ]
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash &&\
+ . /root/.bashrc && \
+ nvm install 14.9.0 && \
+ npm install && \
+ npm run build
+RUN cp -a /srv/build/. /usr/share/nginx/html
+ENTRYPOINT [ "/srv/startup.sh"]
+CMD ["nginx", "-g", "daemon off;"]
