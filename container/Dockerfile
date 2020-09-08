@@ -1,11 +1,14 @@
-FROM nginx
+FROM node:14.9.0-alpine3.10 as build0
+
 WORKDIR /srv
 COPY  . ./
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash &&\
- . /root/.bashrc && \
- nvm install 14.9.0 && \
- npm install && \
- npm run build
-RUN cp -a /srv/build/. /usr/share/nginx/html
+RUN npm install
+RUN npm run build
+
+
+FROM nginx
+EXPOSE 5000
+COPY --from=build0 /srv/build /usr/share/nginx/html/
+COPY  ./startup.sh /srv/startup.sh
 ENTRYPOINT [ "/srv/startup.sh"]
 CMD ["nginx", "-g", "daemon off;"]
