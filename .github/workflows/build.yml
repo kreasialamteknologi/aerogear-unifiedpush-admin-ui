@@ -20,3 +20,12 @@ jobs:
 
       - name: Build
         run: npm run compile
+      
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Deploy
+        run: BRANCH_NAME=${{ steps.extract_branch.outputs.branch }};sh ./container/quay_push '${{secrets.QUAY_USERNAME}}' '${{secrets.QUAY_PASSWORD}}' "$BRANCH_NAME"
+        if: github.event_name == 'push'
