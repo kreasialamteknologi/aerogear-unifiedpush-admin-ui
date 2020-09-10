@@ -1,0 +1,17 @@
+name: publish
+
+on: release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/tags/})"
+        id: extract_branch
+
+      - name: Deploy
+        run: BRANCH_NAME=${{ steps.extract_branch.outputs.branch }};sh ./container/quay_push '${{secrets.QUAY_USERNAME}}' '${{secrets.QUAY_PASSWORD}}' "$BRANCH_NAME"
