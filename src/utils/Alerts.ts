@@ -7,6 +7,7 @@ export interface Alert {
   title: string;
   variant: AlertVariant;
   details: string[];
+  timeout: boolean;
 }
 
 interface Alerts {
@@ -17,7 +18,8 @@ export const addAlert = async (
   messageOrError: string | Error,
   owner: Component<unknown, Alerts>,
   details?: string[],
-  type?: AlertVariant
+  type?: AlertVariant,
+  timeout?: number
 ): Promise<void> => {
   if (messageOrError instanceof Error) {
     if (messageOrError instanceof UpsError) {
@@ -32,6 +34,7 @@ export const addAlert = async (
             ),
             title: messageOrError.message,
             variant: AlertVariant.danger,
+            timeout: !!timeout,
           },
         ],
       });
@@ -43,6 +46,7 @@ export const addAlert = async (
           details: [],
           title: messageOrError.message,
           variant: AlertVariant.danger,
+          timeout: !!timeout,
         },
       ],
     });
@@ -55,6 +59,7 @@ export const addAlert = async (
         details: details!,
         title: messageOrError,
         variant: type!,
+        timeout: !!timeout,
       },
     ],
   });

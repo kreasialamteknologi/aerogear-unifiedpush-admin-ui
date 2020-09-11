@@ -18,7 +18,12 @@ export interface UpsAdminState {
   alerts: Alert[];
 
   alert(err: Error): Promise<void>;
-  alert(message: string, details: string[], type: AlertVariant): Promise<void>;
+  alert(
+    message: string,
+    details: string[],
+    type: AlertVariant,
+    timeout?: number
+  ): Promise<void>;
 
   selectVariant: (variant: Variant) => void;
 

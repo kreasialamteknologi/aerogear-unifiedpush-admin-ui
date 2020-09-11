@@ -32,12 +32,6 @@ interface Props {
   variant: Variant;
 }
 
-interface State {
-  refreshSecret?: boolean;
-  editNetworkOptions?: boolean;
-  docLinks?: UpsConfig;
-}
-
 export function VariantDetails(props: Props) {
   const [refreshSecret, openRefreshSecretDialog] = useState<boolean>(false);
   const [docLinks, setDocLinks] = useState<UpsConfig>({});

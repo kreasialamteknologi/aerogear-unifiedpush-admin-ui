@@ -26,6 +26,7 @@ import {
   ApplicationListContext,
   ContextInterface,
 } from '../../../context/Context';
+import { InstallationCount } from '../InstallationsCount';
 
 interface Props {
   app: PushApplication;
@@ -65,17 +66,7 @@ export function VariantItem(props: Props) {
               <DataListCell key="primary content">
                 <div id={'cell-' + props.variant.id}>
                   {props.variant.name}
-                  <Text
-                    style={{ paddingLeft: 20, color: '#999' }}
-                    component={TextVariants.small}
-                  >
-                    <i style={{ paddingRight: 5 }} className="fas fa-ban" />
-                    {!props.variant.metadata?.deviceCount
-                      ? 'No installation yet'
-                      : `${props.variant.metadata?.deviceCount} Device${
-                          props.variant.metadata?.deviceCount > 1 ? 's' : ''
-                        }`}
-                  </Text>
+                  <InstallationCount variant={props.variant} app={props.app} />
                 </div>
               </DataListCell>,
               <DataListCell key="buttons">

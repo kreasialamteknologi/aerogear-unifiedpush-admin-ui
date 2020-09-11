@@ -8,6 +8,9 @@ import {
   TextList,
   TextListItem,
   TextListVariants,
+  Split,
+  SplitItem,
+  WizardContextConsumer,
 } from '@patternfly/react-core';
 import {
   PushApplication,
@@ -15,6 +18,7 @@ import {
   WebPushVariant,
   IOSVariant,
   IOSTokenVariant,
+  Variant,
 } from '@aerogear/unifiedpush-admin-client';
 import {
   ApplicationListContext,
@@ -25,10 +29,11 @@ import { WebPushCodeSnippets } from '../ApplicationDetail/panels/web_push/WebPus
 import { IOSCertCodeSnippets } from '../ApplicationDetail/panels/ios_cert/iOSCertCodeSnippets';
 import { IOSTokenCodeSnippets } from '../ApplicationDetail/panels/ios_token/iOSTokenCodeSnippets';
 import { getLink as _getLink } from '../../utils/DocLinksUtils';
+import { InstallationCount } from '../ApplicationDetail/InstallationsCount';
 
 interface Props {
   app: PushApplication;
-  variant: AndroidVariant;
+  variant: Variant;
   onFinished: () => void;
 }
 
@@ -37,34 +42,48 @@ export class SetupPage extends Component<Props> {
     const context = this.context as ContextInterface;
     const getLink = (key: string) => _getLink(context.upsConfig, key);
 
+    const getIcon = () => {
+      switch (this.props.variant.type) {
+        case 'android':
+          return 'fab fa-android fa-3x muted';
+        case 'ios':
+        case 'ios_token':
+          return 'fab fa-apple fa-3x muted';
+        case 'web_push':
+          return 'fab fa-chrome fa-3x muted';
+        default:
+          return '';
+      }
+    };
+
     const getCodeSnippet = () => {
-      switch (context.selectedVariant?.type) {
+      switch (this.props.variant.type) {
         case 'android':
           return (
             <AndroidCodeSnippets
               app={this.props.app}
-              variant={context.selectedVariant! as AndroidVariant}
+              variant={this.props.variant as AndroidVariant}
             />
           );
         case 'web_push':
           return (
             <WebPushCodeSnippets
               app={this.props.app}
-              variant={context.selectedVariant! as WebPushVariant}
+              variant={this.props.variant as WebPushVariant}
             />
           );
         case 'ios':
           return (
             <IOSCertCodeSnippets
               app={this.props.app}
-              variant={context.selectedVariant! as IOSVariant}
+              variant={this.props.variant as IOSVariant}
             />
           );
         case 'ios_token':
           return (
             <IOSTokenCodeSnippets
               app={this.props.app}
-              variant={context.selectedVariant! as IOSTokenVariant}
+              variant={this.props.variant as IOSTokenVariant}
             />
           );
         default:
@@ -76,7 +95,24 @@ export class SetupPage extends Component<Props> {
       <>
         <Page>
           <TextContent>
-            <Text component={TextVariants.h1}>{`${this.props.app.name}`}</Text>
+            <Split style={{ alignItems: 'center' }}>
+              <SplitItem>
+                <i className={getIcon()} />
+              </SplitItem>
+              <SplitItem>
+                <Text
+                  component={TextVariants.h1}
+                >{`${this.props.app.name} :`}</Text>
+              </SplitItem>
+              <SplitItem>
+                <InstallationCount
+                  variant={this.props.variant}
+                  app={this.props.app}
+                  autoRefresh={true}
+                  onNewInstallation={this.props.onFinished}
+                />
+              </SplitItem>
+            </Split>
             <Text component={TextVariants.p}>
               We are half way there! Use the code snippet below to{' '}
               <Text
@@ -109,9 +145,7 @@ export class SetupPage extends Component<Props> {
               Next we are going to send a test notification. Make sure you {''}
               <Text
                 component={TextVariants.a}
-                href={getLink(
-                  `build-and-deploy-${context.selectedVariant?.type}`
-                )}
+                href={getLink(`build-and-deploy-${this.props.variant.type}`)}
               >
                 build or deploy your app
               </Text>
@@ -119,13 +153,17 @@ export class SetupPage extends Component<Props> {
             </Text>
           </TextContent>
         </Page>
-        <Button
-          className={'setupPageButton'}
-          variant="primary"
-          onClick={() => {}}
-        >
-          Next
-        </Button>
+        <WizardContextConsumer>
+          {({ onNext }) => (
+            <Button
+              className={'setupPageButton'}
+              variant="primary"
+              onClick={onNext}
+            >
+              Next
+            </Button>
+          )}
+        </WizardContextConsumer>
       </>
     );
   }

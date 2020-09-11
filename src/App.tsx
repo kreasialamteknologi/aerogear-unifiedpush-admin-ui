@@ -41,8 +41,9 @@ export class App extends Component<{}, UpsAdminState> {
       alert: (
         messageOrError: string | Error,
         details?: string[],
-        type?: AlertVariant
-      ) => addAlert(messageOrError, this, details, type),
+        type?: AlertVariant,
+        timeout?: number
+      ) => addAlert(messageOrError, this, details, type, timeout),
       alerts: [],
       selectVariant: this.selectVariant,
       authConfig: {},
@@ -106,29 +107,32 @@ export class App extends Component<{}, UpsAdminState> {
     return (
       <ApplicationListContext.Provider value={this.state}>
         <AlertGroup isToast>
-          {this.state.alerts.map(({ key, variant, title, details }) => (
-            <Alert
-              isLiveRegion
-              variant={AlertVariant[variant]}
-              title={title}
-              actionClose={
-                <AlertActionCloseButton
-                  title={title}
-                  variantLabel={`${variant} alert`}
-                  onClose={() => removeAlert(key, this)}
-                />
-              }
-              key={key}
-            >
-              {details.length === 0 ? null : (
-                <ul>
-                  {details.map(detail => (
-                    <p>{detail}</p>
-                  ))}
-                </ul>
-              )}
-            </Alert>
-          ))}
+          {this.state.alerts.map(
+            ({ key, variant, title, details, timeout }) => (
+              <Alert
+                isLiveRegion
+                variant={AlertVariant[variant]}
+                title={title}
+                timeout={timeout}
+                actionClose={
+                  <AlertActionCloseButton
+                    title={title}
+                    variantLabel={`${variant} alert`}
+                    onClose={() => removeAlert(key, this)}
+                  />
+                }
+                key={key}
+              >
+                {details.length === 0 ? null : (
+                  <ul>
+                    {details.map(detail => (
+                      <p>{detail}</p>
+                    ))}
+                  </ul>
+                )}
+              </Alert>
+            )
+          )}
         </AlertGroup>
         <Page
           header={<Header />}

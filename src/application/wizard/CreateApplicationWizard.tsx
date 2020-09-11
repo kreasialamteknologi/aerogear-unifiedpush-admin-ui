@@ -16,6 +16,10 @@ import {
   ApplicationListContext,
   ContextInterface,
 } from '../../context/Context';
+import { SendTestNotificationPage } from './SendTestNotificationPage';
+import { VariantItem } from '../ApplicationDetail/panels/VariantItem';
+import { SetupSenderAPI } from './SetupSenderAPI';
+import { WizardFinalPage } from './WizardFinalPage';
 
 interface Props {
   open: boolean;
@@ -36,62 +40,75 @@ export class CreateApplicationWizard extends Component<Props, State> {
   }
 
   render(): React.ReactNode {
+    const context = this.context as ContextInterface;
     const { stepIdReached } = this.state;
+
+    const moveNext = async (
+      nextId: number,
+      onNext: () => void,
+      stateUpdate?: Partial<State>
+    ) => {
+      await this.setState({ ...stateUpdate, stepIdReached: nextId });
+      onNext();
+    };
+
     const createAppPage = (
       <WizardContextConsumer>
-        {({
-          activeStep,
-          goToStepByName,
-          goToStepById,
-          onNext,
-          onBack,
-          onClose,
-        }) => (
+        {({ onNext }) => (
           <CreateApplicationPage
-            onFinished={application => {
-              this.setState({ app: application });
-              onNext();
-            }}
+            onFinished={async application =>
+              moveNext(2, onNext, { app: application })
+            }
           />
         )}
       </WizardContextConsumer>
     );
     const createVariantPage = (
       <WizardContextConsumer>
-        {({
-          activeStep,
-          goToStepByName,
-          goToStepById,
-          onNext,
-          onBack,
-          onClose,
-        }) => <CreateVariantPage app={this.state.app!} />}
+        {({ onNext }) => (
+          <CreateVariantPage
+            app={this.state.app!}
+            onFinished={() => moveNext(3, onNext)}
+          />
+        )}
       </WizardContextConsumer>
     );
 
     const setupPage = (
-      <ApplicationListContext.Consumer>
-        {({ selectedVariant }: ContextInterface): ReactNode => {
-          return (
-            <WizardContextConsumer>
-              {({
-                activeStep,
-                goToStepByName,
-                goToStepById,
-                onNext,
-                onBack,
-                onClose,
-              }) => (
-                <SetupPage
-                  app={this.state.app!}
-                  variant={selectedVariant! as AndroidVariant}
-                  onFinished={onNext}
-                />
-              )}
-            </WizardContextConsumer>
-          );
-        }}
-      </ApplicationListContext.Consumer>
+      <WizardContextConsumer>
+        {({ onNext }) => (
+          <SetupPage
+            app={this.state.app!}
+            variant={context.selectedVariant!}
+            onFinished={onNext}
+          />
+        )}
+      </WizardContextConsumer>
+    );
+
+    const sendTestNotificationPage = (
+      <SendTestNotificationPage
+        app={this.state.app!}
+        variant={context.selectedVariant!}
+      />
+    );
+
+    const setupSenderAPI = (
+      <WizardContextConsumer>
+        {({ onNext }) => (
+          <SetupSenderAPI
+            app={this.state.app!}
+            variant={context.selectedVariant!}
+            onFinished={onNext}
+          />
+        )}
+      </WizardContextConsumer>
+    );
+
+    const finalPage = (
+      <WizardContextConsumer>
+        {({ onClose }) => <WizardFinalPage onClose={onClose} />}
+      </WizardContextConsumer>
     );
 
     const steps = [
@@ -105,16 +122,34 @@ export class CreateApplicationWizard extends Component<Props, State> {
         id: 2,
         name: 'Create Application Variant',
         component: createVariantPage,
-        canJumpTo: stepIdReached >= 2,
+        canJumpTo: stepIdReached >= 20,
         nextButtonText: 'Next',
       },
       {
         id: 3,
         name: 'Mobile device: Set up variant',
         component: setupPage,
-        canJumpTo: stepIdReached >= 3,
+        canJumpTo: stepIdReached >= 30,
         nextButtonText: 'Next',
       } as WizardStep,
+      {
+        id: 4,
+        name: 'Test! Send notification',
+        component: sendTestNotificationPage,
+        canJumpTo: stepIdReached >= 40,
+        nextButtonText: 'Next',
+      } as WizardStep,
+      {
+        id: 5,
+        name: 'Backend: Set up sender API',
+        component: setupSenderAPI,
+        nextButtonText: 'Next',
+      },
+      {
+        id: 6,
+        name: 'Well done!',
+        component: finalPage,
+      },
     ];
 
     if (this.props.open) {
@@ -133,3 +168,4 @@ export class CreateApplicationWizard extends Component<Props, State> {
     return null;
   }
 }
+CreateApplicationWizard.contextType = ApplicationListContext;

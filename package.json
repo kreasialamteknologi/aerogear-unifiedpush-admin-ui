@@ -5,8 +5,8 @@
   "dependencies": {
     "@aerogear/unifiedpush-admin-client": "4.3.0",
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@patternfly/react-core": "^4.40.4",
-    "@patternfly/react-table": "^4.12.1",
+    "@patternfly/react-core": "^4.47.0",
+    "@patternfly/react-table": "^4.16.7",
     "@react-keycloak/web": "^2.1.4",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-syntax-highlighter": "^11.0.4",

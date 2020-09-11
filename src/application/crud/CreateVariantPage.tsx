@@ -27,7 +27,7 @@ interface State {
 
 interface Props {
   app?: PushApplication;
-  close?: () => void;
+  onFinished: () => void;
 }
 
 export class CreateVariantPage extends Component<Props, State> {
@@ -70,7 +70,7 @@ export class CreateVariantPage extends Component<Props, State> {
                 open={this.state.variantSelectionForm}
                 close={() => this.setState({ variantSelectionForm: false })}
                 app={this.props.app}
-                onFinished={onNext}
+                onFinished={this.props.onFinished}
               />
             )}
           </WizardContextConsumer>

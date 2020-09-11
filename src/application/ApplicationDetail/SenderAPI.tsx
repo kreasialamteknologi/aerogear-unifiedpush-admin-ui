@@ -27,6 +27,7 @@ import {
   ApplicationListContext,
   ContextInterface,
 } from '../../context/Context';
+import { SenderApiSnippets } from './senderapi-snippets-panel/SenderApiSnippets';
 
 interface State {
   refreshSecret: boolean;
@@ -106,93 +107,7 @@ export class SenderAPI extends Component<Props, State> {
         <Alert variant="warning" title="Keep this info secure!">
           Never expose your Master Secret or Application ID publicly.
         </Alert>
-        <Tabs
-          style={{ marginTop: 20 }}
-          activeKey={this.state.activeTab}
-          isBox={false}
-          onSelect={(evt, key) => onTabSelect(key as string)}
-        >
-          <Tab eventKey={'java-sender-api'} title="Java Sender API">
-            <Title headingLevel={'h1'}>Set up Java UPS Sender API</Title>
-            <Text component={'small'}>
-              First add{' '}
-              <code className={'code'}>unifiedpush-java-client.jar</code> as a{' '}
-              <a href={getLink('sender-api-java')}>
-                dependency to your Java project
-              </a>
-              .
-              <p>
-                Then use the following snippet in your Java code to enable push
-                notification sending.
-              </p>
-            </Text>
-            <CodeSnippet
-              app={this.props.app}
-              language={'java'}
-              snippet={java_snippet}
-            />
-            <Text component={'small'}>
-              Read more on the details of the{' '}
-              <a href={getLink('sender-api-java')}>
-                Java UPS Sender API in documentation
-              </a>
-              .
-              <p>
-                If you have questions about this process,{' '}
-                <a href={getLink('sender-api-java')}>
-                  visit the documentation for full step by step explanation
-                </a>
-                .
-              </p>
-            </Text>
-          </Tab>
-          <Tab eventKey={'node-sender-api'} title="Node.js Sender API">
-            <Title headingLevel={'h1'}>Set up Node.js Sender API</Title>
-            <Text component={'small'}>
-              First add <code className={'code'}>unifiedpush-node-sender</code>{' '}
-              as a{' '}
-              <a href={getLink('sender-api-nodejs')}>
-                dependency to your project
-              </a>
-              .
-              <p>
-                Then use the following snippet in your Node.js code to enable
-                push notification sending.
-              </p>
-            </Text>
-            <CodeSnippet
-              app={this.props.app}
-              language={'javascript'}
-              snippet={node_snippet}
-            />
-            <Text component={'small'}>
-              Read more on the details of the{' '}
-              <a href={getLink('sender-api-nodejs')}>
-                Node.js UPS Sender API in documentation
-              </a>
-              .
-            </Text>
-          </Tab>
-          <Tab eventKey={'rest-sender-api'} title="REST Sender API (with CURL)">
-            <Title headingLevel={'h1'}>
-              Use UPS REST Sender API (with CURL)
-            </Title>
-            <Text component={'small'}>
-              If none of the official client libs suit you or you just want to
-              simply try out the notification sending, you can use the REST API
-              directly.
-              <p>
-                Run the following <code className={'code'}>curl</code> command
-                in a shell to send a notification to UPS server.
-              </p>
-            </Text>
-            <CodeSnippet
-              app={this.props.app}
-              language={'bash'}
-              snippet={curl_snippet}
-            />
-          </Tab>
-        </Tabs>
+        <SenderApiSnippets app={this.props.app} />
       </>
     );
   };
