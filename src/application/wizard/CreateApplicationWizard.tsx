@@ -43,12 +43,16 @@ export class CreateApplicationWizard extends Component<Props, State> {
     const context = this.context as ContextInterface;
     const { stepIdReached } = this.state;
 
-    const moveNext = async (
+    const move = async (
       nextId: number,
       onNext: () => void,
       stateUpdate?: Partial<State>
     ) => {
-      await this.setState({ ...stateUpdate, stepIdReached: nextId });
+      await this.setState({
+        ...stateUpdate,
+        stepIdReached:
+          nextId > this.state.stepIdReached ? nextId : this.state.stepIdReached,
+      });
       onNext();
     };
 
@@ -57,7 +61,7 @@ export class CreateApplicationWizard extends Component<Props, State> {
         {({ onNext }) => (
           <CreateApplicationPage
             onFinished={async application =>
-              moveNext(2, onNext, { app: application })
+              move(2, onNext, { app: application })
             }
           />
         )}
@@ -68,7 +72,7 @@ export class CreateApplicationWizard extends Component<Props, State> {
         {({ onNext }) => (
           <CreateVariantPage
             app={this.state.app!}
-            onFinished={() => moveNext(3, onNext)}
+            onFinished={() => move(3, onNext)}
           />
         )}
       </WizardContextConsumer>
@@ -80,17 +84,23 @@ export class CreateApplicationWizard extends Component<Props, State> {
           <SetupPage
             app={this.state.app!}
             variant={context.selectedVariant!}
-            onFinished={onNext}
+            onFinished={() => move(4, onNext)}
           />
         )}
       </WizardContextConsumer>
     );
 
     const sendTestNotificationPage = (
-      <SendTestNotificationPage
-        app={this.state.app!}
-        variant={context.selectedVariant!}
-      />
+      <WizardContextConsumer>
+        {({ onNext, onBack }) => (
+          <SendTestNotificationPage
+            app={this.state.app!}
+            variant={context.selectedVariant!}
+            onFinished={() => move(5, onNext)}
+            onBack={() => move(4, onBack)}
+          />
+        )}
+      </WizardContextConsumer>
     );
 
     const setupSenderAPI = (
@@ -99,7 +109,7 @@ export class CreateApplicationWizard extends Component<Props, State> {
           <SetupSenderAPI
             app={this.state.app!}
             variant={context.selectedVariant!}
-            onFinished={onNext}
+            onFinished={() => move(6, onNext)}
           />
         )}
       </WizardContextConsumer>
@@ -116,38 +126,41 @@ export class CreateApplicationWizard extends Component<Props, State> {
         id: 1,
         name: 'Create your first Application',
         component: createAppPage,
+        canJumpTo: true,
         nextButtonText: 'Next',
       },
       {
         id: 2,
         name: 'Create Application Variant',
         component: createVariantPage,
-        canJumpTo: stepIdReached >= 20,
+        canJumpTo: stepIdReached >= 2,
         nextButtonText: 'Next',
       },
       {
         id: 3,
         name: 'Mobile device: Set up variant',
         component: setupPage,
-        canJumpTo: stepIdReached >= 30,
+        canJumpTo: stepIdReached >= 3,
         nextButtonText: 'Next',
       } as WizardStep,
       {
         id: 4,
         name: 'Test! Send notification',
         component: sendTestNotificationPage,
-        canJumpTo: stepIdReached >= 40,
+        canJumpTo: stepIdReached >= 3,
         nextButtonText: 'Next',
       } as WizardStep,
       {
         id: 5,
         name: 'Backend: Set up sender API',
         component: setupSenderAPI,
+        canJumpTo: stepIdReached >= 2,
         nextButtonText: 'Next',
       },
       {
         id: 6,
         name: 'Well done!',
+        canJumpTo: stepIdReached >= 2,
         component: finalPage,
       },
     ];

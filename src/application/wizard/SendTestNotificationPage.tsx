@@ -9,7 +9,6 @@ import {
   TextArea,
   TextContent,
   TextVariants,
-  WizardContextConsumer,
 } from '@patternfly/react-core';
 import { InstallationCount } from '../ApplicationDetail/InstallationsCount';
 import React, { useContext, useState } from 'react';
@@ -18,13 +17,14 @@ import {
   ContextInterface,
 } from '../../context/Context';
 import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import { getLink as _getLink } from '../../utils/DocLinksUtils';
 import { CheckIcon } from '@patternfly/react-icons';
 import { UpsClientFactory } from '../../utils/UpsClientFactory';
 
 interface Props {
   app: PushApplication;
   variant: Variant;
+  onFinished: () => void;
+  onBack: () => void;
 }
 
 export function SendTestNotificationPage(props: Props) {
@@ -36,7 +36,6 @@ export function SendTestNotificationPage(props: Props) {
     `Hello! This is my first notification to ${props.variant.name}`
   );
 
-  const getLink = (key: string) => _getLink(context.upsConfig, key);
   const getIcon = () => {
     switch (props.variant.type) {
       case 'android':
@@ -101,6 +100,37 @@ export function SendTestNotificationPage(props: Props) {
     }
   };
 
+  const content = () => {
+    if (variantReady) {
+      return (
+        <Button
+          className={'setupPageButton'}
+          variant="primary"
+          onClick={async () => {
+            await sendTestMessage();
+            props.onFinished();
+          }}
+        >
+          Send Push Notification And Continue
+        </Button>
+      );
+    }
+    return (
+      <>
+        <Button
+          className={'setupPageButton'}
+          variant="primary"
+          onClick={props.onBack}
+        >
+          Back To Variant Set Up
+        </Button>
+        <Button variant={ButtonVariant.link} onClick={props.onFinished}>
+          Skip This Step
+        </Button>
+      </>
+    );
+  };
+
   return (
     <>
       <Page>
@@ -142,38 +172,7 @@ export function SendTestNotificationPage(props: Props) {
         defaultValue={`Hello! This is my first notification to ${props.variant.name}`}
         onChange={value => setTestMessage(value)}
       />
-      <WizardContextConsumer>
-        {({ onNext, onBack }) => {
-          if (variantReady) {
-            return (
-              <Button
-                className={'setupPageButton'}
-                variant="primary"
-                onClick={async () => {
-                  await sendTestMessage();
-                  onNext();
-                }}
-              >
-                Send Push Notification And Continue
-              </Button>
-            );
-          }
-          return (
-            <>
-              <Button
-                className={'setupPageButton'}
-                variant="primary"
-                onClick={onBack}
-              >
-                Back To Variant Set Up
-              </Button>
-              <Button variant={ButtonVariant.link} onClick={onNext}>
-                Skip This Step
-              </Button>
-            </>
-          );
-        }}
-      </WizardContextConsumer>
+      {content()}
     </>
   );
 }
