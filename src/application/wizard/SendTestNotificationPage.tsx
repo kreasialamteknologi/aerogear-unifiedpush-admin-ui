@@ -67,7 +67,7 @@ export function SendTestNotificationPage(props: Props) {
 
   const variantReadyContent = (
     <Text component={TextVariants.p}>
-      <b>Excellent!</b> Now lets test by sending a notification and see if
+      <b>Excellent!</b> Now let's test by sending a notification and see if
       everything adds up.
     </Text>
   );

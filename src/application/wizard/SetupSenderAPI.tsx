@@ -30,7 +30,7 @@ export function SetupSenderAPI(props: Props) {
             <b>Backend: </b>Set up sender API
           </Text>
           <Text component={'small'}>
-            <b>Last step!</b> Now that your mobile device is set up, lets make
+            <b>Last step!</b> Now that your mobile device is set up, let's make
             your backend server send notifications to this UnifiedPush Server
             using UPS Sender API:
           </Text>
