@@ -1,4 +1,4 @@
-FROM node:14.9.0-alpine3.10 as build0
+FROM node:current-buster as build0
 
 WORKDIR /srv
 COPY  . ./
