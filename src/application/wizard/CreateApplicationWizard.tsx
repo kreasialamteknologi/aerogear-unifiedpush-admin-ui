@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Component } from 'react';
 import { CreateApplicationPage } from '../crud/CreateApplicationPage';
 import { CreateVariantPage } from '../crud/CreateVariantPage';
@@ -7,17 +7,13 @@ import {
   WizardContextConsumer,
   WizardStep,
 } from '@patternfly/react-core';
-import {
-  PushApplication,
-  AndroidVariant,
-} from '@aerogear/unifiedpush-admin-client';
+import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { SetupPage } from './SetupPage';
 import {
   ApplicationListContext,
   ContextInterface,
 } from '../../context/Context';
 import { SendTestNotificationPage } from './SendTestNotificationPage';
-import { VariantItem } from '../ApplicationDetail/panels/VariantItem';
 import { SetupSenderAPI } from './SetupSenderAPI';
 import { WizardFinalPage } from './WizardFinalPage';
 

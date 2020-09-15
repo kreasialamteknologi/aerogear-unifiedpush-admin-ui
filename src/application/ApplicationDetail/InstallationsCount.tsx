@@ -1,12 +1,6 @@
 import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
 import { Text, TextVariants } from '@patternfly/react-core';
-import React, {
-  Component,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
 import { UpsClientFactory } from '../../utils/UpsClientFactory';
 import {
   ApplicationListContext,

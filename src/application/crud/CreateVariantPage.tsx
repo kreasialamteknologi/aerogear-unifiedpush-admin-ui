@@ -8,11 +8,9 @@ import {
   EmptyStateBody,
   Bullseye,
   Button,
-  WizardContextConsumer,
 } from '@patternfly/react-core';
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
-import { Config, UpsConfig } from '../../utils/Config';
 import {
   getEnabledVariants,
   getLink as _getLink,
@@ -21,7 +19,6 @@ import {
   ApplicationListContext,
   ContextInterface,
 } from '../../context/Context';
-import { ActivityLogPanel } from '../ApplicationDetail/panels/ActivityLogPanel';
 
 interface State {
   variantName: string;

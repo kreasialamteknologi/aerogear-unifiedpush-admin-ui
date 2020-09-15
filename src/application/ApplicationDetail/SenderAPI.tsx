@@ -5,8 +5,6 @@ import {
   Alert,
   Button,
   ButtonVariant,
-  Tab,
-  Tabs,
   Text,
   TextContent,
   TextList,
@@ -17,16 +15,8 @@ import {
 import { RedoIcon } from '@patternfly/react-icons';
 import { UpsClientFactory } from '../../utils/UpsClientFactory';
 import { RenewApplicationSecret } from './panels/dialogs/RenewApplicationSecret';
-import { CodeSnippet } from './CodeSnippet';
-import { snippet as java_snippet } from './snippets/sender/java';
-import { snippet as node_snippet } from './snippets/sender/node';
-import { snippet as curl_snippet } from './snippets/sender/curl';
 import { Secret } from '../../common/Secret';
-import { getLink as _getLink } from '../../utils/DocLinksUtils';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
+import { ApplicationListContext } from '../../context/Context';
 import { SenderApiSnippets } from './senderapi-snippets-panel/SenderApiSnippets';
 
 interface State {
@@ -46,16 +36,9 @@ export class SenderAPI extends Component<Props, State> {
   }
 
   readonly render = () => {
-    const context = this.context as ContextInterface;
-    const getLink = (key: string) => _getLink(context.upsConfig, key);
-
     const onRefreshed = (app: PushApplication) => {
       this.props.app.masterSecret = app.masterSecret;
       this.setState({ refreshSecret: false });
-    };
-
-    const onTabSelect = (tabKey: string) => {
-      this.setState({ activeTab: tabKey });
     };
 
     return (

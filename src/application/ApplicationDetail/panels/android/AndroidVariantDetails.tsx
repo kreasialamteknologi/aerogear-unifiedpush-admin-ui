@@ -7,14 +7,10 @@ import React, { Component } from 'react';
 import {
   Button,
   ButtonVariant,
-  Label,
   TextList,
   TextListItem,
   TextListItemVariants,
   TextListVariants,
-  Text,
-  TextVariants,
-  ClipboardCopy,
 } from '@patternfly/react-core';
 import { EditIcon } from '@patternfly/react-icons';
 import { EditAndroidNetworkOptions } from './EditAndroidNetworkOptions';

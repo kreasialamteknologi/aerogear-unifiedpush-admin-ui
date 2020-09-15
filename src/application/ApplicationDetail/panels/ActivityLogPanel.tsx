@@ -26,13 +26,11 @@ import {
 } from '@patternfly/react-table';
 import { EllipsisText } from '../../../common/EllipsisText';
 import { CodeSnippet } from '../CodeSnippet';
-import { Config, UpsConfig } from '../../../utils/Config';
 import { getLink as _getLink } from '../../../utils/DocLinksUtils';
 import {
   ApplicationListContext,
   ContextInterface,
 } from '../../../context/Context';
-import { SenderAPI } from '../SenderAPI';
 
 interface Props {
   app: PushApplication;

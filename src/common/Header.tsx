@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import '@patternfly/react-core/dist/styles/base.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import { QuestionCircleIcon } from '@patternfly/react-icons';
