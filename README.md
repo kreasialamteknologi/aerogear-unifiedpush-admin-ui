@@ -7,7 +7,7 @@ This is the admin interface for the AeroGear Unified Push Server. It is run alon
 ### `npm install`
 This project requires a recent version of the NPM tool chain.
 
-### `yarn start`
+### `npm run start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
