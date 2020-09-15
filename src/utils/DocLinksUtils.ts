@@ -46,7 +46,7 @@ export const getEnabledVariants = (
   ];
 
   const isDisabled = (variantType: string): boolean =>
-    !!config.UPS_DISABLED?.find(
+    !!config.UPS_DISABLED?.split(',').find(
       disabledVariant => disabledVariant === variantType
     );
 

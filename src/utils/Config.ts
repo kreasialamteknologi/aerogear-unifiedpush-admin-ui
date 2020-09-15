@@ -3,7 +3,7 @@ import { UpsClientFactory } from './UpsClientFactory';
 
 export interface UpsConfig {
   DOCS_LINKS?: Record<string, string>;
-  UPS_DISABLED?: string[];
+  UPS_DISABLED?: string;
 }
 
 export class Config {
