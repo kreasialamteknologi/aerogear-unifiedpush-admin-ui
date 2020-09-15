@@ -22,6 +22,11 @@ import { PlusIcon, ShareIcon } from '@patternfly/react-icons';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
 import { ActivityLogPanel } from './panels/ActivityLogPanel';
 import { SendNotifications } from './panels/dialogs/SendNotification';
+import { getEnabledVariants } from '../../utils/DocLinksUtils';
+import {
+  ApplicationListContext,
+  ContextInterface,
+} from '../../context/Context';
 
 interface Props {
   app?: PushApplication;
@@ -44,6 +49,7 @@ export class ApplicationDetail extends Component<Props, State> {
   }
 
   render = () => {
+    const context = this.context as ContextInterface;
     const onTabSelect = (tabKey: number) => {
       this.setState({ activeTab: tabKey });
     };
@@ -132,6 +138,9 @@ export class ApplicationDetail extends Component<Props, State> {
                         <SplitItem isFilled />
                         <SplitItem>
                           <Button
+                            isDisabled={
+                              getEnabledVariants(context.upsConfig).length === 0
+                            }
                             className={'button-small'}
                             icon={<PlusIcon />}
                             variant={ButtonVariant.primary}
@@ -173,3 +182,4 @@ export class ApplicationDetail extends Component<Props, State> {
     );
   };
 }
+ApplicationDetail.contextType = ApplicationListContext;

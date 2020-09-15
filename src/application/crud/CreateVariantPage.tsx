@@ -13,7 +13,10 @@ import {
 import { PushApplication } from '@aerogear/unifiedpush-admin-client';
 import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
 import { Config, UpsConfig } from '../../utils/Config';
-import { getLink as _getLink } from '../../utils/DocLinksUtils';
+import {
+  getEnabledVariants,
+  getLink as _getLink,
+} from '../../utils/DocLinksUtils';
 import {
   ApplicationListContext,
   ContextInterface,
@@ -58,22 +61,19 @@ export class CreateVariantPage extends Component<Props, State> {
           </EmptyStateBody>
           <Bullseye>
             <Button
+              isDisabled={getEnabledVariants(context.upsConfig).length === 0}
               variant="primary"
               onClick={() => this.setState({ variantSelectionForm: true })}
             >
               Create Variant
             </Button>
           </Bullseye>
-          <WizardContextConsumer>
-            {({ onNext }) => (
-              <VariantSelectionForm
-                open={this.state.variantSelectionForm}
-                close={() => this.setState({ variantSelectionForm: false })}
-                app={this.props.app}
-                onFinished={this.props.onFinished}
-              />
-            )}
-          </WizardContextConsumer>
+          <VariantSelectionForm
+            open={this.state.variantSelectionForm}
+            close={() => this.setState({ variantSelectionForm: false })}
+            app={this.props.app}
+            onFinished={this.props.onFinished}
+          />
         </EmptyState>
       </>
     );

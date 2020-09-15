@@ -20,6 +20,7 @@ import {
 import { VariantDefinition } from '@aerogear/unifiedpush-admin-client/dist/src/commands/variants/Variant';
 import { UpsError } from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
 import { VariantEditForm } from './VariantEditForm';
+import { getEnabledVariants } from '../../utils/DocLinksUtils';
 
 interface State {
   variantName: string;
@@ -48,10 +49,29 @@ const initialState: State = {
   variantType: 'android',
 };
 
+interface VariantData {
+  name: string;
+  label: string;
+  description: string;
+  checked?: boolean;
+}
+
 export class VariantSelectionForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { ...initialState };
+    this.state = {
+      ...initialState,
+    };
+  }
+
+  componentDidMount() {
+    const context = this.context as ContextInterface;
+    this.setState({
+      variantType:
+        getEnabledVariants(context.upsConfig).find(
+          variantData => variantData.checked
+        )?.name || '',
+    });
   }
 
   componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -62,6 +82,7 @@ export class VariantSelectionForm extends Component<Props, State> {
 
   render(): React.ReactNode {
     const context = this.context as ContextInterface;
+
     return (
       <>
         <Modal
@@ -80,52 +101,21 @@ export class VariantSelectionForm extends Component<Props, State> {
                 onChange={value => this.setState({ variantName: value })}
               />
               <>
-                <Radio
-                  defaultChecked
-                  className="radioBtn"
-                  name={'variant-type'}
-                  id="android"
-                  label="android"
-                  description="using Firebase Cloud Messaging"
-                  onChange={checked => {
-                    if (checked) this.setState({ variantType: 'android' });
-                  }}
-                />
-
-                <Radio
-                  className="radioBtn"
-                  name={'variant-type'}
-                  id="web_push"
-                  label="webpush"
-                  description="using web browsers"
-                  onChange={checked => {
-                    if (checked) this.setState({ variantType: 'web_push' });
-                  }}
-                />
-
-                <Radio
-                  className="radioBtn"
-                  name={'variant-type'}
-                  id="ios_token"
-                  label="iOS(APNS Token)"
-                  description="using Apple Push Network with Tokens"
-                  onChange={checked => {
-                    if (checked) this.setState({ variantType: 'ios_token' });
-                  }}
-                />
-
-                <Radio
-                  className="radioBtn"
-                  name={'variant-type'}
-                  id="ios"
-                  label="iOS(Certificate)"
-                  description="using Apple Push Network with certificates"
-                  onChange={checked => {
-                    if (checked) {
-                      this.setState({ variantType: 'ios' });
-                    }
-                  }}
-                />
+                {getEnabledVariants(context.upsConfig).map(variantData => (
+                  <Radio
+                    defaultChecked={variantData.checked}
+                    className="radioBtn"
+                    name={'variant-type'}
+                    id={variantData.name}
+                    label={variantData.label}
+                    description={variantData.description}
+                    onChange={checked => {
+                      if (checked) {
+                        this.setState({ variantType: variantData.name });
+                      }
+                    }}
+                  />
+                ))}
               </>
             </FormGroup>
           </Form>
