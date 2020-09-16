@@ -129,7 +129,7 @@ export class SendNotifications extends Component<Props, State> {
 
         try {
           const client = await agSender({
-            url: UpsClientFactory.getUPSServerURL(),
+            url: UpsClientFactory.getUPSServerURL().trim(),
             applicationId: this.props.app.pushApplicationID,
             masterSecret: this.props.app.masterSecret,
           });
