@@ -67,7 +67,8 @@ export class SendNotifications extends Component<Props, State> {
       categories: [],
       deviceTypes: [],
       alias: [],
-      variants: this.props.app.variants?.map(variant => variant.variantID) || [],
+      variants:
+        this.props.app.variants?.map(variant => variant.variantID) || [],
       priority: 'normal',
       formValidation: {
         message: true,
@@ -247,8 +248,12 @@ export class SendNotifications extends Component<Props, State> {
                       id={variant.variantID}
                       name="variants"
                       label={variant.name}
-                      isChecked={this.state.variants.indexOf(variant.variantID) > -1}
-                      onChange={checked => updateVariants(checked, variant.variantID)}
+                      isChecked={
+                        this.state.variants.indexOf(variant.variantID) > -1
+                      }
+                      onChange={checked =>
+                        updateVariants(checked, variant.variantID)
+                      }
                     />
                   </FlexItem>
                 );
