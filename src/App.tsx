@@ -145,6 +145,7 @@ export class App extends Component<{}, UpsAdminState> {
           >
             <Router>
               <Route path="/" exact={true} component={Welcome} />
+              <Route path="/app" exact={true} component={Welcome} />
               <Route
                 path="/app/:appId"
                 render={({ match }) => {
