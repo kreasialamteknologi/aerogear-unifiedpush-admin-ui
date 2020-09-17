@@ -1,4 +1,4 @@
-# [0.2.0](https://github.com/aerogear/unifiedpush-admin-ui/compare/2.2.0...0.2.0) (2020-09-17)
+# [3.0.0](https://github.com/aerogear/unifiedpush-admin-ui/compare/2.2.0...3.0.0) (2020-09-17)
 
 
 ### Bug Fixes
