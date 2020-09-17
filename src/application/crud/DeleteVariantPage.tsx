@@ -43,12 +43,12 @@ export class DeleteVariantPage extends Component<Props, State> {
           .variants.delete(app.pushApplicationID)
           .withName(providedName)
           .execute();
-        // this.props.app.variants = this.props.app!.variants!.filter(filteredVar => filteredVar.variantID !== variant.variantID);
+
         this.props.close();
         (this.context as ContextInterface).refresh();
       }
     } catch (err) {
-      console.log(err);
+      (this.context as ContextInterface).alert(err);
     }
   };
 

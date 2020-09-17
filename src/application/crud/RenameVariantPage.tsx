@@ -45,7 +45,7 @@ export class RenameVariantPage extends Component<Props, State> {
       this.props.close();
       (this.context as ContextInterface).refresh();
     } catch (err) {
-      console.log(err);
+      (this.context as ContextInterface).alert(err);
     }
   };
 

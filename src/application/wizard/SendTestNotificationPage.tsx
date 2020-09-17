@@ -169,7 +169,7 @@ export function SendTestNotificationPage(props: Props) {
       </Text>
       <TextArea
         disabled={!variantReady}
-        defaultValue={`Hello! This is my first notification to ${props.variant.name}`}
+        defaultValue={testMessage}
         onChange={value => setTestMessage(value)}
       />
       {content()}
