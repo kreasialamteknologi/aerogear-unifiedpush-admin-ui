@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import 'app-dashboard.scss';
+@import 'landing-page.scss';
+@import 'app-list.scss';
+@import 'globals.scss' ;
+@import 'app-details.scss';
+@import 'activity-list.scss';
+@import 'variant-forms.scss';
+
+body {
+  color: #333;
+}
+
+:root {
+  --pf-global--FontSize--4xl: 2.25rem;
+  --pf-global--FontSize--3xl: 1.75rem;
+  --pf-global--FontSize--2xl: 1.5rem;
+  --pf-global--FontSize--xl: 1.25rem;
+  --pf-global--FontSize--lg: 1.125rem;
+  --pf-global--FontSize--md: 1rem;
+  --pf-global--FontSize--sm: 0.875rem;
+  --pf-global--FontSize--xs: 0.75rem;
+
+  --pf-global--Color--dark-100: #333;
+  --pf-global--FontFamily--sans-serif: "Open Sans",Helvetica,Arial,sans-serif;
+
+
+}
+
+.pf-c-label {
+  --pf-c-label--FontSize: 1rem;
+}
+
+.pf-c-content {
+  --pf-c-content--h5--FontSize: 8rem;
+}
+
+
+
+// Buttons
+
+.button-small {
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+//////////
+
+
+#root {
+  height: 100%;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+h1 {
+}
+
+h1, h2 {
+  font-weight: 300;
+  line-height: 1.1;
+  font-size: 1.4rem;
+}
+
+emptyState {
+  margin-top: 64px;
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+
+//styling for Modal dialogs
+.dialog-form{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.formInput{
+  margin-top: 20px;
+}
+
+.formButtons{
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.dialogBtn {
+  margin-right: 10px;
+}
+
+.addVariantBtn {
+  display: flex;
+  align-items: center;
+}
+
+//styling for buttons on the variant list
+
+.varBtnGroup {
+  align-items: center;
+  height: 100%;
+  display: flex;
+  float: right;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.varList:hover {
+  cursor: pointer;
+  .varBtnGroup {
+    opacity: 1;
+  }
+} 

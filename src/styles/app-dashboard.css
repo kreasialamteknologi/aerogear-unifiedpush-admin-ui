@@ -1,0 +1,9 @@
+.ups-count, .ups-count-label {
+  color: #999; }
+
+.ups-count {
+  font-weight: bold; }
+
+.ups-count-label {
+  font-size: 0.85rem;
+  font-weight: bold; }

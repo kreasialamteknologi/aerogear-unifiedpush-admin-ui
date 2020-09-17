@@ -1,0 +1,41 @@
+@import 'globals.scss' ;
+.title {
+  color: rgb(85,85,85);
+}
+
+.subtitle {
+  color: #999;
+  font-size: 1rem;
+}
+
+.app-icon {
+  background-color: $aerogearBlue;
+  color: rgba(255,255,255,.9);
+  font-weight: bold;
+  line-height: 50px;
+  text-align: center;
+  width: 50px;
+  text-transform: capitalize;
+}
+
+.buttonGroup {
+  align-items: center;
+  height: 100%;
+  display: flex;
+  float: right;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.appList:hover {
+  cursor: pointer;
+  .buttonGroup {
+    opacity: 1;
+  }
+  .app-icon {
+    background-color: #124d77;
+  }
+  .title {
+    text-decoration: underline;
+  }
+}
