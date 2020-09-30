@@ -1,4 +1,17 @@
-# [3.0.0](https://github.com/aerogear/unifiedpush-admin-ui/compare/2.2.0...3.0.0) (2020-09-17)
+## [3.0.1](https://github.com/aerogear/unifiedpush-admin-ui/compare/3.0.0...3.0.1) (2020-09-30)
+
+
+### Bug Fixes
+
+* updating dependencies ([7e53150](https://github.com/aerogear/unifiedpush-admin-ui/commit/7e53150d850e8ff671889980b2bc0f5e64704ad6))
+
+
+
+# [3.0.0](https://github.com/aerogear/unifiedpush-admin-ui/compare/0.2.0...3.0.0) (2020-09-17)
+
+
+
+# [0.2.0](https://github.com/aerogear/unifiedpush-admin-ui/compare/2.2.0...0.2.0) (2020-09-17)
 
 
 ### Bug Fixes
