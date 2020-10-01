@@ -1,3 +1,12 @@
+## [3.0.2](https://github.com/aerogear/unifiedpush-admin-ui/compare/3.0.1...3.0.2) (2020-10-01)
+
+
+### Bug Fixes
+
+* **deps:** pin dependencies ([5ef8dac](https://github.com/aerogear/unifiedpush-admin-ui/commit/5ef8dacf9daa92ba9ec66233256639ea50123889))
+
+
+
 ## [3.0.1](https://github.com/aerogear/unifiedpush-admin-ui/compare/3.0.0...3.0.1) (2020-09-30)
 
 
