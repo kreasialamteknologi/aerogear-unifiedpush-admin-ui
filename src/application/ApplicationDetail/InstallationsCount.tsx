@@ -59,7 +59,7 @@ export function InstallationCount(props: Props) {
           variant.metadata?.deviceCount !== update?.metadata?.deviceCount
         ) {
           const upd = async () => {
-            await context.selectVariant(update);
+            await context.selectVariant(update!);
             if (props.onNewInstallation) {
               props.onNewInstallation(updatedApp);
             }
