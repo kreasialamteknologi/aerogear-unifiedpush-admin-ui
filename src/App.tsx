@@ -183,7 +183,6 @@ export class App extends Component<{}, UpsAdminState> {
           }}
           LoadingComponent={<Loading />}
           onTokens={(tokens: KeycloakTokens) => {
-            console.log({ tokens });
             UpsClientFactory.configureAuth({
               type: 'keycloak',
               token: tokens.token,

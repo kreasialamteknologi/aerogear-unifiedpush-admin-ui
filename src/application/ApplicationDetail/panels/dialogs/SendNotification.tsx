@@ -90,7 +90,6 @@ export class SendNotifications extends Component<Props, State> {
         }
       } else {
         if (variants.includes(variantId)) {
-          console.log(this.state);
           await this.setState({
             variants: variants.filter(id => id !== variantId),
           });
