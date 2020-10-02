@@ -72,6 +72,7 @@ export function InstallationCount(props: Props) {
     } else {
       return () => {};
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
