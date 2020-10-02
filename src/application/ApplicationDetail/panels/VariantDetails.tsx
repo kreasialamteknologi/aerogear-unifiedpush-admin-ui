@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Variant, PushApplication } from '@aerogear/unifiedpush-admin-client';
+import {
+  Variant,
+  PushApplication,
+  WebPushVariant,
+} from '@aerogear/unifiedpush-admin-client';
 import { RedoIcon } from '@patternfly/react-icons';
 import {
   Button,
@@ -35,6 +39,7 @@ interface Props {
 export function VariantDetails(props: Props) {
   const [refreshSecret, openRefreshSecretDialog] = useState<boolean>(false);
   const [docLinks, setDocLinks] = useState<UpsConfig>({});
+  const [variant, setVariant] = useState<Variant>(props.variant);
 
   useEffect(() => {
     (async () => setDocLinks(await Config.getInstance().getDocsConfig()))();
@@ -138,12 +143,16 @@ export function VariantDetails(props: Props) {
 
         <IOSCertVariantDetails app={props.app} variant={props.variant} />
 
-        <WebPushVariantDetails app={props.app} variant={props.variant} />
+        <WebPushVariantDetails
+          app={props.app}
+          variant={variant}
+          onRefresh={(wpv: WebPushVariant) => setVariant(wpv)}
+        />
       </TextContent>
       <AndroidCodeSnippets app={props.app} variant={props.variant} />
       <IOSTokenCodeSnippets app={props.app} variant={props.variant} />
       <IOSCertCodeSnippets app={props.app} variant={props.variant} />
-      <WebPushCodeSnippets app={props.app} variant={props.variant} />
+      <WebPushCodeSnippets app={props.app} variant={variant} />
     </>
   );
 }

@@ -18,6 +18,5 @@ export const initKeycloak = async (): Promise<KeycloakInstance> => {
       clientId: authConfig['resource'],
     });
   }
-  console.log('returning', keycloak);
   return keycloak;
 };

@@ -1,4 +1,4 @@
-import React, { Component, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   AndroidVariant,
   Variant,
@@ -11,8 +11,6 @@ import {
   DataListItemCells,
   DataListItemRow,
   DataListToggle,
-  Text,
-  TextVariants,
   Button,
   ListVariant,
   List,
@@ -31,13 +29,6 @@ import { InstallationCount } from '../InstallationsCount';
 interface Props {
   app: PushApplication;
   variant: Variant;
-}
-
-interface State {
-  expanded: boolean;
-  deleteVariantPage: boolean;
-  editVariantPage: boolean;
-  selectedVariant?: Variant;
 }
 
 export function VariantItem(props: Props) {
@@ -122,102 +113,3 @@ export function VariantItem(props: Props) {
     </>
   );
 }
-
-export class VariantItem2 extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      expanded: false,
-      deleteVariantPage: false,
-      editVariantPage: false,
-    };
-  }
-
-  render = () => {
-    const toggle = () => {
-      this.setState({ expanded: !this.state.expanded });
-    };
-    const context = this.context as ContextInterface;
-    return (
-      <>
-        <DataListItem
-          className="varList"
-          aria-labelledby={'cell-' + this.props.variant.id}
-          isExpanded={this.state.expanded}
-        >
-          <DataListItemRow>
-            <DataListToggle
-              onClick={() => toggle()}
-              isExpanded={this.state.expanded}
-              id={'toggle-' + this.props.variant.id}
-              aria-controls={'expand-' + this.props.variant.id}
-            />
-            <DataListItemCells
-              dataListCells={[
-                <DataListCell key="primary content">
-                  <div id={'cell-' + this.props.variant.id}>
-                    {this.props.variant.name}
-                    <Text
-                      style={{ paddingLeft: 20, color: '#999' }}
-                      component={TextVariants.small}
-                    >
-                      <i style={{ paddingRight: 5 }} className="fas fa-ban" />
-                      No installation yet
-                    </Text>
-                  </div>
-                </DataListCell>,
-                <DataListCell key="buttons">
-                  <List className="varBtnGroup" variant={ListVariant.inline}>
-                    <ListItem>
-                      <Button
-                        className="editBtn"
-                        variant="secondary"
-                        icon={<EditIcon />}
-                        onClick={async () => {
-                          await context.selectVariant(this.props.variant);
-                          this.setState({ editVariantPage: true });
-                        }}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <Button
-                        className="deleteBtn"
-                        variant="danger"
-                        icon={<TrashIcon />}
-                        onClick={async () => {
-                          await context.selectVariant(this.props.variant);
-                          this.setState({ deleteVariantPage: true });
-                        }}
-                      />
-                    </ListItem>
-                  </List>
-                </DataListCell>,
-              ]}
-            />
-          </DataListItemRow>
-          <DataListContent
-            aria-label="Primary Content Details"
-            id={'expand-' + this.props.variant.id}
-            isHidden={!this.state.expanded}
-          >
-            <VariantDetails
-              variant={this.props.variant as AndroidVariant}
-              app={this.props.app}
-            />
-          </DataListContent>
-        </DataListItem>
-        <DeleteVariantPage
-          open={this.state.deleteVariantPage}
-          close={() => this.setState({ deleteVariantPage: false })}
-          app={this.props.app}
-        />
-        <RenameVariantPage
-          open={this.state.editVariantPage}
-          close={() => this.setState({ editVariantPage: false })}
-          app={this.props.app}
-        />
-      </>
-    );
-  };
-}
-VariantItem.contextType = ApplicationListContext;

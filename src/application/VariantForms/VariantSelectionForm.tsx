@@ -106,6 +106,7 @@ export class VariantSelectionForm extends Component<Props, State> {
                     defaultChecked={variantData.checked}
                     className="radioBtn"
                     name={'variant-type'}
+                    key={variantData.name}
                     id={variantData.name}
                     label={variantData.label}
                     description={variantData.description}

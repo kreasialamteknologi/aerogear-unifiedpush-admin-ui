@@ -18,6 +18,7 @@ import { EditWebPushNetworkOptions } from './EditWebPushNetworkOptions';
 interface Props {
   app: PushApplication;
   variant: Variant;
+  onRefresh: (variant: WebPushVariant) => void;
 }
 
 interface State {
@@ -39,7 +40,10 @@ export class WebPushVariantDetails extends Component<Props, State> {
           app={this.props.app}
           variant={variant}
           onCancel={() => this.setState({ editNetworkOptions: false })}
-          onSaved={() => this.setState({ editNetworkOptions: false })}
+          onSaved={updatedVariant => {
+            this.setState({ editNetworkOptions: false });
+            this.props.onRefresh(updatedVariant as WebPushVariant);
+          }}
         />
         <TextList component={TextListVariants.dl}>
           <TextListItem component={TextListItemVariants.dt}>
