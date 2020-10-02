@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
+import {docco} from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
 import {
   AndroidVariant,
   PushApplication,
@@ -46,10 +46,10 @@ export class CodeSnippet extends Component<Props> {
         .replace('__SERVERURL__', UpsClientFactory.getUPSServerURL());
 
     return (
-      <div style={{ maxHeight: this.maxHeight, overflow: 'auto' }}>
+      <div style={{maxHeight: this.maxHeight, overflow: 'auto'}}>
         <SyntaxHighlighter
           style={docco}
-          customStyle={{ fontSize: 13 }}
+          customStyle={{fontSize: 13}}
           language={this.props.language}
         >
           {replacePlaceHolders(this.props.snippet)}

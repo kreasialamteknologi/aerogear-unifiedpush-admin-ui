@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   IOSVariant,
   IOSVariantDefinition,
@@ -16,14 +16,14 @@ import {
   Switch,
   TextInput,
 } from '@patternfly/react-core';
-import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
+import {UpsClientFactory} from '../../../../utils/UpsClientFactory';
 import {
   validatorBuilder,
   RuleBuilder,
   Data,
   Validator,
 } from 'json-data-validator';
-import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
+import {MultiEvaluationResult} from 'json-data-validator/build/src/Rule';
 
 interface Props {
   visible: boolean;
@@ -73,7 +73,7 @@ export class EditIOSCertNetworkOptions extends Component<Props, State> {
         );
       }
 
-      await this.setState({ updating: true });
+      await this.setState({updating: true});
 
       await UpsClientFactory.getUpsClient()
         .variants.ios.update(
@@ -85,7 +85,7 @@ export class EditIOSCertNetworkOptions extends Component<Props, State> {
 
       this.props.variant.production = this.state.production;
 
-      await this.setState({ updating: false });
+      await this.setState({updating: false});
 
       this.props.onSaved(this.props.variant);
     };
@@ -116,7 +116,7 @@ export class EditIOSCertNetworkOptions extends Component<Props, State> {
       this.setState(({
         [name]: value,
         formValidation: validator.validate(
-          ({ ...this.state, [name]: value } as unknown) as Data,
+          ({...this.state, [name]: value} as unknown) as Data,
           true
         ),
       } as unknown) as State);
@@ -203,7 +203,7 @@ export class EditIOSCertNetworkOptions extends Component<Props, State> {
               labelOff="Development"
               isChecked={this.state.production}
               onChange={() => {
-                this.setState({ production: !this.state.production });
+                this.setState({production: !this.state.production});
                 this.setState(({
                   production: !this.state.production,
                   formValidation: validator.validate(

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Variant, PushApplication } from '@aerogear/unifiedpush-admin-client';
+import React, {Component} from 'react';
+import {Variant, PushApplication} from '@aerogear/unifiedpush-admin-client';
 import {
   Button,
   ButtonVariant,
@@ -10,7 +10,7 @@ import {
   TextVariants,
   ValidatedOptions,
 } from '@patternfly/react-core';
-import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
+import {UpsClientFactory} from '../../../../utils/UpsClientFactory';
 
 interface Props {
   visible: boolean;
@@ -45,7 +45,7 @@ export class RenewVariantSecret extends Component<Props, State> {
 
   readonly render = () => {
     const refresh = async () => {
-      await this.setState({ refreshing: true });
+      await this.setState({refreshing: true});
 
       // make the call
 
@@ -55,15 +55,15 @@ export class RenewVariantSecret extends Component<Props, State> {
           this.props.variant.variantID
         )
         .execute();
-      await this.setState({ refreshing: false });
+      await this.setState({refreshing: false});
       this.props.onRefreshed(variant);
     };
 
     const handleAppNameInput = (value: string) => {
       if (value === this.props.variant.name) {
-        this.setState({ nameValid: ValidatedOptions.success });
+        this.setState({nameValid: ValidatedOptions.success});
       } else {
-        this.setState({ nameValid: ValidatedOptions.error });
+        this.setState({nameValid: ValidatedOptions.error});
       }
     };
 

@@ -1,5 +1,5 @@
-import React, { Component, ReactNode } from 'react';
-import { CodeBranchIcon } from '@patternfly/react-icons';
+import React, {Component, ReactNode} from 'react';
+import {CodeBranchIcon} from '@patternfly/react-icons';
 import {
   EmptyState,
   EmptyStateVariant,
@@ -9,16 +9,13 @@ import {
   Bullseye,
   Button,
 } from '@patternfly/react-core';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
-import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
+import {VariantSelectionForm} from '../VariantForms/VariantSelectionForm';
 import {
   getEnabledVariants,
   getLink as _getLink,
 } from '../../utils/DocLinksUtils';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
 
 interface State {
   variantName: string;
@@ -60,14 +57,14 @@ export class CreateVariantPage extends Component<Props, State> {
             <Button
               isDisabled={getEnabledVariants(context.upsConfig).length === 0}
               variant="primary"
-              onClick={() => this.setState({ variantSelectionForm: true })}
+              onClick={() => this.setState({variantSelectionForm: true})}
             >
               Create Variant
             </Button>
           </Bullseye>
           <VariantSelectionForm
             open={this.state.variantSelectionForm}
-            close={() => this.setState({ variantSelectionForm: false })}
+            close={() => this.setState({variantSelectionForm: false})}
             app={this.props.app}
             onFinished={this.props.onFinished}
           />

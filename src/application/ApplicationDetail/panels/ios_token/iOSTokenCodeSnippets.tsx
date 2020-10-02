@@ -1,7 +1,7 @@
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import React, { Component } from 'react';
-import { Tab, Tabs } from '@patternfly/react-core';
-import { CodeSnippet } from '../../CodeSnippet';
+import {PushApplication, Variant} from '@aerogear/unifiedpush-admin-client';
+import React, {Component} from 'react';
+import {Tab, Tabs} from '@patternfly/react-core';
+import {CodeSnippet} from '../../CodeSnippet';
 import {
   cordova_snippet_ios,
   ios_snippet,
@@ -32,7 +32,7 @@ export class IOSTokenCodeSnippets extends Component<Props, State> {
     }
 
     const onTabSelect = (codeSnippetTab: string) => {
-      this.setState({ activeCodeSnippets: codeSnippetTab });
+      this.setState({activeCodeSnippets: codeSnippetTab});
     };
 
     return (

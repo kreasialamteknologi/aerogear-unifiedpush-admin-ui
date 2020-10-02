@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
-import { Component } from 'react';
-import { ApplicationListConsumer } from '../../context/Context';
+import React, {ReactNode} from 'react';
+import {Component} from 'react';
+import {ApplicationListConsumer} from '../../context/Context';
 
-import { NoApplicationsPage } from './NoApplicationsPage';
+import {NoApplicationsPage} from './NoApplicationsPage';
 import {
   Spinner,
   Grid,
@@ -10,14 +10,14 @@ import {
   EmptyState,
   EmptyStateVariant,
 } from '@patternfly/react-core';
-import { ApplicationList } from '../../application/ApplicationList';
-import { GeneralStats } from './GeneralStats';
+import {ApplicationList} from '../../application/ApplicationList';
+import {GeneralStats} from './GeneralStats';
 
 export class Welcome extends Component<{}> {
   render = () => {
     return (
       <ApplicationListConsumer>
-        {({ applications, loading }): ReactNode => {
+        {({applications, loading}): ReactNode => {
           if (loading) {
             return (
               <EmptyState
@@ -34,7 +34,7 @@ export class Welcome extends Component<{}> {
           }
           if (applications.length > 0) {
             return (
-              <Grid style={{ height: '100%' }}>
+              <Grid style={{height: '100%'}}>
                 <GridItem sm={8} md={9}>
                   <ApplicationList apps={applications} />
                 </GridItem>

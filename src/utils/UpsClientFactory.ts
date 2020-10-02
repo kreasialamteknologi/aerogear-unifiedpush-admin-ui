@@ -1,6 +1,6 @@
-import { UpsAdminClient } from '@aerogear/unifiedpush-admin-client';
-import { KeycloakCredentials } from '@aerogear/unifiedpush-admin-client/dist/src/credentials';
-import { Config } from './Config';
+import {UpsAdminClient} from '@aerogear/unifiedpush-admin-client';
+import {KeycloakCredentials} from '@aerogear/unifiedpush-admin-client/dist/src/credentials';
+import {Config} from './Config';
 
 export abstract class UpsClientFactory {
   private static UPS_URL: string | undefined;

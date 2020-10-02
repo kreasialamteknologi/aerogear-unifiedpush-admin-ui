@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
+import React, {Component} from 'react';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
 import {
   Form,
   TextInput,
@@ -7,11 +7,8 @@ import {
   Button,
   Modal,
 } from '@patternfly/react-core';
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
+import {PushApplication, Variant} from '@aerogear/unifiedpush-admin-client';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
 
 interface State {
   varName: string;
@@ -78,7 +75,7 @@ export class DeleteVariantPage extends Component<Props, State> {
           >
             <TextInput
               className="formInput"
-              onChange={value => this.setState({ varName: value })}
+              onChange={value => this.setState({varName: value})}
               isRequired
             />
           </FormGroup>

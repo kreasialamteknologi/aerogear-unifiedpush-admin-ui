@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { Button, FormGroup, Switch } from '@patternfly/react-core';
-import { Variant, IOSTokenVariant } from '@aerogear/unifiedpush-admin-client';
-import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
+import React, {Component} from 'react';
+import {Button, FormGroup, Switch} from '@patternfly/react-core';
+import {Variant, IOSTokenVariant} from '@aerogear/unifiedpush-admin-client';
+import {MultiEvaluationResult} from 'json-data-validator/build/src/Rule';
 import {
   validatorBuilder,
   RuleBuilder,
   Data,
   Validator,
 } from 'json-data-validator';
-import { UPSForm, UPSFormField } from '../ApplicationDetail/panels/UPSForm';
+import {UPSForm, UPSFormField} from '../ApplicationDetail/panels/UPSForm';
 
 interface State {
   privateKey: string;
@@ -38,7 +38,7 @@ const initialState: State = {
 export class IOSTokenVariantForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { ...initialState };
+    this.state = {...initialState};
   }
 
   componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -106,25 +106,25 @@ export class IOSTokenVariantForm extends Component<Props, State> {
           label={'Push Network'}
           component={'textarea'}
           helperText={'Private Key'}
-          onChange={value => this.setState({ privateKey: value })}
+          onChange={value => this.setState({privateKey: value})}
         />
 
         <UPSFormField
           fieldId="keyId"
           helperText={'Key Id'}
-          onChange={value => this.setState({ keyId: value })}
+          onChange={value => this.setState({keyId: value})}
         />
 
         <UPSFormField
           fieldId="teamId"
           helperText={'Team Id'}
-          onChange={value => this.setState({ teamId: value })}
+          onChange={value => this.setState({teamId: value})}
         />
 
         <UPSFormField
           fieldId="bundleId"
           helperText={'Bundle Id'}
-          onChange={value => this.setState({ bundleId: value })}
+          onChange={value => this.setState({bundleId: value})}
         />
 
         <FormGroup fieldId={'production'}>
@@ -134,7 +134,7 @@ export class IOSTokenVariantForm extends Component<Props, State> {
             labelOff="Development"
             isChecked={this.state.production}
             onChange={(checked: boolean) => {
-              this.setState({ production: checked });
+              this.setState({production: checked});
             }}
           />
         </FormGroup>

@@ -1,26 +1,17 @@
-import React, { Component, ReactNode } from 'react';
+import React, {Component, ReactNode} from 'react';
 
-import {
-  TextInput,
-  Modal,
-  Form,
-  FormGroup,
-  Radio,
-} from '@patternfly/react-core';
+import {TextInput, Modal, Form, FormGroup, Radio} from '@patternfly/react-core';
 import {
   PushApplication,
   Variant,
   VariantType,
 } from '@aerogear/unifiedpush-admin-client';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
-import { VariantDefinition } from '@aerogear/unifiedpush-admin-client/dist/src/commands/variants/Variant';
-import { UpsError } from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
-import { VariantEditForm } from './VariantEditForm';
-import { getEnabledVariants } from '../../utils/DocLinksUtils';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
+import {VariantDefinition} from '@aerogear/unifiedpush-admin-client/dist/src/commands/variants/Variant';
+import {UpsError} from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
+import {VariantEditForm} from './VariantEditForm';
+import {getEnabledVariants} from '../../utils/DocLinksUtils';
 
 interface State {
   variantName: string;
@@ -94,15 +85,16 @@ export class VariantSelectionForm extends Component<Props, State> {
           <Form>
             <FormGroup label="Name" fieldId="variant selection">
               <TextInput
-                style={{ marginBottom: 15 }}
+                style={{marginBottom: 15}}
                 id="variant-name"
                 className="variantForm"
                 isRequired
-                onChange={value => this.setState({ variantName: value })}
+                onChange={value => this.setState({variantName: value})}
               />
               <>
                 {getEnabledVariants(context.upsConfig).map(variantData => (
                   <Radio
+                    key={variantData.name}
                     defaultChecked={variantData.checked}
                     className="radioBtn"
                     name={'variant-type'}
@@ -111,7 +103,7 @@ export class VariantSelectionForm extends Component<Props, State> {
                     description={variantData.description}
                     onChange={checked => {
                       if (checked) {
-                        this.setState({ variantType: variantData.name });
+                        this.setState({variantType: variantData.name});
                       }
                     }}
                   />
@@ -120,7 +112,7 @@ export class VariantSelectionForm extends Component<Props, State> {
             </FormGroup>
           </Form>
           <ApplicationListContext.Consumer>
-            {({ selectVariant }: ContextInterface): ReactNode => {
+            {({selectVariant}: ContextInterface): ReactNode => {
               const createVariant = async (
                 variant: VariantDefinition,
                 variantType: VariantType
@@ -129,11 +121,12 @@ export class VariantSelectionForm extends Component<Props, State> {
                   const newVariant = await UpsClientFactory.getUpsClient()
                     .variants[variantType].create(
                       this.props.app!.pushApplicationID!
-                    ) // tslint:disable-next-line:no-any
+                    )
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     .withDefinition(variant as any)
                     .execute();
 
-                  this.setState({ variant: newVariant });
+                  this.setState({variant: newVariant});
                   await selectVariant(newVariant);
                   this.props.onFinished(newVariant);
                   this.props.close();
@@ -147,7 +140,7 @@ export class VariantSelectionForm extends Component<Props, State> {
                   type={this.state.variantType}
                   name={this.state.variantName}
                   onCancel={() => {
-                    this.setState({ androidVariantForm: false });
+                    this.setState({androidVariantForm: false});
                     this.props.close();
                   }}
                   onSave={async variant => {

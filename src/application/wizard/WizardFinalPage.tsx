@@ -6,7 +6,7 @@ import {
   EmptyStateIcon,
   Title,
 } from '@patternfly/react-core';
-import { CheckSquareIcon } from '@patternfly/react-icons';
+import {CheckSquareIcon} from '@patternfly/react-icons';
 
 interface Props {
   onClose: () => void;

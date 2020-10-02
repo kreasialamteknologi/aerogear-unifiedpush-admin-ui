@@ -1,4 +1,4 @@
-import { UpsConfig } from './Config';
+import {UpsConfig} from './Config';
 
 export interface VariantData {
   name: string;

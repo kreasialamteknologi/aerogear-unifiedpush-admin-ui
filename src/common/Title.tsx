@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Title as PFTitle } from '@patternfly/react-core';
+import React, {Component} from 'react';
+import {Title as PFTitle} from '@patternfly/react-core';
 
 interface Props {
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';

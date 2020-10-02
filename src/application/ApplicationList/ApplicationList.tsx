@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react';
-import { PlusCircleIcon } from '@patternfly/react-icons';
-import { Component } from 'react';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import React, {ReactNode} from 'react';
+import {PlusCircleIcon} from '@patternfly/react-icons';
+import {Component} from 'react';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
 import {
   DataList,
   Text,
@@ -12,14 +12,11 @@ import {
   PaginationVariant,
   TextVariants,
 } from '@patternfly/react-core';
-import { CreateApplicationWizard } from '../wizard/CreateApplicationWizard';
-import {
-  ApplicationListConsumer,
-  ContextInterface,
-} from '../../context/Context';
-import { DeleteApplicationPage } from '../crud/DeleteApplicationPage';
-import { UpdateApplicationPage } from '../crud/UpdateApplicationPage';
-import { ApplicationListItem } from './ApplicationListItem';
+import {CreateApplicationWizard} from '../wizard/CreateApplicationWizard';
+import {ApplicationListConsumer, ContextInterface} from '../../context/Context';
+import {DeleteApplicationPage} from '../crud/DeleteApplicationPage';
+import {UpdateApplicationPage} from '../crud/UpdateApplicationPage';
+import {ApplicationListItem} from './ApplicationListItem';
 
 interface Props {
   apps: PushApplication[];
@@ -69,14 +66,14 @@ export class ApplicationList extends Component<Props, State> {
 
     return (
       <ApplicationListConsumer>
-        {({ applications, refresh, total }: ContextInterface): ReactNode => {
+        {({applications, refresh, total}: ContextInterface): ReactNode => {
           return (
             <>
               <UpdateApplicationPage
                 open={this.state.updateApplicationPage}
                 app={this.state.selectedApp}
                 close={() => {
-                  this.setState({ updateApplicationPage: false });
+                  this.setState({updateApplicationPage: false});
                   refresh();
                 }}
               />
@@ -84,14 +81,14 @@ export class ApplicationList extends Component<Props, State> {
                 open={this.state.deleteApplicationPage}
                 app={this.state.selectedApp}
                 close={() => {
-                  this.setState({ deleteApplicationPage: false });
+                  this.setState({deleteApplicationPage: false});
                   refresh();
                 }}
               />
               <CreateApplicationWizard
                 open={this.state.openCreateAppWizard}
                 close={() => {
-                  this.setState({ openCreateAppWizard: false });
+                  this.setState({openCreateAppWizard: false});
                   refresh();
                 }}
               />
@@ -118,7 +115,7 @@ export class ApplicationList extends Component<Props, State> {
                       paddingLeft: 25,
                       paddingBottom: 20,
                     }}
-                    onClick={() => this.setState({ openCreateAppWizard: true })}
+                    onClick={() => this.setState({openCreateAppWizard: true})}
                   >
                     Create Application
                   </Button>
@@ -141,11 +138,11 @@ export class ApplicationList extends Component<Props, State> {
                 page={this.state.currentPage}
                 variant={PaginationVariant.bottom}
                 onNextClick={(_event, currentPage) => {
-                  this.setState({ currentPage });
+                  this.setState({currentPage});
                   refresh(currentPage - 1);
                 }}
                 onPreviousClick={(_event, currentPage) => {
-                  this.setState({ currentPage });
+                  this.setState({currentPage});
                   refresh(currentPage - 1);
                 }}
               />

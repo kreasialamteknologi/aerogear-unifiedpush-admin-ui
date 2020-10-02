@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Variant, PushApplication } from '@aerogear/unifiedpush-admin-client';
-import { RedoIcon } from '@patternfly/react-icons';
+import React, {useEffect, useState} from 'react';
+import {Variant, PushApplication} from '@aerogear/unifiedpush-admin-client';
+import {RedoIcon} from '@patternfly/react-icons';
 import {
   Button,
   ButtonVariant,
@@ -13,19 +13,19 @@ import {
   TextListVariants,
   TextVariants,
 } from '@patternfly/react-core';
-import { UpsClientFactory } from '../../../utils/UpsClientFactory';
-import { RenewVariantSecret } from './dialogs/RenewVariantSecret';
-import { AndroidVariantDetails } from './android/AndroidVariantDetails';
-import { AndroidCodeSnippets } from './android/AndroidCodeSnippets';
-import { IOSTokenVariantDetails } from './ios_token/iOSTokenVariantDetails';
-import { IOSTokenCodeSnippets } from './ios_token/iOSTokenCodeSnippets';
-import { IOSCertVariantDetails } from './ios_cert/iOSCertVariantDetails';
-import { IOSCertCodeSnippets } from './ios_cert/iOSCertCodeSnippets';
-import { WebPushVariantDetails } from './web_push/WebPushVariantDetails';
-import { WebPushCodeSnippets } from './web_push/WebPushCodeSnippets';
-import { Secret } from '../../../common/Secret';
-import { Config, UpsConfig } from '../../../utils/Config';
-import { getLink } from '../../../utils/DocLinksUtils';
+import {UpsClientFactory} from '../../../utils/UpsClientFactory';
+import {RenewVariantSecret} from './dialogs/RenewVariantSecret';
+import {AndroidVariantDetails} from './android/AndroidVariantDetails';
+import {AndroidCodeSnippets} from './android/AndroidCodeSnippets';
+import {IOSTokenVariantDetails} from './ios_token/iOSTokenVariantDetails';
+import {IOSTokenCodeSnippets} from './ios_token/iOSTokenCodeSnippets';
+import {IOSCertVariantDetails} from './ios_cert/iOSCertVariantDetails';
+import {IOSCertCodeSnippets} from './ios_cert/iOSCertCodeSnippets';
+import {WebPushVariantDetails} from './web_push/WebPushVariantDetails';
+import {WebPushCodeSnippets} from './web_push/WebPushCodeSnippets';
+import {Secret} from '../../../common/Secret';
+import {Config, UpsConfig} from '../../../utils/Config';
+import {getLink} from '../../../utils/DocLinksUtils';
 
 interface Props {
   app: PushApplication;
@@ -98,7 +98,7 @@ export function VariantDetails(props: Props) {
         onCancel={() => openRefreshSecretDialog(false)}
         onRefreshed={onRefreshed}
       />
-      <TextContent style={{ marginBottom: 20 }}>
+      <TextContent style={{marginBottom: 20}}>
         {intro()}
         <TextList component={TextListVariants.dl}>
           <TextListItem component={TextListItemVariants.dt}>

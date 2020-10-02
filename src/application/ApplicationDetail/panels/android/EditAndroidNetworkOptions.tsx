@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   AndroidVariant,
   PushApplication,
@@ -10,19 +10,19 @@ import {
   Modal,
   ModalVariant,
 } from '@patternfly/react-core';
-import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
+import {UpsClientFactory} from '../../../../utils/UpsClientFactory';
 import {
   ApplicationListContext,
   ContextInterface,
 } from '../../../../context/Context';
-import { UPSForm, UPSFormField } from '../UPSForm';
+import {UPSForm, UPSFormField} from '../UPSForm';
 import {
   Data,
   RuleBuilder,
   Validator,
   validatorBuilder,
 } from 'json-data-validator';
-import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
+import {MultiEvaluationResult} from 'json-data-validator/build/src/Rule';
 
 interface Props {
   visible: boolean;
@@ -64,7 +64,7 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
     const context = this.context as ContextInterface;
 
     const update = async () => {
-      await this.setState({ updating: true });
+      await this.setState({updating: true});
 
       // make the call
       try {
@@ -83,7 +83,7 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
           this.state.projectNumber || this.props.variant.projectNumber;
         this.props.variant.googleKey =
           this.state.googleKey || this.props.variant.googleKey;
-        await this.setState({ updating: false });
+        await this.setState({updating: false});
       } catch (err) {
         context.alert(err);
       }
@@ -146,16 +146,14 @@ export class EditAndroidNetworkOptions extends Component<Props, State> {
             label={'Push Network'}
             helperText={'Server Key'}
             defaultValue={this.props.variant.googleKey}
-            onChange={(value: string) => this.setState({ googleKey: value })}
+            onChange={(value: string) => this.setState({googleKey: value})}
           />
 
           <UPSFormField
             fieldId="projectNumber"
             helperText={'Sender ID'}
             defaultValue={this.props.variant.projectNumber}
-            onChange={(value: string) =>
-              this.setState({ projectNumber: value })
-            }
+            onChange={(value: string) => this.setState({projectNumber: value})}
           />
         </UPSForm>
       </Modal>

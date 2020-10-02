@@ -1,10 +1,8 @@
-import Keycloak, { KeycloakInstance } from 'keycloak-js';
-import { UpsClientFactory } from './utils/UpsClientFactory';
+import Keycloak, {KeycloakInstance} from 'keycloak-js';
+import {UpsClientFactory} from './utils/UpsClientFactory';
 
 const loadKeycloakConfig = async (): Promise<Record<string, string>> => {
-  return UpsClientFactory.getUpsClient()
-    .config.auth.get()
-    .execute();
+  return UpsClientFactory.getUpsClient().config.auth.get().execute();
 };
 
 let keycloak: KeycloakInstance | null = null;

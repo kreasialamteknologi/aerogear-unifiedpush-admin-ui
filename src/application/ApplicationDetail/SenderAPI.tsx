@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
-import { Title } from '../../common/Title';
+import React, {Component} from 'react';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
+import {Title} from '../../common/Title';
 import {
   Alert,
   Button,
@@ -12,12 +12,12 @@ import {
   TextListItemVariants,
   TextListVariants,
 } from '@patternfly/react-core';
-import { RedoIcon } from '@patternfly/react-icons';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
-import { RenewApplicationSecret } from './panels/dialogs/RenewApplicationSecret';
-import { Secret } from '../../common/Secret';
-import { ApplicationListContext } from '../../context/Context';
-import { SenderApiSnippets } from './senderapi-snippets-panel/SenderApiSnippets';
+import {RedoIcon} from '@patternfly/react-icons';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
+import {RenewApplicationSecret} from './panels/dialogs/RenewApplicationSecret';
+import {Secret} from '../../common/Secret';
+import {ApplicationListContext} from '../../context/Context';
+import {SenderApiSnippets} from './senderapi-snippets-panel/SenderApiSnippets';
 
 interface State {
   refreshSecret: boolean;
@@ -38,7 +38,7 @@ export class SenderAPI extends Component<Props, State> {
   readonly render = () => {
     const onRefreshed = (app: PushApplication) => {
       this.props.app.masterSecret = app.masterSecret;
-      this.setState({ refreshSecret: false });
+      this.setState({refreshSecret: false});
     };
 
     return (
@@ -46,7 +46,7 @@ export class SenderAPI extends Component<Props, State> {
         <RenewApplicationSecret
           visible={this.state.refreshSecret}
           app={this.props.app}
-          onCancel={() => this.setState({ refreshSecret: false })}
+          onCancel={() => this.setState({refreshSecret: false})}
           onRefreshed={onRefreshed}
         />
         <Title>Sending push notifications</Title>
@@ -54,7 +54,7 @@ export class SenderAPI extends Component<Props, State> {
           Make your backend server send push notifications through this
           UnifiedPush Server using supported sender APIs.
         </Text>
-        <TextContent style={{ marginTop: 20, marginBottom: 20 }}>
+        <TextContent style={{marginTop: 20, marginBottom: 20}}>
           <TextList component={TextListVariants.dl}>
             <TextListItem component={TextListItemVariants.dt}>
               Server URL:
@@ -80,7 +80,7 @@ export class SenderAPI extends Component<Props, State> {
                 className={'button-small'}
                 icon={<RedoIcon />}
                 variant={ButtonVariant.secondary}
-                onClick={() => this.setState({ refreshSecret: true })}
+                onClick={() => this.setState({refreshSecret: true})}
               >
                 Renew Master Secret
               </Button>

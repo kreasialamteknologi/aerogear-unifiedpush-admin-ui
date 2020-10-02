@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { AndroidVariantForm } from './AndroidVariantForm';
-import { WebpushVariantForm } from './WebpushVariantForm';
-import { IOSTokenVariantForm } from './IOSTokenVariantForm';
-import { IOSCertificateVariantForm } from './IOSCertificateForm';
-import { Variant } from '@aerogear/unifiedpush-admin-client';
+import React, {Component} from 'react';
+import {AndroidVariantForm} from './AndroidVariantForm';
+import {WebpushVariantForm} from './WebpushVariantForm';
+import {IOSTokenVariantForm} from './IOSTokenVariantForm';
+import {IOSCertificateVariantForm} from './IOSCertificateForm';
+import {Variant} from '@aerogear/unifiedpush-admin-client';
 
 interface Props {
   type: string;

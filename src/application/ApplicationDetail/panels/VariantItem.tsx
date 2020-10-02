@@ -1,4 +1,4 @@
-import React, { Component, useContext, useState } from 'react';
+import React, {Component, useContext, useState} from 'react';
 import {
   AndroidVariant,
   Variant,
@@ -18,15 +18,15 @@ import {
   List,
   ListItem,
 } from '@patternfly/react-core';
-import { VariantDetails } from './VariantDetails';
-import { EditIcon, TrashIcon } from '@patternfly/react-icons';
-import { DeleteVariantPage } from '../../crud/DeleteVariantPage';
-import { RenameVariantPage } from '../../crud/RenameVariantPage';
+import {VariantDetails} from './VariantDetails';
+import {EditIcon, TrashIcon} from '@patternfly/react-icons';
+import {DeleteVariantPage} from '../../crud/DeleteVariantPage';
+import {RenameVariantPage} from '../../crud/RenameVariantPage';
 import {
   ApplicationListContext,
   ContextInterface,
 } from '../../../context/Context';
-import { InstallationCount } from '../InstallationsCount';
+import {InstallationCount} from '../InstallationsCount';
 
 interface Props {
   app: PushApplication;
@@ -135,7 +135,7 @@ export class VariantItem2 extends Component<Props, State> {
 
   render = () => {
     const toggle = () => {
-      this.setState({ expanded: !this.state.expanded });
+      this.setState({expanded: !this.state.expanded});
     };
     const context = this.context as ContextInterface;
     return (
@@ -158,10 +158,10 @@ export class VariantItem2 extends Component<Props, State> {
                   <div id={'cell-' + this.props.variant.id}>
                     {this.props.variant.name}
                     <Text
-                      style={{ paddingLeft: 20, color: '#999' }}
+                      style={{paddingLeft: 20, color: '#999'}}
                       component={TextVariants.small}
                     >
-                      <i style={{ paddingRight: 5 }} className="fas fa-ban" />
+                      <i style={{paddingRight: 5}} className="fas fa-ban" />
                       No installation yet
                     </Text>
                   </div>
@@ -175,7 +175,7 @@ export class VariantItem2 extends Component<Props, State> {
                         icon={<EditIcon />}
                         onClick={async () => {
                           await context.selectVariant(this.props.variant);
-                          this.setState({ editVariantPage: true });
+                          this.setState({editVariantPage: true});
                         }}
                       />
                     </ListItem>
@@ -186,7 +186,7 @@ export class VariantItem2 extends Component<Props, State> {
                         icon={<TrashIcon />}
                         onClick={async () => {
                           await context.selectVariant(this.props.variant);
-                          this.setState({ deleteVariantPage: true });
+                          this.setState({deleteVariantPage: true});
                         }}
                       />
                     </ListItem>
@@ -208,12 +208,12 @@ export class VariantItem2 extends Component<Props, State> {
         </DataListItem>
         <DeleteVariantPage
           open={this.state.deleteVariantPage}
-          close={() => this.setState({ deleteVariantPage: false })}
+          close={() => this.setState({deleteVariantPage: false})}
           app={this.props.app}
         />
         <RenameVariantPage
           open={this.state.editVariantPage}
-          close={() => this.setState({ editVariantPage: false })}
+          close={() => this.setState({editVariantPage: false})}
           app={this.props.app}
         />
       </>

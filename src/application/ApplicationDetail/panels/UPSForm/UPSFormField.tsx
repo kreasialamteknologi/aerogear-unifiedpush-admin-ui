@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { FormGroup, TextArea, TextInput } from '@patternfly/react-core';
-import { Validator } from 'json-data-validator';
-import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
-import { validatorToPF4Status } from '../../../../utils/ValidatorUtils';
+import React, {Component} from 'react';
+import {FormGroup, TextArea, TextInput} from '@patternfly/react-core';
+import {Validator} from 'json-data-validator';
+import {MultiEvaluationResult} from 'json-data-validator/build/src/Rule';
+import {validatorToPF4Status} from '../../../../utils/ValidatorUtils';
 
 interface Props {
   fieldId: string;
@@ -30,10 +30,10 @@ export class UPSFormField extends Component<Props, State> {
     const onChange = (newVal: string) => {
       if (this.props.validator) {
         const validation = this.props.validator.validate(
-          { [this.props.fieldId]: newVal },
+          {[this.props.fieldId]: newVal},
           true
         ) as MultiEvaluationResult;
-        this.setState({ formValidation: validation });
+        this.setState({formValidation: validation});
         if (this.props.onChange) {
           this.props.onChange(newVal);
         }

@@ -10,10 +10,10 @@ import {
   TextListVariants,
 } from '@patternfly/react-core';
 import React from 'react';
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
-import { Secret } from '../../common/Secret';
-import { SenderApiSnippets } from '../ApplicationDetail/senderapi-snippets-panel/SenderApiSnippets';
+import {PushApplication, Variant} from '@aerogear/unifiedpush-admin-client';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
+import {Secret} from '../../common/Secret';
+import {SenderApiSnippets} from '../ApplicationDetail/senderapi-snippets-panel/SenderApiSnippets';
 
 interface Props {
   app: PushApplication;
@@ -35,7 +35,7 @@ export function SetupSenderAPI(props: Props) {
             using UPS Sender API:
           </Text>
         </TextContent>
-        <TextContent style={{ marginTop: 20, marginBottom: 20 }}>
+        <TextContent style={{marginTop: 20, marginBottom: 20}}>
           <TextList component={TextListVariants.dl}>
             <TextListItem component={TextListItemVariants.dt}>
               Server URL

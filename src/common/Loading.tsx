@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { EmptyState, Spinner, EmptyStateVariant } from '@patternfly/react-core';
+import React, {Component} from 'react';
+import {EmptyState, Spinner, EmptyStateVariant} from '@patternfly/react-core';
 
 export class Loading extends Component<{}> {
   render() {

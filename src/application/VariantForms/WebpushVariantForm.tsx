@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
-import { Button } from '@patternfly/react-core';
-import { Variant, WebPushVariant } from '@aerogear/unifiedpush-admin-client';
-import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
+import {Button} from '@patternfly/react-core';
+import {Variant, WebPushVariant} from '@aerogear/unifiedpush-admin-client';
+import {MultiEvaluationResult} from 'json-data-validator/build/src/Rule';
 import {
   validatorBuilder,
   RuleBuilder,
   Data,
   Validator,
 } from 'json-data-validator';
-import { UPSForm, UPSFormField } from '../ApplicationDetail/panels/UPSForm';
+import {UPSForm, UPSFormField} from '../ApplicationDetail/panels/UPSForm';
 
 interface State {
   webpushVapidPublicKey: string;
@@ -35,7 +35,7 @@ const initialState: State = {
 export class WebpushVariantForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { ...initialState };
+    this.state = {...initialState};
   }
 
   componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -107,19 +107,19 @@ export class WebpushVariantForm extends Component<Props, State> {
           fieldId="webpushVapidPublicKey"
           label={'Push Network'}
           helperText={'Vapid Public Key'}
-          onChange={value => this.setState({ webpushVapidPublicKey: value })}
+          onChange={value => this.setState({webpushVapidPublicKey: value})}
         />
 
         <UPSFormField
           fieldId="webpushVapidPrivateKey"
           helperText={'Vapid Private Key'}
-          onChange={value => this.setState({ webpushVapidPrivateKey: value })}
+          onChange={value => this.setState({webpushVapidPrivateKey: value})}
         />
 
         <UPSFormField
           fieldId="webpushAlias"
           helperText={'Alias'}
-          onChange={value => this.setState({ webpushAlias: value })}
+          onChange={value => this.setState({webpushAlias: value})}
         />
 
         <div className="variantFormButtons">

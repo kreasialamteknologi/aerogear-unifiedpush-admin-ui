@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import React, {Component} from 'react';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
 import {
   Button,
   DataListCell,
@@ -12,7 +12,7 @@ import {
   TextVariants,
   Text,
 } from '@patternfly/react-core';
-import { Label } from '../../common/Label';
+import {Label} from '../../common/Label';
 import {
   EditIcon,
   MessagesIcon,
@@ -20,7 +20,7 @@ import {
   TrashIcon,
   UserIcon,
 } from '@patternfly/react-icons';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 interface Props {
   app: PushApplication;
@@ -66,15 +66,17 @@ export class ApplicationListItem extends Component<Props> {
                   </ListItem>
                   <ListItem>
                     <Label
-                      text={`${this.props.app.metadata?.activity ||
-                        0} messages sent`}
+                      text={`${
+                        this.props.app.metadata?.activity || 0
+                      } messages sent`}
                       icon={<MessagesIcon />}
                     />
                   </ListItem>
                   <ListItem>
                     <Label
-                      text={`${this.props.app.metadata?.deviceCount ||
-                        0} device${
+                      text={`${
+                        this.props.app.metadata?.deviceCount || 0
+                      } device${
                         this.props.app.metadata?.deviceCount === 1 ? '' : 's'
                       } registered`}
                       icon={<MobileAltIcon />}

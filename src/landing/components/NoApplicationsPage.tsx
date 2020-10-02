@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
-import { Component } from 'react';
+import React, {ReactElement} from 'react';
+import {Component} from 'react';
 
-import { LightPageSection } from '../../common/LightPageSection';
+import {LightPageSection} from '../../common/LightPageSection';
 
 import {
   Title,
@@ -13,9 +13,9 @@ import {
   Text,
 } from '@patternfly/react-core';
 
-import { ActionBox } from './ActionBox';
-import { ApplicationListConsumer } from '../../context/Context';
-import { CreateApplicationWizard } from '../../application/wizard/CreateApplicationWizard';
+import {ActionBox} from './ActionBox';
+import {ApplicationListConsumer} from '../../context/Context';
+import {CreateApplicationWizard} from '../../application/wizard/CreateApplicationWizard';
 
 interface State {
   openCreateAppWizard: boolean;
@@ -32,18 +32,18 @@ export class NoApplicationsPage extends Component<{}, State> {
   render = (): ReactElement => {
     return (
       <ApplicationListConsumer>
-        {({ refresh }): ReactElement => {
+        {({refresh}): ReactElement => {
           return (
             <>
               <CreateApplicationWizard
                 open={this.state.openCreateAppWizard}
                 close={() => {
-                  this.setState({ openCreateAppWizard: false });
+                  this.setState({openCreateAppWizard: false});
                   refresh();
                 }}
               />
               <PageSection variant={'light'}>
-                <div style={{ textAlign: 'center' }}>
+                <div style={{textAlign: 'center'}}>
                   <Title headingLevel="h1" size="3xl">
                     Welcome to Unified Push Server
                   </Title>
@@ -91,11 +91,11 @@ export class NoApplicationsPage extends Component<{}, State> {
                     }
                   />
                   <GridItem sm={12} min={1000}>
-                    <div style={{ textAlign: 'center' }}>
+                    <div style={{textAlign: 'center'}}>
                       <Button
                         variant={'primary'}
                         onClick={() =>
-                          this.setState({ openCreateAppWizard: true })
+                          this.setState({openCreateAppWizard: true})
                         }
                       >
                         START HERE

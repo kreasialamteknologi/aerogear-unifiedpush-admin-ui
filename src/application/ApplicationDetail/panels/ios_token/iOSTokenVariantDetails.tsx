@@ -3,7 +3,7 @@ import {
   PushApplication,
   Variant,
 } from '@aerogear/unifiedpush-admin-client';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Button,
   ButtonVariant,
@@ -12,8 +12,8 @@ import {
   TextListItemVariants,
   TextListVariants,
 } from '@patternfly/react-core';
-import { EditIcon } from '@patternfly/react-icons';
-import { EditIOSTokenNetworkOptions } from './EditIOSTokenNetworkOptions';
+import {EditIcon} from '@patternfly/react-icons';
+import {EditIOSTokenNetworkOptions} from './EditIOSTokenNetworkOptions';
 
 interface Props {
   app: PushApplication;
@@ -38,8 +38,8 @@ export class IOSTokenVariantDetails extends Component<Props, State> {
           visible={!!this.state?.editNetworkOptions}
           app={this.props.app}
           variant={variant}
-          onCancel={() => this.setState({ editNetworkOptions: false })}
-          onSaved={() => this.setState({ editNetworkOptions: false })}
+          onCancel={() => this.setState({editNetworkOptions: false})}
+          onSaved={() => this.setState({editNetworkOptions: false})}
         />
         <TextList component={TextListVariants.dl}>
           <TextListItem component={TextListItemVariants.dt}>Type:</TextListItem>
@@ -73,7 +73,7 @@ export class IOSTokenVariantDetails extends Component<Props, State> {
               className={'button-small'}
               icon={<EditIcon />}
               variant={ButtonVariant.secondary}
-              onClick={() => this.setState({ editNetworkOptions: true })}
+              onClick={() => this.setState({editNetworkOptions: true})}
             >
               Edit Network Options
             </Button>

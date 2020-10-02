@@ -1,8 +1,8 @@
 import React from 'react';
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import { AlertVariant } from '@patternfly/react-core';
-import { Alert } from '../utils/Alerts';
-import { UpsConfig } from '../utils/Config';
+import {PushApplication, Variant} from '@aerogear/unifiedpush-admin-client';
+import {AlertVariant} from '@patternfly/react-core';
+import {Alert} from '../utils/Alerts';
+import {UpsConfig} from '../utils/Config';
 
 export interface UpsAdminState {
   //the current page being viewed
@@ -42,12 +42,13 @@ const defaultState: UpsAdminState = {
     return;
   },
   alerts: [],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   selectVariant: async (variant: Variant) => {},
   authConfig: {},
   upsConfig: {},
 };
 
-export interface ContextInterface extends UpsAdminState {}
+export type ContextInterface = UpsAdminState;
 
 // tslint:disable-next-line:variable-name
 export const ApplicationListContext = React.createContext<ContextInterface>(

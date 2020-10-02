@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import '@patternfly/react-core/dist/styles/base.css';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -11,21 +11,21 @@ import {
   PageSection,
 } from '@patternfly/react-core';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Welcome } from './landing';
-import { Header } from './common/Header';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {Welcome} from './landing';
+import {Header} from './common/Header';
 
-import { ApplicationListContext, UpsAdminState } from './context/Context';
-import { UpsClientFactory } from './utils/UpsClientFactory';
+import {ApplicationListContext, UpsAdminState} from './context/Context';
+import {UpsClientFactory} from './utils/UpsClientFactory';
 
-import { Variant } from '@aerogear/unifiedpush-admin-client';
-import { ApplicationDetail } from './application/ApplicationDetail/ApplicationDetail';
-import { initKeycloak } from './keycloak';
-import { KeycloakTokens, KeycloakProvider } from '@react-keycloak/web';
-import { KeycloakInstance } from 'keycloak-js';
-import { Loading } from './common/Loading';
+import {Variant} from '@aerogear/unifiedpush-admin-client';
+import {ApplicationDetail} from './application/ApplicationDetail/ApplicationDetail';
+import {initKeycloak} from './keycloak';
+import {KeycloakTokens, KeycloakProvider} from '@react-keycloak/web';
+import {KeycloakInstance} from 'keycloak-js';
+import {Loading} from './common/Loading';
 
-import { addAlert, removeAlert } from './utils/Alerts';
+import {addAlert, removeAlert} from './utils/Alerts';
 import './styles/App.scss';
 
 export class App extends Component<{}, UpsAdminState> {
@@ -52,7 +52,7 @@ export class App extends Component<{}, UpsAdminState> {
   }
 
   private readonly selectVariant = async (variant?: Variant) => {
-    return this.setState({ selectedVariant: variant });
+    return this.setState({selectedVariant: variant});
   };
 
   private readonly refresh = async (currentPage = 0) => {
@@ -81,9 +81,7 @@ export class App extends Component<{}, UpsAdminState> {
   private readonly loadKeycloakConfig = async (): Promise<
     Record<string, string>
   > => {
-    return UpsClientFactory.getUpsClient()
-      .config.auth.get()
-      .execute();
+    return UpsClientFactory.getUpsClient().config.auth.get().execute();
   };
 
   async componentDidMount() {
@@ -107,48 +105,46 @@ export class App extends Component<{}, UpsAdminState> {
     return (
       <ApplicationListContext.Provider value={this.state}>
         <AlertGroup isToast>
-          {this.state.alerts.map(
-            ({ key, variant, title, details, timeout }) => (
-              <Alert
-                isLiveRegion
-                variant={AlertVariant[variant]}
-                title={title}
-                timeout={timeout}
-                actionClose={
-                  <AlertActionCloseButton
-                    title={title}
-                    variantLabel={`${variant} alert`}
-                    onClose={() => removeAlert(key, this)}
-                  />
-                }
-                key={key}
-              >
-                {details.length === 0 ? null : (
-                  <ul>
-                    {details.map(detail => (
-                      <p>{detail}</p>
-                    ))}
-                  </ul>
-                )}
-              </Alert>
-            )
-          )}
+          {this.state.alerts.map(({key, variant, title, details, timeout}) => (
+            <Alert
+              isLiveRegion
+              variant={AlertVariant[variant]}
+              title={title}
+              timeout={timeout}
+              actionClose={
+                <AlertActionCloseButton
+                  title={title}
+                  variantLabel={`${variant} alert`}
+                  onClose={() => removeAlert(key, this)}
+                />
+              }
+              key={key}
+            >
+              {details.length === 0 ? null : (
+                <ul>
+                  {details.map(detail => (
+                    <p key={detail}>{detail}</p>
+                  ))}
+                </ul>
+              )}
+            </Alert>
+          ))}
         </AlertGroup>
         <Page
           header={<Header />}
-          style={{ flexGrow: 1, flexDirection: 'column' }}
+          style={{flexGrow: 1, flexDirection: 'column'}}
         >
           <PageSection
             isFilled={true}
             variant={'light'}
-            style={{ padding: '0 0 0 0' }}
+            style={{padding: '0 0 0 0'}}
           >
             <Router>
               <Route path="/" exact={true} component={Welcome} />
               <Route path="/app" exact={true} component={Welcome} />
               <Route
                 path="/app/:appId"
-                render={({ match }) => {
+                render={({match}) => {
                   return (
                     <ApplicationDetail
                       app={this.state.applications.find(
@@ -183,7 +179,7 @@ export class App extends Component<{}, UpsAdminState> {
           }}
           LoadingComponent={<Loading />}
           onTokens={(tokens: KeycloakTokens) => {
-            console.log({ tokens });
+            console.log({tokens});
             UpsClientFactory.configureAuth({
               type: 'keycloak',
               token: tokens.token,

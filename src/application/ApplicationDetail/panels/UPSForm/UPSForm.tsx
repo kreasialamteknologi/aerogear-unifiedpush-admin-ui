@@ -1,6 +1,6 @@
-import React, { Component, ReactElement } from 'react';
-import { Form } from '@patternfly/react-core';
-import { Validator } from 'json-data-validator';
+import React, {Component, ReactElement} from 'react';
+import {Form} from '@patternfly/react-core';
+import {Validator} from 'json-data-validator';
 
 interface Props {
   validator: Validator;

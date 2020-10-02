@@ -1,5 +1,5 @@
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
-import React, { useEffect, useState } from 'react';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   EmptyState,
@@ -8,9 +8,9 @@ import {
   EmptyStateVariant,
   Title,
 } from '@patternfly/react-core';
-import { MobileAltIcon, PlusIcon } from '@patternfly/react-icons';
-import { Config, UpsConfig } from '../../../utils/Config';
-import { getLink } from '../../../utils/DocLinksUtils';
+import {MobileAltIcon, PlusIcon} from '@patternfly/react-icons';
+import {Config, UpsConfig} from '../../../utils/Config';
+import {getLink} from '../../../utils/DocLinksUtils';
 
 interface Props {
   app?: PushApplication;

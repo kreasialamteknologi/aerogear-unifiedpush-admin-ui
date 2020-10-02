@@ -1,7 +1,7 @@
 import React from 'react';
-import { Component } from 'react';
+import {Component} from 'react';
 
-import { Card, CardTitle, CardHeader, CardBody } from '@patternfly/react-core';
+import {Card, CardTitle, CardHeader, CardBody} from '@patternfly/react-core';
 
 interface Props {
   icon?: string;

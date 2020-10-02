@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
+import React, {Component} from 'react';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
 import {
   Form,
   TextInput,
@@ -7,11 +7,8 @@ import {
   Button,
   Modal,
 } from '@patternfly/react-core';
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
+import {PushApplication, Variant} from '@aerogear/unifiedpush-admin-client';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
 
 interface State {
   varName: string;
@@ -64,7 +61,8 @@ export class RenameVariantPage extends Component<Props, State> {
             fieldId="simple-form-title"
             helperText={
               <>
-                You are updating "<b>{context.selectedVariant?.name}</b>"?
+                You are updating &quot;<b>{context.selectedVariant?.name}</b>
+                &quot;?
               </>
             }
           ></FormGroup>
@@ -75,7 +73,7 @@ export class RenameVariantPage extends Component<Props, State> {
             <TextInput
               className="formInput"
               defaultValue={context.selectedVariant?.name}
-              onChange={value => this.setState({ varName: value })}
+              onChange={value => this.setState({varName: value})}
               isRequired
             />
           </FormGroup>

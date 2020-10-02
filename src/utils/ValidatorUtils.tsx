@@ -1,4 +1,4 @@
-import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
+import {MultiEvaluationResult} from 'json-data-validator/build/src/Rule';
 
 export const validatorToPF4Status: (
   status: MultiEvaluationResult | undefined | null,

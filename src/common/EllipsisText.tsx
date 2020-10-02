@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { TextProps, Text } from '@patternfly/react-core';
+import React, {Component} from 'react';
+import {TextProps, Text} from '@patternfly/react-core';
 
 interface EllipsisTextProps extends TextProps {
   maxLength: number;

@@ -3,7 +3,7 @@ import {
   Variant,
   VariantType,
 } from '@aerogear/unifiedpush-admin-client';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Card,
   CardBody,
@@ -16,7 +16,7 @@ import {
   TextVariants,
   DataList,
 } from '@patternfly/react-core';
-import { VariantItem } from './VariantItem';
+import {VariantItem} from './VariantItem';
 
 export interface Props {
   app?: PushApplication;
@@ -73,13 +73,13 @@ export abstract class VariantsPanel extends Component<Props> {
               </Text>
               <List
                 variant={ListVariant.inline}
-                style={{ paddingLeft: 15, color: '#999', fontSize: 13 }}
+                style={{paddingLeft: 15, color: '#999', fontSize: 13}}
               >
                 <ListItem>
-                  <i className={`fas fa-mobile-alt`} />{' '}
+                  <i className={'fas fa-mobile-alt'} />{' '}
                 </ListItem>
                 <ListItem>
-                  <Text style={{ fontWeight: 700 }}>{deviceCount}</Text>
+                  <Text style={{fontWeight: 700}}>{deviceCount}</Text>
                 </ListItem>
                 <ListItem>{`Device${
                   deviceCount > 1 || deviceCount === 0 ? 's' : ''

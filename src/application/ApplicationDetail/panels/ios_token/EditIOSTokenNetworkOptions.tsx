@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   IOSTokenVariant,
   IOSTokenVariantDefinition,
@@ -13,15 +13,15 @@ import {
   ModalVariant,
   Switch,
 } from '@patternfly/react-core';
-import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
+import {UpsClientFactory} from '../../../../utils/UpsClientFactory';
 import {
   validatorBuilder,
   RuleBuilder,
   Data,
   Validator,
 } from 'json-data-validator';
-import { UPSForm, UPSFormField } from '../UPSForm';
-import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
+import {UPSForm, UPSFormField} from '../UPSForm';
+import {MultiEvaluationResult} from 'json-data-validator/build/src/Rule';
 
 interface Props {
   visible: boolean;
@@ -63,7 +63,7 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
 
   readonly render = () => {
     const update = async () => {
-      await this.setState({ updating: true });
+      await this.setState({updating: true});
 
       const update: IOSTokenVariantDefinition = {
         keyId: this.state.keyId || this.props.variant.keyId,
@@ -92,7 +92,7 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
         this.state.bundleId || this.props.variant.bundleId;
       this.props.variant.production = !!this.state.production;
 
-      await this.setState({ updating: false });
+      await this.setState({updating: false});
       this.props.onSaved(this.props.variant);
     };
 
@@ -106,9 +106,7 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
       )
       .withField('keyId')
       .validate(
-        RuleBuilder.required()
-          .withErrorMessage('Key ID is required')
-          .build()
+        RuleBuilder.required().withErrorMessage('Key ID is required').build()
       )
       .validate(
         RuleBuilder.length.withLength(
@@ -166,7 +164,7 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
             label={'Push Network'}
             helperText={'Private Key'}
             defaultValue={this.props.variant.privateKey}
-            onChange={(value: string) => this.setState({ privateKey: value })}
+            onChange={(value: string) => this.setState({privateKey: value})}
           />
 
           <UPSFormField
@@ -174,21 +172,21 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
             component={'textarea'}
             helperText={'Key Id'}
             defaultValue={this.props.variant.keyId}
-            onChange={(value: string) => this.setState({ keyId: value })}
+            onChange={(value: string) => this.setState({keyId: value})}
           />
 
           <UPSFormField
             fieldId="teamId"
             helperText={'Team Id'}
             defaultValue={this.props.variant.teamId}
-            onChange={(value: string) => this.setState({ teamId: value })}
+            onChange={(value: string) => this.setState({teamId: value})}
           />
 
           <UPSFormField
             fieldId="bundleId"
             helperText={'Bundle Id'}
             defaultValue={this.props.variant.bundleId}
-            onChange={(value: string) => this.setState({ bundleId: value })}
+            onChange={(value: string) => this.setState({bundleId: value})}
           />
 
           <FormGroup fieldId={'Push Network'}>
@@ -198,7 +196,7 @@ export class EditIOSTokenNetworkOptions extends Component<Props, State> {
               labelOff="Development"
               isChecked={!!this.state.production}
               onChange={() =>
-                this.setState({ production: !this.state.production })
+                this.setState({production: !this.state.production})
               }
             />
           </FormGroup>

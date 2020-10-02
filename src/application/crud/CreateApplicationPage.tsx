@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { RocketIcon } from '@patternfly/react-icons';
+import React, {Component} from 'react';
+import {RocketIcon} from '@patternfly/react-icons';
 
 import {
   Bullseye,
@@ -13,13 +13,10 @@ import {
   TextInput,
   Title,
 } from '@patternfly/react-core';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
-import { getLink as _getLink } from '../../utils/DocLinksUtils';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
+import {getLink as _getLink} from '../../utils/DocLinksUtils';
 
 interface State {
   appName: string;
@@ -64,11 +61,11 @@ export class CreateApplicationPage extends Component<Props, State> {
           <a href={getLink('create-app')}>go to the documentation.</a>
         </EmptyStateBody>
         <Bullseye>
-          <Form style={{ width: 350, paddingTop: 20 }}>
+          <Form style={{width: 350, paddingTop: 20}}>
             <InputGroup>
               <TextInput
                 value={this.state.appName}
-                onChange={value => this.setState({ appName: value })}
+                onChange={value => this.setState({appName: value})}
                 isRequired
                 placeholder={'Application name'}
                 type="text"

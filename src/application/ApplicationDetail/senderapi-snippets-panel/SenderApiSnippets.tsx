@@ -1,12 +1,12 @@
-import { Tab, Tabs, Text } from '@patternfly/react-core';
-import { Title } from '../../../common/Title';
-import { CodeSnippet } from '../CodeSnippet';
-import { snippet as java_snippet } from '../snippets/sender/java';
-import { snippet as node_snippet } from '../snippets/sender/node';
-import { snippet as curl_snippet } from '../snippets/sender/curl';
-import React, { useContext, useState } from 'react';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
-import { getLink as _getLink } from '../../../utils/DocLinksUtils';
+import {Tab, Tabs, Text} from '@patternfly/react-core';
+import {Title} from '../../../common/Title';
+import {CodeSnippet} from '../CodeSnippet';
+import {snippet as java_snippet} from '../snippets/sender/java';
+import {snippet as node_snippet} from '../snippets/sender/node';
+import {snippet as curl_snippet} from '../snippets/sender/curl';
+import React, {useContext, useState} from 'react';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
+import {getLink as _getLink} from '../../../utils/DocLinksUtils';
 import {
   ApplicationListContext,
   ContextInterface,
@@ -24,7 +24,7 @@ export function SenderApiSnippets(props: Props) {
 
   return (
     <Tabs
-      style={{ marginTop: 20 }}
+      style={{marginTop: 20}}
       activeKey={activeTab}
       isBox={false}
       onSelect={(evt, key) => setActiveTab(key as string)}

@@ -1,6 +1,6 @@
-import { Component } from 'react';
-import { AlertVariant } from '@patternfly/react-core';
-import { UpsError } from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
+import {Component} from 'react';
+import {AlertVariant} from '@patternfly/react-core';
+import {UpsError} from '@aerogear/unifiedpush-admin-client/dist/src/errors/UpsError';
 
 export interface Alert {
   key: number;

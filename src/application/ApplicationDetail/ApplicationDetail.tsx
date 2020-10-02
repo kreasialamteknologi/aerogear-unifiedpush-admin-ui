@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import { NoVariantsPanel } from './panels/NoVariantsPanel';
+import React, {Component} from 'react';
+import {PushApplication, Variant} from '@aerogear/unifiedpush-admin-client';
+import {NoVariantsPanel} from './panels/NoVariantsPanel';
 import {
   Tabs,
   Tab,
@@ -15,18 +15,15 @@ import {
   ButtonVariant,
   Button,
 } from '@patternfly/react-core';
-import { VariantsPanel } from './panels/VariantsPanel';
-import { SenderAPI } from './SenderAPI';
-import { ApplicationStats } from '../../landing/components/ApplicationStats';
-import { PlusIcon, ShareIcon } from '@patternfly/react-icons';
-import { VariantSelectionForm } from '../VariantForms/VariantSelectionForm';
-import { ActivityLogPanel } from './panels/ActivityLogPanel';
-import { SendNotifications } from './panels/dialogs/SendNotification';
-import { getEnabledVariants } from '../../utils/DocLinksUtils';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
+import {VariantsPanel} from './panels/VariantsPanel';
+import {SenderAPI} from './SenderAPI';
+import {ApplicationStats} from '../../landing/components/ApplicationStats';
+import {PlusIcon, ShareIcon} from '@patternfly/react-icons';
+import {VariantSelectionForm} from '../VariantForms/VariantSelectionForm';
+import {ActivityLogPanel} from './panels/ActivityLogPanel';
+import {SendNotifications} from './panels/dialogs/SendNotification';
+import {getEnabledVariants} from '../../utils/DocLinksUtils';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
 
 interface Props {
   app?: PushApplication;
@@ -51,7 +48,7 @@ export class ApplicationDetail extends Component<Props, State> {
   render = () => {
     const context = this.context as ContextInterface;
     const onTabSelect = (tabKey: number) => {
-      this.setState({ activeTab: tabKey });
+      this.setState({activeTab: tabKey});
     };
 
     if (!this.props.app) {
@@ -63,21 +60,21 @@ export class ApplicationDetail extends Component<Props, State> {
         <SendNotifications
           app={this.props.app}
           visible={this.state.sendNotificationModel}
-          close={() => this.setState({ sendNotificationModel: false })}
-          createNewVariant={() => this.setState({ addVariantModel: true })}
+          close={() => this.setState({sendNotificationModel: false})}
+          createNewVariant={() => this.setState({addVariantModel: true})}
         />
         <VariantSelectionForm
           app={this.props.app}
           open={this.state.addVariantModel}
-          close={() => this.setState({ addVariantModel: false })}
+          close={() => this.setState({addVariantModel: false})}
           onFinished={(variant?: Variant) => {
             const newVariantList = this.props.app!.variants ?? [];
             newVariantList.push(variant!);
             this.props.app!.variants = newVariantList;
-            this.setState({ addVariantModel: false });
+            this.setState({addVariantModel: false});
           }}
         />
-        <Grid style={{ height: '100%' }}>
+        <Grid style={{height: '100%'}}>
           <GridItem sm={8} md={9}>
             <div
               style={{
@@ -91,7 +88,7 @@ export class ApplicationDetail extends Component<Props, State> {
                   this.props.app!.name
                 }: Variants`}</BreadcrumbItem>
               </Breadcrumb>
-              <Split style={{ paddingTop: 20, paddingBottom: 10 }}>
+              <Split style={{paddingTop: 20, paddingBottom: 10}}>
                 <SplitItem>
                   <Text component={TextVariants.h1}>
                     {this.props.app!.name}
@@ -103,9 +100,7 @@ export class ApplicationDetail extends Component<Props, State> {
                     className={'button-small'}
                     icon={<ShareIcon />}
                     variant={ButtonVariant.primary}
-                    onClick={() =>
-                      this.setState({ sendNotificationModel: true })
-                    }
+                    onClick={() => this.setState({sendNotificationModel: true})}
                   >
                     Send Notification To This App
                   </Button>
@@ -120,11 +115,11 @@ export class ApplicationDetail extends Component<Props, State> {
                 <Tab eventKey={0} title="Variants">
                   <NoVariantsPanel
                     app={this.props.app}
-                    onCreateNew={() => this.setState({ addVariantModel: true })}
+                    onCreateNew={() => this.setState({addVariantModel: true})}
                   />
                   {this.props.app?.variants &&
                     this.props.app.variants.length > 0 && (
-                      <Split style={{ paddingTop: 20, paddingBottom: 10 }}>
+                      <Split style={{paddingTop: 20, paddingBottom: 10}}>
                         <SplitItem>
                           <Text>{`You have ${
                             this.props.app.variants.length
@@ -142,7 +137,7 @@ export class ApplicationDetail extends Component<Props, State> {
                             icon={<PlusIcon />}
                             variant={ButtonVariant.primary}
                             onClick={() =>
-                              this.setState({ addVariantModel: true })
+                              this.setState({addVariantModel: true})
                             }
                           >
                             Add A Variant

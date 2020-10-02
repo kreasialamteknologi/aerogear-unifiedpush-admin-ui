@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Dropdown, DropdownItem, DropdownToggle } from '@patternfly/react-core';
-import { CaretDownIcon, UserIcon } from '@patternfly/react-icons';
-import { useKeycloak } from '@react-keycloak/web';
+import React, {useEffect, useState} from 'react';
+import {Dropdown, DropdownItem, DropdownToggle} from '@patternfly/react-core';
+import {CaretDownIcon, UserIcon} from '@patternfly/react-icons';
+import {useKeycloak} from '@react-keycloak/web';
 
 interface State {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface State {
 
 export function UserTool() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { keycloak } = useKeycloak();
+  const {keycloak} = useKeycloak();
   const [username, setUsername] = useState<string>('unknown');
 
   useEffect(() => {

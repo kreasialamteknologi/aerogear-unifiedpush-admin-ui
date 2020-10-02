@@ -10,15 +10,12 @@ import {
   TextContent,
   TextVariants,
 } from '@patternfly/react-core';
-import { InstallationCount } from '../ApplicationDetail/InstallationsCount';
-import React, { useContext, useState } from 'react';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import { CheckIcon } from '@patternfly/react-icons';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
+import {InstallationCount} from '../ApplicationDetail/InstallationsCount';
+import React, {useContext, useState} from 'react';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
+import {PushApplication, Variant} from '@aerogear/unifiedpush-admin-client';
+import {CheckIcon} from '@patternfly/react-icons';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
 
 interface Props {
   app: PushApplication;
@@ -73,6 +70,7 @@ export function SendTestNotificationPage(props: Props) {
   );
 
   const sendTestMessage = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const agSender = require('unifiedpush-node-sender');
 
     try {
@@ -135,7 +133,7 @@ export function SendTestNotificationPage(props: Props) {
     <>
       <Page>
         <TextContent>
-          <Split style={{ alignItems: 'center' }}>
+          <Split style={{alignItems: 'center'}}>
             <SplitItem>
               <i className={getIcon()} />
             </SplitItem>
@@ -150,7 +148,7 @@ export function SendTestNotificationPage(props: Props) {
                 onNewInstallation={() => setVariantReady(true)}
                 deviceInstalledComponent={
                   <Text
-                    style={{ paddingLeft: 20, color: 'green' }}
+                    style={{paddingLeft: 20, color: 'green'}}
                     component={TextVariants.small}
                   >
                     <b>

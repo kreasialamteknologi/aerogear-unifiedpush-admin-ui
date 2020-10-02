@@ -1,8 +1,8 @@
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import React, { Component } from 'react';
-import { Tab, Tabs } from '@patternfly/react-core';
-import { CodeSnippet } from '../../CodeSnippet';
-import { push_config_webpush } from '../../snippets';
+import {PushApplication, Variant} from '@aerogear/unifiedpush-admin-client';
+import React, {Component} from 'react';
+import {Tab, Tabs} from '@patternfly/react-core';
+import {CodeSnippet} from '../../CodeSnippet';
+import {push_config_webpush} from '../../snippets';
 
 interface Props {
   app: PushApplication;
@@ -27,7 +27,7 @@ export class WebPushCodeSnippets extends Component<Props, State> {
     }
 
     const onTabSelect = (codeSnippetTab: string) => {
-      this.setState({ activeCodeSnippets: codeSnippetTab });
+      this.setState({activeCodeSnippets: codeSnippetTab});
     };
 
     return (

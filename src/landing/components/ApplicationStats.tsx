@@ -1,5 +1,5 @@
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
-import React, { Component } from 'react';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
+import React, {Component} from 'react';
 import {
   Divider,
   Grid,
@@ -29,7 +29,7 @@ export class ApplicationStats extends Component<Props> {
           App Statistics
         </Text>
         <Divider />
-        <Grid style={{ paddingLeft: 20, paddingTop: 20 }}>
+        <Grid style={{paddingLeft: 20, paddingTop: 20}}>
           <GridItem sm={4}>
             <div>
               <Text className={'ups-count'}>

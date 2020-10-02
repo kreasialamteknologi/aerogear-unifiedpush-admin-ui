@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   PushApplication,
   Variant,
@@ -11,7 +11,7 @@ import {
   Modal,
   ModalVariant,
 } from '@patternfly/react-core';
-import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
+import {UpsClientFactory} from '../../../../utils/UpsClientFactory';
 import {
   validatorBuilder,
   RuleBuilder,
@@ -19,7 +19,7 @@ import {
   Data,
   Validator,
 } from 'json-data-validator';
-import { UPSForm, UPSFormField } from '../UPSForm';
+import {UPSForm, UPSFormField} from '../UPSForm';
 
 interface Props {
   visible: boolean;
@@ -59,7 +59,7 @@ export class EditWebPushNetworkOptions extends Component<Props, State> {
 
   readonly render = () => {
     const update = async () => {
-      await this.setState({ updating: true });
+      await this.setState({updating: true});
 
       const update: WebPushVariantDefinition = {
         privateKey: this.state.privateKey || this.props.variant.privateKey,
@@ -81,7 +81,7 @@ export class EditWebPushNetworkOptions extends Component<Props, State> {
         update.privateKey ?? this.props.variant.privateKey;
       this.props.variant.alias = update.alias ?? this.props.variant.alias;
 
-      await this.setState({ updating: false });
+      await this.setState({updating: false});
       this.props.onSaved(this.props.variant);
     };
 
@@ -123,21 +123,21 @@ export class EditWebPushNetworkOptions extends Component<Props, State> {
             label={'Push Network'}
             helperText={'Vapid Public Key'}
             defaultValue={this.props.variant.publicKey}
-            onChange={(value: string) => this.setState({ publicKey: value })}
+            onChange={(value: string) => this.setState({publicKey: value})}
           />
 
           <UPSFormField
             fieldId="privateKey"
             helperText={'Vapid Private Key'}
             defaultValue={this.props.variant.privateKey}
-            onChange={(value: string) => this.setState({ privateKey: value })}
+            onChange={(value: string) => this.setState({privateKey: value})}
           />
 
           <UPSFormField
             fieldId="alias"
             helperText={'Alias'}
             defaultValue={this.props.variant.alias}
-            onChange={(value: string) => this.setState({ alias: value })}
+            onChange={(value: string) => this.setState({alias: value})}
           />
         </UPSForm>
       </Modal>

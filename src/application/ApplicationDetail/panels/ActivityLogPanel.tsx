@@ -1,6 +1,6 @@
 import moment from 'moment';
-import React, { Component } from 'react';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import React, {Component} from 'react';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
 import {
   EmptyState,
   EmptyStateBody,
@@ -12,10 +12,10 @@ import {
   Pagination,
   PaginationVariant,
 } from '@patternfly/react-core';
-import { TableIcon, ErrorCircleOIcon } from '@patternfly/react-icons';
-import { UpsClientFactory } from '../../../utils/UpsClientFactory';
-import { FlatPushMessageInformation } from '@aerogear/unifiedpush-admin-client/dist/src/commands/metrics/LoadMetricsCommand';
-import { Title } from '../../../common/Title';
+import {TableIcon, ErrorCircleOIcon} from '@patternfly/react-icons';
+import {UpsClientFactory} from '../../../utils/UpsClientFactory';
+import {FlatPushMessageInformation} from '@aerogear/unifiedpush-admin-client/dist/src/commands/metrics/LoadMetricsCommand';
+import {Title} from '../../../common/Title';
 import {
   Table,
   TableHeader,
@@ -24,9 +24,9 @@ import {
   IRow,
   expandable,
 } from '@patternfly/react-table';
-import { EllipsisText } from '../../../common/EllipsisText';
-import { CodeSnippet } from '../CodeSnippet';
-import { getLink as _getLink } from '../../../utils/DocLinksUtils';
+import {EllipsisText} from '../../../common/EllipsisText';
+import {CodeSnippet} from '../CodeSnippet';
+import {getLink as _getLink} from '../../../utils/DocLinksUtils';
 import {
   ApplicationListContext,
   ContextInterface,
@@ -58,10 +58,10 @@ export class ActivityLogPanel extends Component<Props, State> {
       total: 0,
       log: [],
       columns: [
-        { title: 'Message', cellFormatters: [expandable] },
-        { title: 'IP Address' },
-        { title: 'Status' },
-        { title: 'Sent' },
+        {title: 'Message', cellFormatters: [expandable]},
+        {title: 'IP Address'},
+        {title: 'Status'},
+        {title: 'Sent'},
       ],
       rows: [],
     };
@@ -137,7 +137,7 @@ export class ActivityLogPanel extends Component<Props, State> {
 
     const total = metrics.total;
 
-    this.setState({ rows, total });
+    this.setState({rows, total});
   };
 
   componentDidMount = () => {
@@ -153,7 +153,7 @@ export class ActivityLogPanel extends Component<Props, State> {
   };
 
   onCollapse(event: React.MouseEvent, rowKey: number, isOpen: boolean) {
-    const { rows } = this.state;
+    const {rows} = this.state;
     /**
      * Please do not use rowKey as row index for more complex tables.
      * Rather use some kind of identifier like ID passed with each row.
@@ -230,23 +230,23 @@ export class ActivityLogPanel extends Component<Props, State> {
             page={this.state.currentPage}
             variant={PaginationVariant.bottom}
             onNextClick={(_event, currentPage) => {
-              this.setState({ currentPage });
+              this.setState({currentPage});
               this.loadActivityLog(currentPage - 1);
             }}
             onPreviousClick={(_event, currentPage) => {
-              this.setState({ currentPage });
+              this.setState({currentPage});
               this.loadActivityLog(currentPage - 1);
             }}
             onFirstClick={() => {
-              this.setState({ currentPage: 1 });
+              this.setState({currentPage: 1});
               this.loadActivityLog(0);
             }}
             onLastClick={() => {
-              this.setState({ currentPage: Math.ceil(this.state.total / 10) });
+              this.setState({currentPage: Math.ceil(this.state.total / 10)});
               this.loadActivityLog(Math.ceil(this.state.total / 10) - 1);
             }}
             onPerPageSelect={(event, perPage, currentPage) => {
-              this.setState({ currentPage, perPage }, () =>
+              this.setState({currentPage, perPage}, () =>
                 this.loadActivityLog(currentPage - 1)
               );
             }}

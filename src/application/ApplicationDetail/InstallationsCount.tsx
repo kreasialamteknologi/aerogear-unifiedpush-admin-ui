@@ -1,11 +1,8 @@
-import { PushApplication, Variant } from '@aerogear/unifiedpush-admin-client';
-import { Text, TextVariants } from '@patternfly/react-core';
-import React, { ReactNode, useContext, useEffect, useState } from 'react';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
+import {PushApplication, Variant} from '@aerogear/unifiedpush-admin-client';
+import {Text, TextVariants} from '@patternfly/react-core';
+import React, {ReactNode, useContext, useEffect, useState} from 'react';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
 
 interface Props {
   variant: Variant;
@@ -22,7 +19,7 @@ export function InstallationCount(props: Props) {
 
   const defaultDeviceInstalledComponent = (
     <Text
-      style={{ paddingLeft: 20, color: '#999' }}
+      style={{paddingLeft: 20, color: '#999'}}
       component={TextVariants.small}
     >
       {`${variant.metadata?.deviceCount} Device${
@@ -33,10 +30,10 @@ export function InstallationCount(props: Props) {
 
   const defaultNoInstallationComponent = (
     <Text
-      style={{ paddingLeft: 20, color: '#999' }}
+      style={{paddingLeft: 20, color: '#999'}}
       component={TextVariants.small}
     >
-      <i style={{ paddingRight: 5 }} className="fas fa-ban" />
+      <i style={{paddingRight: 5}} className="fas fa-ban" />
       No installation yet
     </Text>
   );
@@ -66,7 +63,7 @@ export function InstallationCount(props: Props) {
           };
           upd();
         }
-        setVariant({ ...variant, ...update });
+        setVariant({...variant, ...update});
       }, 3000);
       return () => clearInterval(interval);
     } else {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   TextInput,
   Button,
@@ -7,15 +7,15 @@ import {
   FileUpload,
   Switch,
 } from '@patternfly/react-core';
-import { Variant, IOSVariant } from '@aerogear/unifiedpush-admin-client';
+import {Variant, IOSVariant} from '@aerogear/unifiedpush-admin-client';
 import {
   validatorBuilder,
   RuleBuilder,
   Data,
   Validator,
 } from 'json-data-validator';
-import { MultiEvaluationResult } from 'json-data-validator/build/src/Rule';
-import { formIsValid, validatorToPF4Status } from '../../utils/ValidatorUtils';
+import {MultiEvaluationResult} from 'json-data-validator/build/src/Rule';
+import {formIsValid, validatorToPF4Status} from '../../utils/ValidatorUtils';
 
 interface State {
   iosCertificate?: string;
@@ -43,7 +43,7 @@ const initialState: State = {
 export class IOSCertificateVariantForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { ...initialState };
+    this.state = {...initialState};
   }
 
   componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
@@ -94,7 +94,7 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
       this.setState(({
         [name]: value,
         formValidation: validator.validate(
-          ({ ...this.state, [name]: value } as unknown) as Data,
+          ({...this.state, [name]: value} as unknown) as Data,
           true
         ),
       } as unknown) as State);
@@ -156,7 +156,7 @@ export class IOSCertificateVariantForm extends Component<Props, State> {
             labelOff="Development"
             isChecked={this.state.production}
             onChange={() => {
-              this.setState({ production: !this.state.production });
+              this.setState({production: !this.state.production});
               this.setState(({
                 production: !this.state.production,
               } as unknown) as State);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   TextContent,
   Text,
@@ -20,16 +20,13 @@ import {
   IOSTokenVariant,
   Variant,
 } from '@aerogear/unifiedpush-admin-client';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
-import { AndroidCodeSnippets } from '../ApplicationDetail/panels/android/AndroidCodeSnippets';
-import { WebPushCodeSnippets } from '../ApplicationDetail/panels/web_push/WebPushCodeSnippets';
-import { IOSCertCodeSnippets } from '../ApplicationDetail/panels/ios_cert/iOSCertCodeSnippets';
-import { IOSTokenCodeSnippets } from '../ApplicationDetail/panels/ios_token/iOSTokenCodeSnippets';
-import { getLink as _getLink } from '../../utils/DocLinksUtils';
-import { InstallationCount } from '../ApplicationDetail/InstallationsCount';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
+import {AndroidCodeSnippets} from '../ApplicationDetail/panels/android/AndroidCodeSnippets';
+import {WebPushCodeSnippets} from '../ApplicationDetail/panels/web_push/WebPushCodeSnippets';
+import {IOSCertCodeSnippets} from '../ApplicationDetail/panels/ios_cert/iOSCertCodeSnippets';
+import {IOSTokenCodeSnippets} from '../ApplicationDetail/panels/ios_token/iOSTokenCodeSnippets';
+import {getLink as _getLink} from '../../utils/DocLinksUtils';
+import {InstallationCount} from '../ApplicationDetail/InstallationsCount';
 
 interface Props {
   app: PushApplication;
@@ -95,7 +92,7 @@ export class SetupPage extends Component<Props> {
       <>
         <Page>
           <TextContent>
-            <Split style={{ alignItems: 'center' }}>
+            <Split style={{alignItems: 'center'}}>
               <SplitItem>
                 <i className={getIcon()} />
               </SplitItem>
@@ -154,7 +151,7 @@ export class SetupPage extends Component<Props> {
           </TextContent>
         </Page>
         <WizardContextConsumer>
-          {({ onNext }) => (
+          {({onNext}) => (
             <Button
               className={'setupPageButton'}
               variant="primary"

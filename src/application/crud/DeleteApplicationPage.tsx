@@ -1,5 +1,5 @@
-import React, { Component, ReactNode } from 'react';
-import { UpsClientFactory } from '../../utils/UpsClientFactory';
+import React, {Component, ReactNode} from 'react';
+import {UpsClientFactory} from '../../utils/UpsClientFactory';
 import {
   Form,
   TextInput,
@@ -7,11 +7,8 @@ import {
   Button,
   Modal,
 } from '@patternfly/react-core';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
 
 interface State {
   name: string;
@@ -72,7 +69,7 @@ export class DeleteApplicationPage extends Component<Props, State> {
             <TextInput
               id="app-name"
               className="formInput"
-              onChange={value => this.setState({ name: value })}
+              onChange={value => this.setState({name: value})}
               isRequired
             />
           </FormGroup>

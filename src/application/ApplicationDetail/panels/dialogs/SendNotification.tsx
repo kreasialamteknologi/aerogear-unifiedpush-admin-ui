@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
+import React, {Component} from 'react';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
 import {
   Button,
   ButtonVariant,
@@ -16,13 +16,13 @@ import {
   Switch,
 } from '@patternfly/react-core';
 
-import { UpsClientFactory } from '../../../../utils/UpsClientFactory';
+import {UpsClientFactory} from '../../../../utils/UpsClientFactory';
 import {
   ContextInterface,
   ApplicationListContext,
 } from '../../../../context/Context';
-import { HelpIcon } from '@patternfly/react-icons';
-import { NoVariantsPanel } from '../NoVariantsPanel';
+import {HelpIcon} from '@patternfly/react-icons';
+import {NoVariantsPanel} from '../NoVariantsPanel';
 
 interface Props {
   visible: boolean;
@@ -41,6 +41,8 @@ interface State {
   formValidation: Record<string, boolean>;
 }
 
+// Library is old and will be replaced. We'll fix this then.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const agSender = require('unifiedpush-node-sender');
 
 export class SendNotifications extends Component<Props, State> {
@@ -86,7 +88,7 @@ export class SendNotifications extends Component<Props, State> {
       if (add) {
         if (!variants.includes(variantId)) {
           variants.push(variantId);
-          await this.setState({ variants });
+          await this.setState({variants});
         }
       } else {
         if (variants.includes(variantId)) {
@@ -118,7 +120,7 @@ export class SendNotifications extends Component<Props, State> {
           },
         });
         const criteria = {
-          ...(this.state.alias.length > 0 && { alias: this.state.alias }),
+          ...(this.state.alias.length > 0 && {alias: this.state.alias}),
           ...(this.state.deviceTypes.length > 0 && {
             deviceType: this.state.deviceTypes,
           }),
@@ -140,7 +142,7 @@ export class SendNotifications extends Component<Props, State> {
               alert: this.state.message,
               priority: this.state.priority,
             },
-            { criteria }
+            {criteria}
           );
           context.refresh();
           this.closeAndReset();
@@ -210,7 +212,7 @@ export class SendNotifications extends Component<Props, State> {
             <TextArea
               aria-label="Message Text Area"
               onChange={async text => {
-                await this.setState({ message: text });
+                await this.setState({message: text});
                 this.setState({
                   formValidation: {
                     ...this.state.formValidation,
@@ -227,7 +229,7 @@ export class SendNotifications extends Component<Props, State> {
               labelOff="Normal Priority"
               isChecked={this.state.priority === 'high'}
               onChange={(checked: boolean) =>
-                this.setState({ priority: checked ? 'high' : 'normal' })
+                this.setState({priority: checked ? 'high' : 'normal'})
               }
             />
           </FormGroup>

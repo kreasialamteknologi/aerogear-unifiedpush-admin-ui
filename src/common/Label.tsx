@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
-import { Component } from 'react';
-import { Text, TextVariants } from '@patternfly/react-core';
+import React, {ReactElement} from 'react';
+import {Component} from 'react';
+import {Text, TextVariants} from '@patternfly/react-core';
 
 interface Props {
   icon?: string | ReactElement;
@@ -13,11 +13,11 @@ export class Label extends Component<Props> {
       if (this.props.icon) {
         if (typeof this.props.icon === 'string') {
           return (
-            <i className={'fa fa-code-branch'} style={{ paddingRight: 3 }} />
+            <i className={'fa fa-code-branch'} style={{paddingRight: 3}} />
           );
         }
         return React.cloneElement(this.props.icon, {
-          style: { paddingRight: 3, verticalAlign: 'middle' },
+          style: {paddingRight: 3, verticalAlign: 'middle'},
         });
       } else {
         return undefined;

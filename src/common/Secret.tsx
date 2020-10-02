@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Text, TextVariants } from '@patternfly/react-core';
-import { EyeIcon, EyeSlashIcon } from '@patternfly/react-icons';
+import React, {Component} from 'react';
+import {Text, TextVariants} from '@patternfly/react-core';
+import {EyeIcon, EyeSlashIcon} from '@patternfly/react-icons';
 
 interface State {
   visible: boolean;
@@ -37,7 +37,7 @@ export class Secret extends Component<Props, State> {
               verticalAlign: 'middle',
               paddingBottom: 3,
             }}
-            onClick={() => this.setState({ visible: false })}
+            onClick={() => this.setState({visible: false})}
           />
         );
       } else {
@@ -48,7 +48,7 @@ export class Secret extends Component<Props, State> {
               verticalAlign: 'middle',
               paddingBottom: 3,
             }}
-            onClick={() => this.setState({ visible: true })}
+            onClick={() => this.setState({visible: true})}
           />
         );
       }

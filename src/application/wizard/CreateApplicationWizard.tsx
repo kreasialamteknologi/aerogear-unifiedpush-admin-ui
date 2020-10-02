@@ -1,21 +1,18 @@
 import React from 'react';
-import { Component } from 'react';
-import { CreateApplicationPage } from '../crud/CreateApplicationPage';
-import { CreateVariantPage } from '../crud/CreateVariantPage';
+import {Component} from 'react';
+import {CreateApplicationPage} from '../crud/CreateApplicationPage';
+import {CreateVariantPage} from '../crud/CreateVariantPage';
 import {
   Wizard,
   WizardContextConsumer,
   WizardStep,
 } from '@patternfly/react-core';
-import { PushApplication } from '@aerogear/unifiedpush-admin-client';
-import { SetupPage } from './SetupPage';
-import {
-  ApplicationListContext,
-  ContextInterface,
-} from '../../context/Context';
-import { SendTestNotificationPage } from './SendTestNotificationPage';
-import { SetupSenderAPI } from './SetupSenderAPI';
-import { WizardFinalPage } from './WizardFinalPage';
+import {PushApplication} from '@aerogear/unifiedpush-admin-client';
+import {SetupPage} from './SetupPage';
+import {ApplicationListContext, ContextInterface} from '../../context/Context';
+import {SendTestNotificationPage} from './SendTestNotificationPage';
+import {SetupSenderAPI} from './SetupSenderAPI';
+import {WizardFinalPage} from './WizardFinalPage';
 
 interface Props {
   open: boolean;
@@ -37,7 +34,7 @@ export class CreateApplicationWizard extends Component<Props, State> {
 
   render(): React.ReactNode {
     const context = this.context as ContextInterface;
-    const { stepIdReached } = this.state;
+    const {stepIdReached} = this.state;
 
     const move = async (
       nextId: number,
@@ -54,10 +51,10 @@ export class CreateApplicationWizard extends Component<Props, State> {
 
     const createAppPage = (
       <WizardContextConsumer>
-        {({ onNext }) => (
+        {({onNext}) => (
           <CreateApplicationPage
             onFinished={async application =>
-              move(2, onNext, { app: application })
+              move(2, onNext, {app: application})
             }
           />
         )}
@@ -65,7 +62,7 @@ export class CreateApplicationWizard extends Component<Props, State> {
     );
     const createVariantPage = (
       <WizardContextConsumer>
-        {({ onNext }) => (
+        {({onNext}) => (
           <CreateVariantPage
             app={this.state.app!}
             onFinished={() => move(3, onNext)}
@@ -76,7 +73,7 @@ export class CreateApplicationWizard extends Component<Props, State> {
 
     const setupPage = (
       <WizardContextConsumer>
-        {({ onNext }) => (
+        {({onNext}) => (
           <SetupPage
             app={this.state.app!}
             variant={context.selectedVariant!}
@@ -88,7 +85,7 @@ export class CreateApplicationWizard extends Component<Props, State> {
 
     const sendTestNotificationPage = (
       <WizardContextConsumer>
-        {({ onNext, onBack }) => (
+        {({onNext, onBack}) => (
           <SendTestNotificationPage
             app={this.state.app!}
             variant={context.selectedVariant!}
@@ -101,7 +98,7 @@ export class CreateApplicationWizard extends Component<Props, State> {
 
     const setupSenderAPI = (
       <WizardContextConsumer>
-        {({ onNext }) => (
+        {({onNext}) => (
           <SetupSenderAPI
             app={this.state.app!}
             variant={context.selectedVariant!}
@@ -113,7 +110,7 @@ export class CreateApplicationWizard extends Component<Props, State> {
 
     const finalPage = (
       <WizardContextConsumer>
-        {({ onClose }) => <WizardFinalPage onClose={onClose} />}
+        {({onClose}) => <WizardFinalPage onClose={onClose} />}
       </WizardContextConsumer>
     );
 

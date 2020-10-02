@@ -6,7 +6,7 @@ import {
   TextListItem,
 } from '@patternfly/react-core';
 import packageJson from '../../package.json';
-import { UpsClientFactory } from '../utils/UpsClientFactory';
+import {UpsClientFactory} from '../utils/UpsClientFactory';
 import {
   browserName,
   engineName,

@@ -1,5 +1,5 @@
 import * as axios from 'axios';
-import { UpsClientFactory } from './UpsClientFactory';
+import {UpsClientFactory} from './UpsClientFactory';
 
 export interface UpsConfig {
   DOCS_LINKS?: Record<string, string>;
