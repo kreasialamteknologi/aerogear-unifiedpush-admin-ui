@@ -1,3 +1,18 @@
+# [3.1.0](https://github.com/aerogear/unifiedpush-admin-ui/compare/3.0.2...3.1.0) (2020-10-05)
+
+
+### Bug Fixes
+
+* 🐛 updated json-data-validator and unifiedpush-admin-client ([c717247](https://github.com/aerogear/unifiedpush-admin-ui/commit/c7172474c6b6045550db404a7296e6f6f0b9794b))
+
+
+### Features
+
+* **webpush:** added ability to refresh vapid keys ([e830b78](https://github.com/aerogear/unifiedpush-admin-ui/commit/e830b7861807a846538584cc9e79442a292bf036))
+* 🎸 changed to functional and added depend on feature ([536493d](https://github.com/aerogear/unifiedpush-admin-ui/commit/536493d1670bf9e2cd3531fd761dc2f1e42e69a2))
+
+
+
 ## [3.0.2](https://github.com/aerogear/unifiedpush-admin-ui/compare/3.0.1...3.0.2) (2020-10-01)
 
 
@@ -70,10 +85,6 @@
 * **variant:** added Android variant details panel ([#62](https://github.com/aerogear/unifiedpush-admin-ui/issues/62)) ([78831bb](https://github.com/aerogear/unifiedpush-admin-ui/commit/78831bb8c3265712993cabf3dd7aa607dd3c1696))
 * **variant:** added No Variants page ([#63](https://github.com/aerogear/unifiedpush-admin-ui/issues/63)) ([0ddddb8](https://github.com/aerogear/unifiedpush-admin-ui/commit/0ddddb87d9f3c3d3f8d549ab4c4c2981bfb90987))
 * **webpush:** implemented webpush variant details ([#72](https://github.com/aerogear/unifiedpush-admin-ui/issues/72)) ([bd40249](https://github.com/aerogear/unifiedpush-admin-ui/commit/bd4024929acee8b7dbe84e0a11341a6520be2240))
-
-
-
-# 2.2.0 (2019-09-30)
 
 
 

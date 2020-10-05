@@ -1,6 +1,6 @@
 {
   "name": "unifiedpush-admin-ui",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "private": true,
   "dependencies": {
     "@aerogear/unifiedpush-admin-client": "4.4.0",
