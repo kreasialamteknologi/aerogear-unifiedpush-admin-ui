@@ -11,7 +11,7 @@
     "data-urls": "2.0.0",
     "json-data-validator": "2.4.0",
     "keycloak-js": "11.0.2",
-    "moment": "2.29.0",
+    "moment": "2.29.1",
     "react": "16.13.1",
     "react-device-detect": "1.13.1",
     "react-dom": "16.13.1",
