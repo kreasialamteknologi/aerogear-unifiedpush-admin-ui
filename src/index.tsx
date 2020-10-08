@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // Ignoring, this file is create at build time
-// eslint-disable-next-line node/no-unpublished-import
+// eslint-disable-next-line
 import './index.css';
 import App from './App';
 
